@@ -1,0 +1,7 @@
+# Next.js
+/.next
+/public
+/out
+
+# config
+*.js
