@@ -57,6 +57,7 @@ const error = {
   main: '#D14343',
   light: '#DA6868',
   dark: '#922E2E',
+  normal: '#717171',
   contrastText: '#FFFFFF',
 };
 
@@ -64,7 +65,22 @@ const text = {
   primary: '#121828',
   secondary: '#65748B',
   disabled: 'rgba(55, 65, 81, 0.48)',
+  warning: '#A9791C',
+  normal: '#999999',
+  dishSize: '#AD343E',
+  title: '#353535',
 };
+
+const button = {
+  main: '#AD343E'
+}
+
+const border = {
+  main: '#999999',
+  light: 'D9D9D9',
+  section: '#CBCBCB',
+};
+
 
 const lightThemeOptions = {
   components: {
@@ -176,6 +192,8 @@ const lightThemeOptions = {
     secondary,
     success,
     text,
+    border,
+    button,
     warning,
   },
   shadows: [
