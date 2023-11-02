@@ -37,19 +37,19 @@ const CartItems = () => {
         dishName="Delicious Cheeseburger"
         dishSize="Medium"
         extras="Chips & Coca-Cola"
-        price="$35.88"
+        price="35.88"
       />
       <CartItem
         dishName="Delicious Cheeseburger"
         dishSize="Medium"
         extras="Chips & Coca-Cola"
-        price="$35.88"
+        price="35.88"
       />
       <CartItem
         dishName="Delicious Cheeseburger"
         dishSize="Medium"
         extras="Chips & Coca-Cola"
-        price="$35.88"
+        price="35.88"
       />
       <Divider sx={{ borderColor: 'border.main' }} />
     </>
