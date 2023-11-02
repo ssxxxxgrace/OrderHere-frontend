@@ -9,16 +9,24 @@ import PickupTime from './components/PickupTime/PickupTime';
 
 const Content = () => {
   return (
-    <Box sx={{display: 'flex', marginTop: 3}}>
-      <Box sx={{width: '440px', mr: '24px', border: 1, borderRadius: 2, borderColor: 'border.main'}}>
+    <Box sx={{ display: 'flex', marginTop: 3 }}>
+      <Box
+        sx={{
+          width: '440px',
+          mr: '24px',
+          border: 1,
+          borderRadius: 2,
+          borderColor: 'border.main',
+        }}
+      >
         {' '}
         <CheckList />{' '}
       </Box>
-      <Box sx={{width: '855px', ml: '24px'}}>
+      <Box sx={{ width: '855px', ml: '24px' }}>
         {' '}
-        <Option /> 
+        <Option />
         <CartItems />
-        <PickupTime/>
+        <PickupTime />
         <Address />
         <Note />
       </Box>

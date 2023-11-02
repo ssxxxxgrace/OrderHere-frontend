@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  Box,
-  Typography,
-  Divider,
-  ListItemText,
-} from '@mui/material';
+import { Box, Typography, Divider, ListItemText } from '@mui/material';
 
-const CartItem = ({ dishName, dishSize, extras, price}) => {
+const CartItem = ({ dishName, dishSize, extras, price }) => {
   return (
     <>
       <Divider sx={{ border: 1.25, borderColor: 'border.main' }} />

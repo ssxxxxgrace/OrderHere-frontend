@@ -6,36 +6,51 @@ const CartItems = () => {
   return (
     <>
       <Divider sx={{ borderColor: 'border.main' }} />
-      <Box sx={{display: 'flex', alignItems: 'center', marginY: 1.5}}>
+      <Box sx={{ display: 'flex', alignItems: 'center', marginY: 1.5 }}>
         <Typography
           sx={{ color: 'black', fontSize: '17px', fontWeight: '700' }}
         >
-           IMAGE
+          IMAGE
         </Typography>
         <Typography
           sx={{ color: 'black', fontSize: '17px', fontWeight: '700', ml: 21 }}
         >
-           PRODUCT DETAILS
+          PRODUCT DETAILS
         </Typography>
         <Typography
           sx={{ color: 'black', fontSize: '17px', fontWeight: '700', ml: 16 }}
         >
-           QTY
+          QTY
         </Typography>
         <Typography
           sx={{ color: 'black', fontSize: '17px', fontWeight: '700', ml: 8 }}
         >
-           TOTAL
+          TOTAL
         </Typography>
         <Typography
           sx={{ color: 'black', fontSize: '17px', fontWeight: '700', ml: 12 }}
         >
-           CLEAN
+          CLEAN
         </Typography>
       </Box>
-      <CartItem dishName="Delicious Cheeseburger" dishSize="Medium" extras="Chips & Coca-Cola" price="$35.88" />
-      <CartItem dishName="Delicious Cheeseburger" dishSize="Medium" extras="Chips & Coca-Cola" price="$35.88" />
-      <CartItem dishName="Delicious Cheeseburger" dishSize="Medium" extras="Chips & Coca-Cola" price="$35.88" />
+      <CartItem
+        dishName="Delicious Cheeseburger"
+        dishSize="Medium"
+        extras="Chips & Coca-Cola"
+        price="$35.88"
+      />
+      <CartItem
+        dishName="Delicious Cheeseburger"
+        dishSize="Medium"
+        extras="Chips & Coca-Cola"
+        price="$35.88"
+      />
+      <CartItem
+        dishName="Delicious Cheeseburger"
+        dishSize="Medium"
+        extras="Chips & Coca-Cola"
+        price="$35.88"
+      />
       <Divider sx={{ borderColor: 'border.main' }} />
     </>
   );

@@ -14,7 +14,9 @@ const Address = () => {
         mt: 4,
       }}
     >
-      <Typography sx={{paddingBottom: 2, fontSize: '32px', fontWeight: 600}}>Your Address:</Typography>
+      <Typography sx={{ paddingBottom: 2, fontSize: '32px', fontWeight: 600 }}>
+        Your Address:
+      </Typography>
       <TextField
         fullWidth
         margin="normal"
