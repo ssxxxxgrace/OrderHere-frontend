@@ -1,10 +1,11 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import Address from './components/Address/Address';
-import CartItem from './components/CartItem/CartItem';
+import CartItems from './components/CartItems/CartItems';
 import CheckList from './components/CheckList/CheckList';
 import Note from './components/Note/Note';
 import Option from './components/Option/Option';
+import PickupTime from './components/PickupTime/PickupTime';
 
 const Content = () => {
   return (
@@ -16,7 +17,8 @@ const Content = () => {
       <Box sx={{width: '855px', ml: '24px'}}>
         {' '}
         <Option /> 
-        <CartItem />
+        <CartItems />
+        <PickupTime/>
         <Address />
         <Note />
       </Box>

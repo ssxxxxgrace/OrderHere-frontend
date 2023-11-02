@@ -1,10 +1,31 @@
 import React from 'react';
+import { Box, Typography, Divider, Button } from '@mui/material';
 
 const Option = () => {
   return (
-    <div>
-        <h1>Option</h1>
-    </div>
+    <Box sx={{ display: 'flex', justifyContent:'space-between' }}>
+      <Button
+        sx={{ backgroundColor: 'button.main', width: '120px', height: '48px', borderRadius: '50px', mb: 4 }}
+      >
+        <Typography sx={{ color: 'white', fontSize: '16px', fontWeight: '600' }}>
+          Check Out
+        </Typography>
+      </Button>
+      <Button
+        sx={{ backgroundColor: 'button.main', width: '120px', height: '48px', borderRadius: '50px' }}
+      >
+        <Typography sx={{ color: 'white', fontSize: '16px', fontWeight: '600' }}>
+          Pickup
+        </Typography>
+      </Button>
+      <Button
+        sx={{ backgroundColor: 'button.main', width: '120px', height: '48px', borderRadius: '50px' }}
+      >
+        <Typography sx={{ color: 'white', fontSize: '16px', fontWeight: '600' }}>
+          Dine in
+        </Typography>
+      </Button>
+    </Box>
   );
 };
 
