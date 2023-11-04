@@ -35,20 +35,23 @@ const CheckListItems = () => {
               <ListItemText
                 primary={item.title}
                 primaryTypographyProps={{
-                    sx: {
-                      fontSize: '14px', 
-                      color: '#353535', 
-                      fontWeight: '450'
-                    }
-                  }}
+                  sx: {
+                    fontSize: '14px',
+                    color: '#353535',
+                    fontWeight: '450',
+                  },
+                }}
               />
-              <ListItemText primary={`$${item.price}`}  primaryTypographyProps={{
-                    sx: {
-                      fontSize: '12px', 
-                      color: '#717171', 
-                      fontWeight: '450'
-                    }
-                  }}/>
+              <ListItemText
+                primary={`$${item.price}`}
+                primaryTypographyProps={{
+                  sx: {
+                    fontSize: '12px',
+                    color: '#717171',
+                    fontWeight: '450',
+                  },
+                }}
+              />
             </Box>
 
             <Box

@@ -4,10 +4,10 @@ import CartImage from './components/CartImage/CartImage';
 
 const Index = () => {
   return (
-      <>
-        <CartImage/>
-        <Content/>
-      </>
+    <>
+      <CartImage />
+      <Content />
+    </>
   );
 };
 
