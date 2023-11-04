@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import Image from 'next/legacy/image';
 import NextLink from 'next/link';

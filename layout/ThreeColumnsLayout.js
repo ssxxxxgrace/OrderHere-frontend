@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Grid, useTheme, useMediaQuery } from '@mui/material';
 import Footer from './Footer';
 

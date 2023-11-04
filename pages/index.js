@@ -1,4 +1,3 @@
-import React from 'react';
 import ThreeColumnsLayout from '../layout/ThreeColumnsLayout';
 
 const Index = () => {

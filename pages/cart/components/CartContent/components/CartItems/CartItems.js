@@ -1,4 +1,3 @@
-import React from 'react';
 import CartItem from './components/CartItem/CartItem';
 import { Box, Typography, Divider } from '@mui/material';
 
