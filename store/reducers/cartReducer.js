@@ -5,7 +5,7 @@ const initialState = {
   isLoading: false,
   totalItems: 0,
   totalPrice: 0,
-  orderType: "delivery",
+  orderType: 'delivery',
 };
 
 const cartReducer = (state = initialState, { type, payload }) => {

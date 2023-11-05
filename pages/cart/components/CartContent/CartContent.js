@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 import Address from './components/Address/Address';
 import CartItems from './components/CartItems/CartItems';
 import CheckList from './components/CheckList/CheckList';
@@ -7,6 +8,8 @@ import Option from './components/Option/Option';
 import PickupTime from './components/PickupTime/PickupTime';
 
 const Content = () => {
+  const orderType = useSelector((state) => state.cart.orderType);
+
   return (
     <Box sx={{ display: 'flex', marginTop: 3 }}>
       <Box
@@ -25,9 +28,13 @@ const Content = () => {
         {' '}
         <Option />
         <CartItems />
-        <PickupTime />
-        <Address />
-        <Note />
+        {orderType === 'delivery' && (
+          <>
+            <Address />
+            <Note />
+          </>
+        )}
+        {orderType === 'pickup' && <PickupTime />}
       </Box>
     </Box>
   );
