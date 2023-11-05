@@ -6,6 +6,7 @@ import CheckList from './components/CheckList/CheckList';
 import Note from './components/Note/Note';
 import Option from './components/Option/Option';
 import PickupTime from './components/PickupTime/PickupTime';
+import DineIn from './components/DineIn/DineIn';
 
 const Content = () => {
   const orderType = useSelector((state) => state.cart.orderType);
@@ -31,6 +32,12 @@ const Content = () => {
         {orderType === 'delivery' && (
           <>
             <Address />
+            <Note />
+          </>
+        )}
+        {orderType === 'dine in' && (
+          <>
+            <DineIn />
             <Note />
           </>
         )}
