@@ -13,6 +13,10 @@ import Navbar from '../components/Navbar';
 import Loading from '../components/Loading';
 import createTheme from '../theme';
 import '../styles/main.scss';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
   const [isLoading, setIsLoading] = useState(false);

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '@mui/material';
 import Address from './components/Address/Address';
 import CartItems from './components/CartItems/CartItems';

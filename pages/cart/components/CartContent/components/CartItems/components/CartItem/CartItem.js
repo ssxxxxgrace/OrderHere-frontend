@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography, Divider, ListItemText } from '@mui/material';
 
 const CartItem = ({ dishName, dishSize, extras, price }) => {

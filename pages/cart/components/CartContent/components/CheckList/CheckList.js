@@ -1,6 +1,5 @@
 import { Box, Typography, Divider, Button } from '@mui/material';
 import CheckListItems from './components/CheckListItems/ChecklistItems';
-import React from 'react';
 
 const CheckList = () => {
   return (

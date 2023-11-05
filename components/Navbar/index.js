@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from '@emotion/styled';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import NextLink from 'next/link';
 import { useSelector } from 'react-redux';
 import { AppBar, Box, Toolbar, useTheme, useMediaQuery } from '@mui/material';
