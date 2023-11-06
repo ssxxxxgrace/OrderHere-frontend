@@ -15,7 +15,7 @@ const RestaurantInfoHeader = () => {
                 alignItems: 'center',
             }}
         >
-            <Typography variant="h4" component="h1" sx={{ color: '#fff', fontSize: '45px' }}>
+            <Typography variant="h4" component="h1" sx={{ fontSize: '45px' }}>
                 RESTAURANT INFO
             </Typography>
         </Box>

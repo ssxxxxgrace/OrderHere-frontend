@@ -10,7 +10,7 @@ const RestaurantInfoPage = () => {
         <Box>
             <RestaurantInfoHeader />
             <RestaurantInfoContent />
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 4, pt:8, pb:8, backgroundColor:'#E9E9E9' }}>
                 <Contact />
                 <OpeningHours />
             </Box>
