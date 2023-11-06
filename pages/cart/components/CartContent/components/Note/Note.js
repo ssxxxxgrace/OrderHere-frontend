@@ -1,11 +1,8 @@
-import React from 'react';
 import { TextField, Box } from '@mui/material';
 
 const Note = () => {
   return (
-    <Box
-      sx={{ maxWidth:'100%', margin: 'auto', mt: 4}}
-    >
+    <Box sx={{ maxWidth: '100%', margin: 'auto', mt: 4 }}>
       <TextField
         fullWidth
         multiline
@@ -15,15 +12,15 @@ const Note = () => {
         rows={4}
         sx={{
           '& .MuiOutlinedInput-root': {
-            borderRadius: '30px', 
+            borderRadius: '30px',
             '& fieldset': {
-              borderColor: 'border.main', 
+              borderColor: 'border.main',
             },
           },
           '& .MuiInputBase-input': {
-            height: 'auto', 
-            padding: '10px' 
-          }
+            height: 'auto',
+            padding: '10px',
+          },
         }}
       />
     </Box>

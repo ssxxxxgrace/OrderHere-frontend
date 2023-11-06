@@ -1,13 +1,16 @@
-import React from 'react';
 import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 import Address from './components/Address/Address';
 import CartItems from './components/CartItems/CartItems';
 import CheckList from './components/CheckList/CheckList';
 import Note from './components/Note/Note';
 import Option from './components/Option/Option';
 import PickupTime from './components/PickupTime/PickupTime';
+import DineIn from './components/DineIn/DineIn';
 
 const Content = () => {
+  const orderType = useSelector((state) => state.cart.orderType);
+
   return (
     <Box sx={{ display: 'flex', marginTop: 3 }}>
       <Box
@@ -26,9 +29,19 @@ const Content = () => {
         {' '}
         <Option />
         <CartItems />
-        <PickupTime />
-        <Address />
-        <Note />
+        {orderType === 'delivery' && (
+          <>
+            <Address />
+            <Note />
+          </>
+        )}
+        {orderType === 'dine in' && (
+          <>
+            <DineIn />
+            <Note />
+          </>
+        )}
+        {orderType === 'pickup' && <PickupTime />}
       </Box>
     </Box>
   );

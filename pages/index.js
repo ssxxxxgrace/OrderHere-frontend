@@ -1,8 +1,8 @@
-import React from 'react';
 import ThreeColumnsLayout from '../layout/ThreeColumnsLayout';
 import FoodItemsList from '../components/DishList/FoodItemsList';
 
 const Index = () => {
+<<<<<<< HEAD
   return (
     <ThreeColumnsLayout>
       Hello World
@@ -11,6 +11,9 @@ const Index = () => {
     </ThreeColumnsLayout>
     
   );
+=======
+  return <ThreeColumnsLayout>Hello World</ThreeColumnsLayout>;
+>>>>>>> main
 };
 
 export default Index;

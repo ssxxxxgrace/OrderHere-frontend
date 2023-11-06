@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Container, Divider } from '@mui/material';
 import NextClientOnly from '../components/NextClientOnly';
 
