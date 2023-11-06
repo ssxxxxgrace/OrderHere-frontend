@@ -98,7 +98,7 @@ const FoodItem = ({ dishName, extras, description, price, imageSrc, onAddToCart 
               opacity: 1.5,
             },
           }}
-          src="/image/dish3.png"
+          src="/image/Dish3.png"
           alt="delete"
         />
       </Box>
