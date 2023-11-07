@@ -14,10 +14,10 @@ import {
 import LoadingButton from '@mui/lab/LoadingButton';
 import Yup from '../../utils/yupValidation';
 import hotToast from '../../utils/hotToast';
-import { register, uniqueUsername, uniqueEmail } from '../../services/Public';
+import { signup, uniqueUsername, uniqueEmail } from '../../services/Public';
 import loginAction from '../../store/actions/httpAction';
 
-const Register = ({ login }) => {
+const Signup = ({ login }) => {
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -49,9 +49,9 @@ const Register = ({ login }) => {
       // preview mode
       const { email, username, password } = values;
       setLoading(true);
-      register({ email, username, password })
+      signup({ email, username, password })
         .then(() => {
-          hotToast('success', 'Register Success');
+          hotToast('success', 'Signup Success');
           dispatch(
             loginAction(
               email,
@@ -92,7 +92,7 @@ const Register = ({ login }) => {
             <Image src="/logo.png" height="55" width="55" alt="logo" />
           </Typography>
           <Typography color="textPrimary" variant="h4" align="center">
-            Register
+            Signup
           </Typography>
           <Typography
             color="textSecondary"
@@ -186,7 +186,7 @@ const Register = ({ login }) => {
                   }
                 }}
               >
-                Register
+                Signup
               </LoadingButton>
             </Grid>
             <Divider />
@@ -202,4 +202,4 @@ const Register = ({ login }) => {
   );
 };
 
-export default Register;
+export default Signup;

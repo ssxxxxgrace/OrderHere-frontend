@@ -3,7 +3,17 @@ import Image from 'next/legacy/image';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { AppBar, Box, Toolbar, useTheme, useMediaQuery, Button, TextField, InputAdornment, ButtonBase } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  useTheme,
+  useMediaQuery,
+  Button,
+  TextField,
+  InputAdornment,
+  ButtonBase,
+} from '@mui/material';
 import AccountButton from './AccountButton';
 import Sign from '../Sign';
 import SearchIcon from '@mui/icons-material/Search';
@@ -25,15 +35,15 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   ...(theme.palette.mode === 'light'
     ? {
-      boxShadow: theme.shadows[3],
-    }
+        boxShadow: theme.shadows[3],
+      }
     : {
-      backgroundColor: theme.palette.background.paper,
-      borderBottomColor: theme.palette.divider,
-      borderBottomStyle: 'solid',
-      borderBottomWidth: 1,
-      boxShadow: 'none',
-    }),
+        backgroundColor: theme.palette.background.paper,
+        borderBottomColor: theme.palette.divider,
+        borderBottomStyle: 'solid',
+        borderBottomWidth: 1,
+        boxShadow: 'none',
+      }),
 }));
 
 const Navbar = () => {
@@ -55,7 +65,15 @@ const Navbar = () => {
       >
         <>
           <NextLink href="/" passHref>
-            <Box sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', marginRight: '20px', marginBottom: '20px' }}>
+            <Box
+              sx={{
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                marginRight: '20px',
+                marginBottom: '20px',
+              }}
+            >
               <Image
                 src="/image/Logo-Nav.png"
                 width="348px"
@@ -68,29 +86,37 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button sx={{
-              display: 'inline-flex',
-              padding: '4px 16px',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginRight: '10px',
-              color: 'black',
-              borderRadius: 10,
-              backgroundColor: isHomeActive ? '#DBDFD0' : 'transparent',
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.08)',
-              }
-            }}> Home</Button>
-            <Button sx={{
-              display: 'inline-flex',
-              padding: '4px 16px',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: 'black',
-              borderRadius: 10,
-            }}>Store Info</Button>
+            <Button
+              sx={{
+                display: 'inline-flex',
+                padding: '4px 16px',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginRight: '10px',
+                color: 'black',
+                borderRadius: 10,
+                backgroundColor: isHomeActive ? '#DBDFD0' : 'transparent',
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                },
+              }}
+            >
+              {' '}
+              Home
+            </Button>
+            <Button
+              sx={{
+                display: 'inline-flex',
+                padding: '4px 16px',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: 'black',
+                borderRadius: 10,
+              }}
+            >
+              Store Info
+            </Button>
           </Box>
-
 
           <Box sx={{ flexGrow: 1 }} />
 

@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { Box, Typography, Divider, ListItemText, Button } from '@mui/material';
 
-const FoodItem = ({ dishName, extras, description, price, imageSrc, onAddToCart }) => {
-  const [quantity, setQuantity] = useState(1); 
+const FoodItem = ({
+  dishName,
+  extras,
+  description,
+  price,
+  imageSrc,
+  onAddToCart,
+}) => {
+  const [quantity, setQuantity] = useState(1);
 
   const incrementQuantity = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -11,7 +18,6 @@ const FoodItem = ({ dishName, extras, description, price, imageSrc, onAddToCart 
   const decrementQuantity = () => {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
-
 
   return (
     <>
@@ -34,7 +40,7 @@ const FoodItem = ({ dishName, extras, description, price, imageSrc, onAddToCart 
           <Typography sx={{ fontSize: '20px', fontWeight: '600', width: 250 }}>
             {dishName}
           </Typography>
-          
+
           <Typography sx={{ fontSize: '12px', fontWeight: '600', width: 250 }}>
             {extras}
           </Typography>
