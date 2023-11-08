@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint && npm run lint:all",
+    "lint": "next lint --no-cache && npm run lint:all",
     "export": "next build && next export",
     "test": "jest -c jest.config.js --colors --coverage --passWithNoTests",
     "test:watch": "jest -c jest.config.js --colors --coverage --passWithNoTests --watch",
