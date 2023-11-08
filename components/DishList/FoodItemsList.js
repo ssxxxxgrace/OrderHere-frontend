@@ -13,14 +13,14 @@ const FoodItemsList = () => {
           alignItems: 'center',
           marginY: 1.5,
         }}
-        ></Box>
+      ></Box>
       <FoodItem
-        dishName="Pepperoni"     
+        dishName="Pepperoni"
         extras="Pepperoni, basil, oregano, chili, mozzarella cheese"
         price="20.00"
       />
       <FoodItem
-        dishName="Penne Bolognese"     
+        dishName="Penne Bolognese"
         extras="Pork and veeal mince slow cooked in a rich Italian red sauce"
         price="15.00"
       />

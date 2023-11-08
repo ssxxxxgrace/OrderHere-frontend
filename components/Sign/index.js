@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
 import SignDialog from './SignDialog';
 import Login from './Login';
-import Register from './Register';
+import Signup from './Signup';
 import {
   openSignDialog,
   closeSignDialog,
@@ -22,7 +22,7 @@ const Sign = () => {
         {content === 'login' ? (
           <Login register={() => dispatch(registerSignDialog())} />
         ) : (
-          <Register login={() => dispatch(loginSignDialog())} />
+          <Signup login={() => dispatch(loginSignDialog())} />
         )}
       </SignDialog>
     </>
