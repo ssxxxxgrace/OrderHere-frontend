@@ -27,7 +27,6 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'jest'],
   rules: {
-    // '@next/next/no-document-import-in-page': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
