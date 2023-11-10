@@ -25,6 +25,8 @@
     "@mui/lab": "^5.0.0-alpha.151",
     "@mui/material": "^5.14.16",
     "@mui/system": "^5.14.16",
+    "@stripe/react-stripe-js": "^2.3.1",
+    "@stripe/stripe-js": "^2.1.11",
     "axios": "^0.25.0",
     "cropperjs": "^1.5.12",
     "formik": "^2.2.9",
