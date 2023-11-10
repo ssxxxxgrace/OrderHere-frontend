@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
-import {
-  TextField,
-  Box,
-  Typography,
-  DatePicker,
-  TimePicker,
-  Select,
-  MenuItem,
-} from '@mui/material';
+import { TextField, Box, Typography, Select, MenuItem } from '@mui/material';
+import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 
 const DineIn = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -42,9 +35,7 @@ const DineIn = () => {
         Dine In:
       </Typography>
 
-      {/* Bug and styles should be fixed on Date Picker and Time picker */}
-
-      {/* <DatePicker
+      <DatePicker
         label="Pick a Date"
         value={selectedDate}
         onChange={handleDateChange}
@@ -59,55 +50,78 @@ const DineIn = () => {
         onChange={handleTimeChange}
         fullWidth
         margin="normal"
-      /> */}
-
-      <TextField
-        fullWidth
-        margin="normal"
-        name="name"
-        label="Name"
-        rows={1}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            borderRadius: '10px',
-            '& fieldset': {
-              borderColor: 'border.main',
-            },
-          },
-          '& .MuiInputBase-input': {
-            height: 'auto',
-          },
-        }}
       />
 
-      <TextField
-        fullWidth
-        margin="normal"
-        name="phone"
-        label="Phone number"
-        rows={1}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            borderRadius: '10px',
-            '& fieldset': {
-              borderColor: 'border.main',
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 3, marginTop: '20px', }}>
+        <TextField
+          margin="normal"
+          name="name"
+          label="Name"
+          rows={1}
+          fullWidth
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '40px',
+              '& fieldset': {
+                borderColor: 'border.main',
+              },
             },
-          },
-          '& .MuiInputBase-input': {
-            height: 'auto',
-          },
-        }}
-      />
+            '& .MuiInputBase-input': {
+              height: 'auto',
+            },
+          }}
+        />
 
-      {/* Reactify the styles for people selector */}
+        <TextField
+          margin="normal"
+          name="person"
+          label="Phone number"
+          rows={1}
+          fullWidth
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '40px',
+              '& fieldset': {
+                borderColor: 'border.main',
+              },
+            },
+            '& .MuiInputBase-input': {
+              height: 'auto',
+            },
+          }}
+        />
+      </Box>
 
       <Select
         value={personCount}
         onChange={handlePersonCountChange}
+        displayEmpty
         fullWidth
         margin="normal"
-        label="Number of People"
+        sx={{
+          marginTop: '20px',
+          borderRadius: '40px',
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'border.main',
+          },
+        }}
+        renderValue={selected => {
+          // Check if the value is the placeholder
+          if (selected === "") {
+            return (
+              <Typography sx={{ color: 'gray' }}>Please select Number of People</Typography> // Replace 'gray' with your desired color
+            );
+          }
+          // For other valid selections, return the selection as is
+          return `${selected} Person`;
+        }}
       >
+  <MenuItem 
+    value="" 
+    disabled
+  >
+    Please select Number of People
+  </MenuItem>
         <MenuItem value={1}>1</MenuItem>
         <MenuItem value={2}>2</MenuItem>
         <MenuItem value={3}>3</MenuItem>
