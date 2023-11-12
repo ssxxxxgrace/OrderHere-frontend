@@ -34,12 +34,13 @@ const ThreeColumnsLayout = ({ children, noFooter = false }) => {
       container
       direction="row"
       spacing={4}
-      style={{ position: 'relative', justifyContent: 'center' }}
+      style={{ position: 'relative' }}
     >
       <Grid
         item
         xs={2.75}
-        style={{ position: 'fixed', left: '-30px', top: '64px', width: '23%' }}
+        // style={{ position: 'fixed', left: '-30px', top: '64px', width: '23%' }}
+        style={{ position: 'relative' }}
       >
         <Filter />
       </Grid>
