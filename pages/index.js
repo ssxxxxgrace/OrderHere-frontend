@@ -4,7 +4,7 @@ import FoodItemsList from '../components/DishList/FoodItemsList';
 const Index = () => {
   return (
     <ThreeColumnsLayout>
-      Hello World
+      {/* Hello World */}
       <FoodItemsList></FoodItemsList>
     </ThreeColumnsLayout>
   );

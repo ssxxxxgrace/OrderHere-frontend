@@ -1,5 +1,6 @@
 import { Container, Grid, useTheme, useMediaQuery } from '@mui/material';
 import Footer from './Footer';
+import Filter from '../components/Filter';
 
 const ThreeColumnsLayout = ({ children, noFooter = false }) => {
   const theme = useTheme();
@@ -15,7 +16,7 @@ const ThreeColumnsLayout = ({ children, noFooter = false }) => {
           alignItems="center"
         >
           <Grid item width="95vw">
-            Left
+            <Filter />
           </Grid>
           <Grid item>
             <Container maxWidth={false}>{children}</Container>
@@ -40,7 +41,7 @@ const ThreeColumnsLayout = ({ children, noFooter = false }) => {
         xs={2.75}
         style={{ position: 'fixed', left: '-30px', top: '64px', width: '23%' }}
       >
-        Left
+        <Filter />
       </Grid>
       <Grid item xs={6.5} style={{ position: 'relative' }}>
         {children}
