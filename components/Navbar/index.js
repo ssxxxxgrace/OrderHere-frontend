@@ -13,11 +13,13 @@ import {
   TextField,
   InputAdornment,
   ButtonBase,
+  Badge,
 } from '@mui/material';
 import AccountButton from './AccountButton';
 import Sign from '../Sign';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Link from 'next/link';
 
 export const styleNew = {
   title: {
@@ -52,6 +54,8 @@ const Navbar = () => {
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);
+  const { totalItems } = useSelector((state) => state.cart);
+
   return (
     <NavbarRoot>
       <Toolbar
@@ -86,24 +90,27 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button
-              sx={{
-                display: 'inline-flex',
-                padding: '4px 16px',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginRight: '10px',
-                color: 'black',
-                borderRadius: 10,
-                backgroundColor: isHomeActive ? '#DBDFD0' : 'transparent',
-                '&:hover': {
-                  backgroundColor: 'rgba(0, 0, 0, 0.08)',
-                },
-              }}
-            >
-              {' '}
-              Home
-            </Button>
+            <Link href="/" passHref>
+              <Button
+                sx={{
+                  display: 'inline-flex',
+                  padding: '4px 16px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginRight: '10px',
+                  color: 'black',
+                  borderRadius: 10,
+                  backgroundColor: isHomeActive ? '#DBDFD0' : 'transparent',
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                  },
+                }}
+              >
+                {' '}
+                Home
+              </Button>
+            </Link>
+
             <Button
               sx={{
                 display: 'inline-flex',
@@ -140,9 +147,17 @@ const Navbar = () => {
           </> */}
           <AccountButton isLogin={isLogin} />
         </>
-        <ButtonBase sx={{ padding: '10px', color: 'black' }}>
-          <ShoppingCartIcon fontSize="large" />
-        </ButtonBase>
+        <Link href="/cart" passHref>
+          <ButtonBase sx={{ padding: '10px', color: 'black' }}>
+            {totalItems > 0 ? (
+              <Badge badgeContent={totalItems} color="error">
+                <ShoppingCartIcon fontSize="large" />
+              </Badge>
+            ) : (
+              <ShoppingCartIcon fontSize="large" />
+            )}
+          </ButtonBase>
+        </Link>
       </Toolbar>
     </NavbarRoot>
   );

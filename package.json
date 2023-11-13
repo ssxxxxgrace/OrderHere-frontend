@@ -18,6 +18,7 @@
     "prettier": "prettier -c .prettierrc \"{pages,components,utils,store}/**/*.{js,jsx}\" --write"
   },
   "dependencies": {
+    "@date-io/dayjs": "^2.17.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
@@ -27,8 +28,10 @@
     "@mui/system": "^5.14.16",
     "@stripe/react-stripe-js": "^2.3.1",
     "@stripe/stripe-js": "^2.1.11",
+    "@mui/x-date-pickers": "^6.18.1",
     "axios": "^0.25.0",
     "cropperjs": "^1.5.12",
+    "dayjs": "^1.11.10",
     "formik": "^2.2.9",
     "html-react-parser": "^1.4.8",
     "isomorphic-dompurify": "^0.18.0",
