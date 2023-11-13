@@ -9,6 +9,7 @@ export default function PayPage() {
     const [clientSecret, setClientSecret] = useState("");
 
     useEffect(() => {
+        // Need to adjust for the real backend
         fetch("http://localhost:4242/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import {Button, Box, Typography, Paper} from '@mui/material';
+import {Button, Box, Typography} from '@mui/material';
 import styles from './PaymentForm.module.css';
 import { useRouter } from 'next/router';
 
 export default function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
-    const router = useRouter(); // Create a router instance
+    const router = useRouter();
 
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -25,12 +25,11 @@ export default function PaymentForm() {
             return;
         }
 
-        // Retrieve the payment intent and check its status
         stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
             switch (paymentIntent.status) {
                 case "succeeded":
                     setMessage("Payment succeeded!");
-                    router.push('/pay/success'); // Redirect to the success page
+                    router.push('/pay/success');
                     break;
                 case "processing":
                     setMessage("Your payment is processing.");
@@ -39,11 +38,11 @@ export default function PaymentForm() {
                 case "requires_confirmation":
                 case "requires_action":
                     setMessage("Your payment was not successful, please try again.");
-                    router.push('/pay/failure'); // Redirect to the failure page
+                    router.push('/pay/failure');
                     break;
                 default:
                     setMessage("Something went wrong.");
-                    router.push('/pay/failure'); // Redirect to the failure page
+                    router.push('/pay/failure');
                     break;
             }
         });
@@ -67,9 +66,9 @@ export default function PaymentForm() {
 
         if (error) {
             setMessage(error.message);
-            router.push('/pay/failure'); // Redirect to the failure page
+            router.push('/pay/failure');
         } else {
-            router.push('/pay/success'); // Redirect to the success page
+            router.push('/pay/success');
         }
     };
 
@@ -79,7 +78,7 @@ export default function PaymentForm() {
 
     return (
         <>
-            <box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10, height: 'auto'}}>
+            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10, height: 'auto'}}>
                 <Typography variant="h4" gutterBottom component="div"
                             sx={{
                                 color: '#474747',
@@ -93,17 +92,17 @@ export default function PaymentForm() {
                             }}>
                     Please select your payment options
                 </Typography>
-            </box>
+            </Box>
             <form className={styles.form} id="payment-form" onSubmit={handleSubmit}>
                 <PaymentElement id="payment-element" options={paymentElementOptions} />
                 <Button
+                    type={"submit"}
                     disabled={isLoading || !stripe || !elements}
                     className={styles.submitButton}
                     id="submit"
                 >
                     {isLoading ? <div className={styles.spinner}></div> : "Pay now"}
                 </Button>
-                {/* Show any error or success messages */}
                 {message && <Typography className={styles.paymentMessage}>{message}</Typography>}
             </form>
         </>

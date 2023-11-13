@@ -3,7 +3,18 @@ import { Box, Typography} from '@mui/material';
 
 const FailurePage = () => {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' , backgroundColor: '#FEF6E9', padding: '20px'}}>
+        <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh' ,
+                backgroundColor: '#FEF6E9',
+                minHeight: '100vh',
+                minWidth: '100vw',
+                padding: '20px',
+                margin: 0,
+            }}>
             <Box sx={{
                 display: 'flex',
                 width: '160px',
