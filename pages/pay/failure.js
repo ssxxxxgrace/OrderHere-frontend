@@ -17,7 +17,7 @@ const FailurePage = () => {
                     objectFit: 'contain',
                 }
             }}>
-                <img src="/icons/payment/successImg.svg" alt="Success"/>
+                <img src="/icons/payment/failedImg.png" alt="Success"/>
             </Box>
             <Typography gutterBottom sx={{
                 color: '#474747',

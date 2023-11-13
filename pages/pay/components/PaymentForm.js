@@ -1,30 +1,80 @@
-import React from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import React, {useEffect, useState} from 'react';
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import {Button, Box, Typography, Paper} from '@mui/material';
+import styles from './PaymentForm.module.css';
 import { useRouter } from 'next/router';
 
-const PaymentForm = async () => {
+export default function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
-    const router = useRouter();
+    const router = useRouter(); // Create a router instance
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const [message, setMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (!stripe) {
+            return;
+        }
+
+        // Extract the client secret from the query parameters
+        const query = new URLSearchParams(window.location.search);
+        const clientSecret = query.get("payment_intent_client_secret");
+
+        if (!clientSecret) {
+            return;
+        }
+
+        // Retrieve the payment intent and check its status
+        stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+            switch (paymentIntent.status) {
+                case "succeeded":
+                    setMessage("Payment succeeded!");
+                    router.push('/pay/success'); // Redirect to the success page
+                    break;
+                case "processing":
+                    setMessage("Your payment is processing.");
+                    break;
+                case "requires_payment_method":
+                case "requires_confirmation":
+                case "requires_action":
+                    setMessage("Your payment was not successful, please try again.");
+                    router.push('/pay/failure'); // Redirect to the failure page
+                    break;
+                default:
+                    setMessage("Something went wrong.");
+                    router.push('/pay/failure'); // Redirect to the failure page
+                    break;
+            }
+        });
+    }, [stripe, router]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
         if (!stripe || !elements) {
             return;
         }
 
-        // Handle the payment submission
+        setIsLoading(true);
+
+        const { error } = await stripe.confirmPayment({
+            elements,
+            redirect: 'if_required',
+        });
+
+        setIsLoading(false);
+
+        if (error) {
+            setMessage(error.message);
+            router.push('/pay/failure'); // Redirect to the failure page
+        } else {
+            router.push('/pay/success'); // Redirect to the success page
+        }
     };
 
-    const result = await stripe.confirmCardPayment("");
-
-    if (result.error) {
-        console.error(result.error.message);
-        await router.push('/pay/failure');
-    } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
-        await router.push('/pay/success');
+    const paymentElementOptions = {
+        layout: "tabs"
     }
 
     return (
@@ -44,50 +94,19 @@ const PaymentForm = async () => {
                     Please select your payment options
                 </Typography>
             </box>
-            <Box sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'flex-start',
-                minHeight: '100vh',
-                width: '400px',
-                mt: 4
-            }}>
-                <Paper elevation={3} sx={{
-                    padding: 4,
-                    width: '100%',
-                    maxWidth: 400,
-                    margin: '0 auto',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center'
-                }}>
-                    <form onSubmit={handleSubmit} style={{width: '100%'}}>
-                        <Box sx={{mb: 2, width: '100%'}}>
-                            <CardElement options={{
-                                style: {
-                                    base: {
-                                        fontSize: '16px',
-                                        color: '#424770',
-                                        '::placeholder': {
-                                            color: '#aab7c4',
-                                        },
-                                    },
-                                    invalid: {
-                                        color: '#9e2146',
-                                    },
-                                },
-                            }}/>
-                        </Box>
-                        <Button type="submit" variant="contained" color="primary" disabled={!stripe} fullWidth>
-                            Pay
-                        </Button>
-                    </form>
-                </Paper>
-            </Box>
+            <form className={styles.form} id="payment-form" onSubmit={handleSubmit}>
+                <PaymentElement id="payment-element" options={paymentElementOptions} />
+                <Button
+                    disabled={isLoading || !stripe || !elements}
+                    className={styles.submitButton}
+                    id="submit"
+                >
+                    {isLoading ? <div className={styles.spinner}></div> : "Pay now"}
+                </Button>
+                {/* Show any error or success messages */}
+                {message && <Typography className={styles.paymentMessage}>{message}</Typography>}
+            </form>
         </>
     );
-};
-
-
-export default PaymentForm;
+}
 
