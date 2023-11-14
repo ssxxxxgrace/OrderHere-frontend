@@ -16,6 +16,7 @@ import Yup from '../../utils/yupValidation';
 import hotToast from '../../utils/hotToast';
 import { register, uniqueUsername, uniqueEmail } from '../../services/Public';
 import loginAction from '../../store/actions/httpAction';
+import GoogleSignInBtn from './ui/googleSignInBtn';
 
 const Register = ({ login }) => {
   const [isLoading, setLoading] = useState(false);
