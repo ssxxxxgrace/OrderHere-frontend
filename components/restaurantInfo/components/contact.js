@@ -6,15 +6,15 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import IconButton from "@mui/material/IconButton";
 
 
-const Contact = () => {
+const Contact = ({data}) => {
     return (
         <Box sx={{ mt: 4 }}>
             <Typography variant="h5" component="h3" sx={{ fontSize: '36px', textDecoration: 'underline' }}>
                 Contact
             </Typography>
-            <Typography sx={{ fontSize: '28px' }}>02 9876 5432</Typography>
-            <Typography sx={{ fontSize: '28px' }}>email@email.com</Typography>
-            <Typography sx={{ fontSize: '28px' }}>123 abc Street, NSW, 2666</Typography>
+            <Typography sx={{ fontSize: '28px' }}>{data.contactNumber}</Typography>
+            <Typography sx={{ fontSize: '28px' }}>{data.email}</Typography>
+            <Typography sx={{ fontSize: '28px' }}>{data.address}</Typography>
             <Box>
                 <IconButton href="https://facebook.com" target="_blank" sx={{paddingLeft:0}}>
                     <FacebookIcon sx={{ fontSize: '2rem' }}/>

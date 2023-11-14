@@ -6,33 +6,32 @@ import Contact from "../../components/restaurantInfo/components/contact";
 import OpeningHours from "../../components/restaurantInfo/components/openingHours";
 import {useEffect, useState} from "react";
 import getRestaurantById from "../api/restaurantService";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchRestaurant} from "../../store/actions/httpAction";
 
 const RestaurantInfoPage = () => {
-    const [restaurantData, setRestaurantData] = useState(null);
     const router = useRouter();
     const { restaurantId } = router.query;
+    const dispatch = useDispatch();
+    const restaurantData = useSelector(state => state.restaurant.data);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                console.log("Restaurant ID:", restaurantId);
-                const data = await getRestaurantById(restaurantId);
-                setRestaurantData(data);
-                console.log("Restaurant Data:", data);
-            } catch (error) {
-                console.error("Error fetching data: ", error);
-            }
-        };
+        if (restaurantId) {
+            dispatch(fetchRestaurant(restaurantId));
+        }
+    }, [dispatch, restaurantId]);
 
-        fetchData();
-    }, [restaurantId]);
+    if (!restaurantData || !restaurantData.openingHours) {
+        return <div>Restaurant not found</div>;
+    }
+
     return (
         <Box>
             <RestaurantInfoHeader />
-            <RestaurantInfoContent />
+            <RestaurantInfoContent data={restaurantData}/>
             <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 4, pt:8, pb:8, backgroundColor:'#E9E9E9' }}>
-                <Contact />
-                <OpeningHours />
+                <Contact data={restaurantData}/>
+                <OpeningHours data={restaurantData.openingHours}/>
             </Box>
         </Box>
     );
