@@ -92,7 +92,7 @@ const Register = ({ login }) => {
             <Image src="/logo.png" height="55" width="55" alt="logo" />
           </Typography>
           <Typography color="textPrimary" variant="h4" align="center">
-            Register
+            CREATE ACCOUNT
           </Typography>
           <Typography
             color="textSecondary"
@@ -100,14 +100,52 @@ const Register = ({ login }) => {
             variant="body2"
             align="center"
           >
-            Where the Discovering Starts
+            Please Enter your Email Address to Start your Online Application
           </Typography>
           <Box sx={{ my: 3 }}>
+            <Grid container spacing={3}>
+              <Grid item>
+                <TextField
+                  error={Boolean(
+                    formik.touched.firstname && formik.errors.firstname,
+                  )}
+                  fullWidth
+                  helperText={formik.touched.username && formik.errors.username}
+                  label="firstname"
+                  margin="normal"
+                  name="firstname"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="firstname"
+                  value={formik.values.lastname}
+                  variant="outlined"
+                />
+              </Grid>
+
+              <Grid item>
+                <TextField
+                  error={Boolean(
+                    formik.touched.lastname && formik.errors.lastname,
+                  )}
+                  fullWidth
+                  helperText={formik.touched.username && formik.errors.username}
+                  label="lastname"
+                  margin="normal"
+                  name="lastname"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="firstname"
+                  value={formik.values.lastname}
+                  variant="outlined"
+                />
+              </Grid>
+            </Grid>
+
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
               helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
+              label="Enter your email..."
               margin="normal"
               name="email"
               onBlur={formik.handleBlur}
@@ -116,24 +154,12 @@ const Register = ({ login }) => {
               value={formik.values.email}
               variant="outlined"
             />
-            <TextField
-              error={Boolean(formik.touched.username && formik.errors.username)}
-              fullWidth
-              helperText={formik.touched.username && formik.errors.username}
-              label="Username"
-              margin="normal"
-              name="username"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="username"
-              value={formik.values.username}
-              variant="outlined"
-            />
+
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
               helperText={formik.touched.password && formik.errors.password}
-              label="Password"
+              label="Enter your password..."
               margin="normal"
               name="password"
               onBlur={formik.handleBlur}
@@ -186,14 +212,41 @@ const Register = ({ login }) => {
                   }
                 }}
               >
-                Register
+                SIGN UP
               </LoadingButton>
             </Grid>
-            <Divider />
-            <Box sx={{ pt: 1 }}>
-              <Typography color="textSecondary" variant="body2">
-                <Button onClick={() => login()}>Having an account</Button>
-              </Typography>
+            <Box sx={{ mt: 2, mb: 1 }}>
+              <Divider> OR </Divider>
+            </Box>
+
+            {/* place to contain Google Login and Facebook Login  */}
+            <Grid container>
+              <Grid item>
+                <GoogleSignInBtn>Sign in With Google</GoogleSignInBtn>
+              </Grid>
+
+
+              <Grid item>
+                
+              </Grid>
+            </Grid>
+
+            <Box>
+              <Grid
+                container
+                spacing={0}
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Grid item>
+                  <Typography>Already have an account?</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography color="textSecondary" variant="body2">
+                    <Button onClick={() => login()}>Log in</Button>
+                  </Typography>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </form>
