@@ -5,7 +5,7 @@ const Index = () => {
   return (
     <ThreeColumnsLayout>
       {/* Hello World */}
-      <FoodItemsList></FoodItemsList>
+      <FoodItemsList />
     </ThreeColumnsLayout>
   );
 };

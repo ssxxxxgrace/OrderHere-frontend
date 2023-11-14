@@ -6,7 +6,7 @@ const FoodItem = ({
   extras,
   description,
   price,
-  imageSrc,
+  imageUrl,
   onAddToCart,
 }) => {
   const [quantity, setQuantity] = useState(1);
@@ -33,7 +33,7 @@ const FoodItem = ({
           component="img"
           width="180px"
           height="180px"
-          src="/image/Dish1.png"
+          src={imageUrl}
           alt="food"
         />
         <Box sx={{ ml: 1 }}>
@@ -42,7 +42,7 @@ const FoodItem = ({
           </Typography>
 
           <Typography sx={{ fontSize: '12px', fontWeight: '600', width: 250 }}>
-            {extras}
+            {description}
           </Typography>
         </Box>
         <Box>
