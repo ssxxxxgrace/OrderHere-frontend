@@ -109,3 +109,10 @@ export default function PaymentForm() {
     );
 }
 
+export async function getServerSideProps(context) {
+
+    return {
+        props: {},
+    };
+}
+
