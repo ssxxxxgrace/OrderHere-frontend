@@ -1,7 +1,7 @@
 import * as Action from '../actionTypes';
 import store, { saveState } from '../store';
 import { login } from '../../services/Public';
-import getRestaurantById from "../../pages/api/restaurantService";
+import getRestaurantById from '../../pages/api/restaurantService';
 
 const loginSuccess = (response) => ({
   type: Action.LOGIN_SUCCESS,
@@ -25,21 +25,21 @@ const loginAction = (email, password, success, fail) => (dispatch) => {
     .then(() => saveState(store.getState()));
 };
 
-export const fetchRestaurant = restaurantId => async dispatch => {
-    dispatch({ type: Action.FETCH_RESTAURANT_START });
+export const fetchRestaurant = (restaurantId) => async (dispatch) => {
+  dispatch({ type: Action.FETCH_RESTAURANT_START });
 
-    try {
-        const response = await getRestaurantById(restaurantId);
-        dispatch({
-            type: Action.FETCH_RESTAURANT_SUCCESS,
-            payload: response
-        });
-    } catch (error) {
-        dispatch({
-            type: Action.FETCH_RESTAURANT_ERROR,
-            payload: error
-        });
-    }
+  try {
+    const response = await getRestaurantById(restaurantId);
+    dispatch({
+      type: Action.FETCH_RESTAURANT_SUCCESS,
+      payload: response,
+    });
+  } catch (error) {
+    dispatch({
+      type: Action.FETCH_RESTAURANT_ERROR,
+      payload: error,
+    });
+  }
 };
 
 export default loginAction;

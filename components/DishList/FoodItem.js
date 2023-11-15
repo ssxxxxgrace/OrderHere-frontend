@@ -1,112 +1,113 @@
-import React, { useState } from 'react';
-import { Box, Typography, Divider, ListItemText, Button } from '@mui/material';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Box,
+  Typography,
+  Divider,
+  ListItemText,
+  IconButton,
+  Button,
+} from '@mui/material';
+import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
+import * as Action from '../../store/actionTypes';
 
-const FoodItem = ({
-  dishName,
-  extras,
-  description,
-  price,
-  imageUrl,
-  onAddToCart,
-}) => {
-  const [quantity, setQuantity] = useState(1);
+const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const item = cartItems.find((item) => item.dishId === dishId);
+  const quantity = item ? item.quantity : 0;
 
-  const incrementQuantity = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
+  const handleAddToCart = () => {
+    if (quantity === 0) {
+      const itemPayload = {
+        dishId,
+        dishName,
+        description,
+        price,
+        imageUrl,
+        quantity: 1,
+      };
+      dispatch({ type: Action.ADD_TO_CART, payload: itemPayload });
+    } else {
+      dispatch({ type: Action.INCREASE_ITEM, payload: { dishId } });
+    }
+    dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
 
   const decrementQuantity = () => {
-    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+    if (quantity > 1) {
+      dispatch({ type: Action.DECREASE_ITEM, payload: { dishId } });
+    } else if (quantity === 1) {
+      dispatch({ type: Action.REMOVE_FROM_CART, payload: { dishId } });
+    }
+    dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
 
   return (
     <>
       <Divider sx={{ border: 0, borderColor: 'border.main' }} />
-      <Box
-        sx={{
-          display: 'center',
-          alignItems: 'center',
-          marginY: 1.5,
-        }}
-      >
+      <Box sx={{ display: 'flex', alignItems: 'center', marginY: 1.5 }}>
         <Box
           component="img"
-          width="180px"
-          height="180px"
+          sx={{ width: '180px', height: '180px', flexShrink: 0 }}
           src={imageUrl}
-          alt="food"
+          alt={dishName}
         />
-        <Box sx={{ ml: 1 }}>
-          <Typography sx={{ fontSize: '20px', fontWeight: '600', width: 250 }}>
+        <Box sx={{ ml: 1, flexShrink: 0, width: '250px' }}>
+          <Typography sx={{ fontSize: '20px', fontWeight: '600' }}>
             {dishName}
           </Typography>
-
-          <Typography sx={{ fontSize: '12px', fontWeight: '600', width: 250 }}>
+          <Typography sx={{ fontSize: '12px', fontWeight: '600' }}>
             {description}
           </Typography>
         </Box>
-        <Box>
-          <Box
-            sx={{
-              display: 'flex',
-              width: 70,
-              ml: 4,
-              border: 1.3,
-              borderRadius: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            ml: 4,
+            border: '1px solid #AD343E',
+            borderRadius: '10px',
+            width: '110px',
+            justifyContent: 'space-between',
+            padding: '0 8px',
+          }}
+        >
+          <IconButton onClick={handleAddToCart} sx={{ color: 'button.main' }}>
+            <AddIcon />
+          </IconButton>
+          <ListItemText
+            primary={quantity}
+            primaryTypographyProps={{ fontWeight: 600 }}
+          />
+          <IconButton
+            onClick={decrementQuantity}
+            sx={{ color: 'button.main' }}
+            disabled={quantity === 0}
           >
-            {' '}
-            <Typography
-              sx={{
-                fontSize: '20px',
-                color: '#AD343E',
-                boardercolor: 'red',
-                mx: 1,
-                ':hover': {
-                  cursor: 'pointer',
-                  opacity: 0.5,
-                },
-              }}
-            >
-              +
-            </Typography>
-            <ListItemText primary={'1'} />
-            <Typography
-              sx={{
-                fontSize: '24px',
-                color: '#AD343E',
-                mx: 0.5,
-                ':hover': {
-                  cursor: 'pointer',
-                  opacity: 0.5,
-                },
-              }}
-            >
-              -
-            </Typography>
-          </Box>
+            <RemoveIcon />
+          </IconButton>
         </Box>
-        <Box sx={{ ml: 5 }}>
-          <Typography sx={{ fontSize: '16px', fontWeight: '600', width: 100 }}>
+        <Box sx={{ ml: 2, flexShrink: 0, width: '100px' }}>
+          <Typography sx={{ fontSize: '16px', fontWeight: '600' }}>
             ${price}
           </Typography>
         </Box>
-        <Box
-          component="img"
+        <Button
           sx={{
-            ml: 7,
-            width: 200,
-            ':hover': {
-              cursor: 'pointer',
-              opacity: 1.5,
+            ml: 2,
+            backgroundColor: 'button.main',
+            color: '#fff',
+            '&:hover': {
+              backgroundColor: 'button.main',
+              opacity: 0.6,
+              transition: '0.3s',
             },
           }}
-          src="/image/Dish3.png"
-          alt="delete"
-        />
+          onClick={() => handleAddToCart()}
+        >
+          ADD TO CART
+        </Button>
       </Box>
     </>
   );

@@ -17,8 +17,11 @@ const cartReducer = (state = initialState, { type, payload }) => {
           ...state.items,
           {
             dishId: payload.dishId,
+            dishName: payload.dishName,
             quantity: payload.quantity,
             price: payload.price,
+            description: payload.description,
+            imageUrl: payload.imageUrl,
           },
         ],
       };

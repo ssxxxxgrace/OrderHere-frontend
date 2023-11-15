@@ -67,7 +67,7 @@ const text = {
   disabled: 'rgba(55, 65, 81, 0.48)',
   warning: '#A9791C',
   normal: '#999999',
-  dishSize: '#AD343E',
+  dishDescription: '#AD343E',
   title: '#353535',
 };
 

@@ -1,7 +1,20 @@
-import { Box, Typography, Divider, Button } from '@mui/material';
+import { Box, Typography, Divider, ButtonBase } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import CheckListItems from './components/CheckListItems/ChecklistItems';
+import * as Action from '../../../../../../store/actionTypes';
 
 const CheckList = () => {
+  const dispatch = useDispatch();
+
+  const totalPrice = useSelector((state) => state.cart.totalPrice).toFixed(2);
+
+  const shippingFee = 0;
+
+  const handleClearCart = () => {
+    dispatch({ type: Action.CLEAR_CART });
+    dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
+  };
+
   return (
     <>
       <Box
@@ -12,7 +25,8 @@ const CheckList = () => {
         >
           Checklist
         </Typography>
-        <Box
+        <ButtonBase
+          onClick={handleClearCart}
           sx={{
             ':hover': {
               cursor: 'pointer',
@@ -20,7 +34,7 @@ const CheckList = () => {
           }}
         >
           <img src="icons/cart/trash.png" alt="trash" />
-        </Box>
+        </ButtonBase>
       </Box>
       <Divider sx={{ mx: 2, borderColor: 'border.section' }} />
       <Box sx={{ mx: 2, height: 216, overflowY: 'scroll' }}>
@@ -40,7 +54,7 @@ const CheckList = () => {
         <Typography
           sx={{ fontSize: '16px', fontWeight: '400', color: 'text.title' }}
         >
-          $51
+          ${totalPrice}
         </Typography>
       </Box>
 
@@ -56,7 +70,7 @@ const CheckList = () => {
         <Typography
           sx={{ fontSize: '14px', fontWeight: '400', color: 'text.title' }}
         >
-          $0
+          ${shippingFee}
         </Typography>
       </Box>
       <Box
@@ -85,20 +99,20 @@ const CheckList = () => {
         <Typography
           sx={{ fontSize: '18px', fontWeight: '500', color: 'text.dishSize' }}
         >
-          $51
+          ${totalPrice}
         </Typography>
       </Box>
       <Box
         sx={{ padding: 2, display: 'flex', justifyContent: 'center', mb: 4 }}
       >
-        <Button
+        <ButtonBase
           sx={{ backgroundColor: 'button.main', width: '100%', height: 40 }}
         >
           <Typography sx={{ marginRight: 2, color: 'white' }}>
             Check Out
           </Typography>{' '}
           <img src="/icons/cart/user.png" />
-        </Button>
+        </ButtonBase>
       </Box>
     </>
   );
