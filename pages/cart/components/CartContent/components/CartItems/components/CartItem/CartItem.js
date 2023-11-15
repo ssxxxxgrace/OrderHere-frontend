@@ -89,7 +89,7 @@ const CartItem = ({ dishId, dishName, description, price, imageUrl }) => {
               +
             </ButtonBase>
             <ListItemText
-              primary={item.quantity}
+              primary={item?.quantity}
               primaryTypographyProps={{ fontWeight: 600 }}
             />
             <ButtonBase
