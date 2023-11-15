@@ -64,6 +64,7 @@ const FoodItemsList = () => {
       {dishes.map((dish) => (
         <FoodItem
           key={dish.dishId}
+          dishId={dish.dishId}
           dishName={dish.dishName}
           description={dish.description}
           price={dish.price}

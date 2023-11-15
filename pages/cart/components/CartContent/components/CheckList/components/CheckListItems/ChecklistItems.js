@@ -1,54 +1,38 @@
-// import { makeStyles } from '@mui/styles';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { List, ListItem, ListItemText, Box, Typography } from '@mui/material';
-
-// const useStyles = makeStyles((theme) => ({
-//   evenRow: {
-//     backgroundColor: '#F9F9F9',
-//   },
-//   oddRow: {
-//     backgroundColor: '#EDEDED',
-//   },
-// }));
+import * as Action from '../../../../../../../../store/actionTypes';
 
 const CheckListItems = () => {
-  // const classes = useStyles();
-  const data = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5']; // Replace this with your data
-  const data2 = [
-    { title: 'Scotch Fillet 250g', price: '27.00', quantity: '1' },
-    { title: 'Scotch Fillet 250g', price: '27.00', quantity: '1' },
-    { title: 'Scotch Fillet 250g', price: '27.00', quantity: '1' },
-    { title: 'Scotch Fillet 250g', price: '27.00', quantity: '1' },
-    { title: 'Scotch Fillet 250g', price: '27.00', quantity: '1' },
-    { title: 'Scotch Fillet 250g', price: '27.00', quantity: '1' },
-  ];
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+
+  const handleIncreaseQuantity = (dishId) => {
+    dispatch({ type: Action.INCREASE_ITEM, payload: { dishId } });
+    dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
+  };
+
+  const handleDecreaseQuantity = (dishId) => {
+    dispatch({ type: Action.DECREASE_ITEM, payload: { dishId } });
+    dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
+  };
 
   return (
     <List>
-      {data2.map((item, index) => (
-        <ListItem
-          key={index}
-          // className={index % 2 === 0 ? classes.evenRow : classes.oddRow}
-        >
+      {cartItems.map((item, index) => (
+        <ListItem key={index}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box>
+            <Box sx={{ width: 150 }}>
               <ListItemText
-                primary={item.title}
+                primary={item.dishName}
                 primaryTypographyProps={{
-                  sx: {
-                    fontSize: '14px',
-                    color: '#353535',
-                    fontWeight: '450',
-                  },
+                  sx: { fontSize: '14px', color: '#353535', fontWeight: '450' },
                 }}
               />
               <ListItemText
                 primary={`$${item.price}`}
                 primaryTypographyProps={{
-                  sx: {
-                    fontSize: '12px',
-                    color: '#717171',
-                    fontWeight: '450',
-                  },
+                  sx: { fontSize: '12px', color: '#717171', fontWeight: '450' },
                 }}
               />
             </Box>
@@ -62,33 +46,30 @@ const CheckListItems = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                width: 75,
               }}
             >
-              {' '}
               <Typography
+                onClick={() => handleIncreaseQuantity(item.dishId)}
                 sx={{
                   color: 'text.dishSize',
                   fontSize: '20px',
                   mx: 1,
-                  ':hover': {
-                    cursor: 'pointer',
-                    opacity: 0.5,
-                  },
+                  ':hover': { cursor: 'pointer', opacity: 0.5 },
                 }}
               >
                 +
               </Typography>
               <ListItemText primary={item.quantity} />
               <Typography
+                onClick={() => handleDecreaseQuantity(item.dishId)}
                 sx={{
                   color: 'text.dishSize',
                   fontSize: '24px',
                   mx: 1,
-                  ':hover': {
-                    cursor: 'pointer',
-                    opacity: 0.5,
-                  },
+                  ':hover': { cursor: 'pointer', opacity: 0.5 },
                 }}
+                disabled={item.quantity === 0}
               >
                 -
               </Typography>

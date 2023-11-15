@@ -1,7 +1,10 @@
 import CartItem from './components/CartItem/CartItem';
 import { Box, Typography, Divider } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const CartItems = () => {
+  const cartItems = useSelector((state) => state.cart.items);
+
   return (
     <>
       <Divider sx={{ borderColor: 'border.main' }} />
@@ -32,25 +35,18 @@ const CartItems = () => {
           CLEAN
         </Typography>
       </Box>
-      <CartItem
-        dishName="Delicious Cheeseburger"
-        dishSize="Medium"
-        extras="Chips & Coca-Cola"
-        price="35.88"
-      />
-      <CartItem
-        dishName="Delicious Cheeseburger"
-        dishSize="Medium"
-        extras="Chips & Coca-Cola"
-        price="35.88"
-      />
-      <CartItem
-        dishName="Delicious Cheeseburger"
-        dishSize="Medium"
-        extras="Chips & Coca-Cola"
-        price="35.88"
-      />
-      <Divider sx={{ borderColor: 'border.main' }} />
+      {cartItems.map((cartItem) => (
+        <>
+          <CartItem
+            dishId={cartItem.dishId}
+            dishName={cartItem.dishName}
+            description={cartItem.description}
+            imageUrl={cartItem.imageUrl}
+            price={cartItem.price}
+          />
+          <Divider sx={{ borderColor: 'border.main' }} />
+        </>
+      ))}
     </>
   );
 };
