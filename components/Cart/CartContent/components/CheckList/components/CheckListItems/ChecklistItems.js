@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { List, ListItem, ListItemText, Box, Typography } from '@mui/material';
-import * as Action from '../../../../../../../../store/actionTypes';
+import * as Action from '../../../../../../../store/actionTypes';
 
 const CheckListItems = () => {
   const dispatch = useDispatch();

@@ -6,7 +6,7 @@ import {
   ButtonBase,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import * as Action from '../../../../../../../../store/actionTypes';
+import * as Action from '../../../../../../../store/actionTypes';
 
 const CartItem = ({ dishId, dishName, description, price, imageUrl }) => {
   const dispatch = useDispatch();

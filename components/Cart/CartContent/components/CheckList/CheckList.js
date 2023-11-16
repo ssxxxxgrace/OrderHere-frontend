@@ -1,7 +1,7 @@
 import { Box, Typography, Divider, ButtonBase } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckListItems from './components/CheckListItems/ChecklistItems';
-import * as Action from '../../../../../../store/actionTypes';
+import * as Action from '../../../../../store/actionTypes';
 
 const CheckList = () => {
   const dispatch = useDispatch();
