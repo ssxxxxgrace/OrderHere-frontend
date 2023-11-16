@@ -3,7 +3,7 @@ import CartImage from '../components/Cart/CartImage/CartImage';
 import CartEmpty from '../components/Cart/CartEmpty/CartEmpty';
 import { useSelector } from 'react-redux';
 
-const Index = () => {
+const Cart = () => {
   const totalItems = useSelector((state) => state.cart.totalItems);
 
   return (
@@ -14,4 +14,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Cart;
