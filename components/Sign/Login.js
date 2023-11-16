@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import Router from 'next/router';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
@@ -11,12 +11,17 @@ import {
   Grid,
   TextField,
   Typography,
+  Checkbox,
   Divider,
+  FormControlLabel,
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import loginAction from '../../store/actions/httpAction';
 import { closeSignDialog } from '../../store/actions/signAction';
 import hotToast from '../../utils/hotToast';
+import GoogleSignInBtn from './UI/GoogleSignInBtn';
+import FacebookSignInBtn from './UI/FacebookSignInBtn';
+import { flexbox } from '@mui/system';
 
 const Login = ({ register }) => {
   const [isLoading, setLoading] = useState(false);
@@ -63,6 +68,13 @@ const Login = ({ register }) => {
       );
     },
   });
+
+  //set state for Remeber me Checkbox and event handler
+  const [isRememberMeChecked, setIsRememberMeChecked] = useState(false);
+  const handleRememberMeChange = (event) => {
+    setIsRememberMeChecked(event.target.checked);
+  };
+
   const resetPassword = () => {
     dispatch(closeSignDialog());
     Router.push('/password-email');
@@ -86,7 +98,7 @@ const Login = ({ register }) => {
             <Image src="/logo.png" height="55" width="55" alt="logo" />
           </Typography>
           <Typography color="textPrimary" variant="h4" align="center">
-            Log in
+            WELCOME BACK, LOG IN
           </Typography>
           <Typography
             color="textSecondary"
@@ -94,14 +106,15 @@ const Login = ({ register }) => {
             variant="body2"
             align="center"
           >
-            Where the Exploration Begins
+            Sign in to your account and make recharges. payments and bookings
+            faster
           </Typography>
           <Box sx={{ my: 4 }}>
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
               helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
+              label="Enter your email..."
               margin="normal"
               name="email"
               onBlur={formik.handleBlur}
@@ -114,7 +127,7 @@ const Login = ({ register }) => {
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
               helperText={formik.touched.password && formik.errors.password}
-              label="Password"
+              label="Enter your password..."
               margin="normal"
               name="password"
               onBlur={formik.handleBlur}
@@ -123,26 +136,68 @@ const Login = ({ register }) => {
               value={formik.values.password}
               variant="outlined"
             />
+            <Grid container alignItems="center">
+              <Grid item xs={8}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={isRememberMeChecked}
+                      onChange={handleRememberMeChange}
+                    />
+                  }
+                  label="Remember Me"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Typography color="textSecondary" variant="body2">
+                  <Button onClick={resetPassword}>Forget password?</Button>
+                </Typography>
+              </Grid>
+            </Grid>
+
             <Grid sx={{ py: 3 }}>
               <LoadingButton
                 loading={isLoading}
-                color="primary"
+                color="error"
                 fullWidth
                 size="large"
                 type="submit"
                 variant="contained"
               >
-                Login
+                LOG IN
               </LoadingButton>
             </Grid>
-            <Divider />
-            <Box sx={{ pt: 1 }}>
-              <Typography color="textSecondary" variant="body2">
-                <Button onClick={() => register()}>Create a new account</Button>
-              </Typography>
-              <Typography color="textSecondary" variant="body2">
-                <Button onClick={resetPassword}>Forgot your password?</Button>
-              </Typography>
+
+            <Box sx={{ mt: 0, mb: 1 }}>
+              <Divider> OR </Divider>
+            </Box>
+
+            {/* place to contain Google Login and Facebook Login  */}
+            <Grid container spacing={2} justifyContent={'space-between'}>
+              <Grid item xs={6}>
+                <GoogleSignInBtn>Sign in With Google</GoogleSignInBtn>
+              </Grid>
+              <Grid item xs={6}>
+                <FacebookSignInBtn></FacebookSignInBtn>
+              </Grid>
+            </Grid>
+
+            <Box>
+              <Grid
+                container
+                spacing={0}
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Grid item>
+                  <Typography>Don't have an account?</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography color="textSecondary" variant="body2">
+                    <Button onClick={() => register()}>Sign Up</Button>
+                  </Typography>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </form>
