@@ -1,12 +1,15 @@
 import Content from './components/CartContent/CartContent';
 import CartImage from './components/CartImage/CartImage';
-import Empty from './components/CartContent/CartEmpty';
+import CartEmpty from './components/CartEmpty/CartEmpty';
+import { useSelector } from 'react-redux';
 
 const Index = () => {
+  const totalItems = useSelector((state) => state.cart.totalItems);
+
   return (
     <>
       <CartImage />
-      <Content />
+      {totalItems ? <Content /> : <CartEmpty />}
     </>
   );
 };
