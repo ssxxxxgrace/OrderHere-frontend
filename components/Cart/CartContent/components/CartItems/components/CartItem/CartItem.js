@@ -1,6 +1,33 @@
-import { Box, Typography, Divider, ListItemText } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Divider,
+  ListItemText,
+  ButtonBase,
+} from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import * as Action from '../../../../../../../store/actionTypes';
 
-const CartItem = ({ dishName, dishSize, extras, price }) => {
+const CartItem = ({ dishId, dishName, description, price, imageUrl }) => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const item = cartItems.find((item) => item.dishId === dishId);
+
+  const handleIncreaseQuantity = () => {
+    dispatch({ type: Action.INCREASE_ITEM, payload: { dishId } });
+    dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
+  };
+
+  const handleDecreaseQuantity = () => {
+    dispatch({ type: Action.DECREASE_ITEM, payload: { dishId } });
+    dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
+  };
+
+  const handleRemoveFromCart = () => {
+    dispatch({ type: Action.REMOVE_FROM_CART, payload: { dishId } });
+    dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
+  };
+
   return (
     <>
       <Divider sx={{ border: 1.25, borderColor: 'border.main' }} />
@@ -15,25 +42,24 @@ const CartItem = ({ dishName, dishSize, extras, price }) => {
           component="img"
           width="180px"
           height="180px"
-          src="/image/FoodPicture.png"
+          src={imageUrl}
           alt="food"
         />
         <Box sx={{ ml: 5 }}>
-          <Typography sx={{ fontSize: '17px', fontWeight: '600', width: 250 }}>
+          <Typography
+            sx={{ fontSize: '17px', fontWeight: '600', width: 250, marginY: 2 }}
+          >
             {dishName}
           </Typography>
           <Typography
             sx={{
-              fontSize: '17px',
-              fontWeight: '600',
-              color: 'text.dishSize',
+              fontSize: '13px',
+              fontWeight: '500',
               width: 250,
+              color: 'text.dishDescription',
             }}
           >
-            {dishSize}
-          </Typography>
-          <Typography sx={{ fontSize: '17px', fontWeight: '600', width: 250 }}>
-            {extras}
+            {description}
           </Typography>
         </Box>
         <Box>
@@ -49,7 +75,8 @@ const CartItem = ({ dishName, dishSize, extras, price }) => {
             }}
           >
             {' '}
-            <Typography
+            <ButtonBase
+              onClick={handleIncreaseQuantity}
               sx={{
                 fontSize: '20px',
                 mx: 1,
@@ -60,9 +87,13 @@ const CartItem = ({ dishName, dishSize, extras, price }) => {
               }}
             >
               +
-            </Typography>
-            <ListItemText primary={'2'} />
-            <Typography
+            </ButtonBase>
+            <ListItemText
+              primary={item?.quantity}
+              primaryTypographyProps={{ fontWeight: 600 }}
+            />
+            <ButtonBase
+              onClick={handleDecreaseQuantity}
               sx={{
                 fontSize: '24px',
                 mx: 0.5,
@@ -73,7 +104,7 @@ const CartItem = ({ dishName, dishSize, extras, price }) => {
               }}
             >
               -
-            </Typography>
+            </ButtonBase>
           </Box>
         </Box>
         <Box sx={{ ml: 5 }}>
@@ -82,6 +113,7 @@ const CartItem = ({ dishName, dishSize, extras, price }) => {
           </Typography>
         </Box>
         <Box
+          onClick={handleRemoveFromCart}
           component="img"
           sx={{
             ml: 7,

@@ -1,6 +1,6 @@
 import { Box, Typography, Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import * as Action from '../../../../../../store/actionTypes';
+import * as Action from '../../../../../store/actionTypes';
 
 const Option = () => {
   const dispatch = useDispatch();
