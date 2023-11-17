@@ -16,7 +16,6 @@ import {
   Badge,
 } from '@mui/material';
 import AccountButton from './AccountButton';
-import Sign from '../Sign';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from 'next/link';
@@ -55,7 +54,7 @@ const Navbar = () => {
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);
   const { totalItems } = useSelector((state) => state.cart);
-
+ 
   return (
     <NavbarRoot>
       <Toolbar
