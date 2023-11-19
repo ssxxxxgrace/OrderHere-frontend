@@ -15,6 +15,12 @@ const CheckList = () => {
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
 
+  const dineInState = useSelector((state) => state.dineIn);
+
+  const handleCheckOutClick = () => {
+    console.log('Dine In State:', dineInState);
+  };
+
   return (
     <>
       <Box
@@ -107,6 +113,7 @@ const CheckList = () => {
       >
         <ButtonBase
           sx={{ backgroundColor: 'button.main', width: '100%', height: 40 }}
+          onClick={handleCheckOutClick}
         >
           <Typography sx={{ marginRight: 2, color: 'white' }}>
             Check Out
