@@ -141,7 +141,14 @@ const Navbar = () => {
             variant="outlined"
             placeholder="Search"
             size="small"
-            sx={{ marginRight: '20px' }}
+            sx={{
+              marginRight: '20px',
+              backgroundColor: '#F2F2F2',
+              borderRadius: '20px',
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '20px',
+              }
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
