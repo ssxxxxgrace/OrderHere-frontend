@@ -27,7 +27,6 @@ const CheckList = () => {
       orderType: "delivery",
       orderStatus: "pending",
       discount: 0,
-      pickupTime: "2023-11-21T02:53:59.993Z",
       address: address.address,
       totalPrice: parseFloat(totalPrice),
       note: note.note,
@@ -41,6 +40,11 @@ const CheckList = () => {
     console.log('Address:', address);
     console.log('Note:', note);
     console.log('order data:', orderData);
+
+    if (!address.name || !address.phone || !address.address) {
+      console.log('Warning: Shipping information is missing!');
+      return; 
+    }
 
     try {
       const response = await placeOrder(orderData);
@@ -140,6 +144,28 @@ const CheckList = () => {
           ${totalPrice}
         </Typography>
       </Box>
+
+      {(!address.name || !address.phone || !address.address) && (
+        <Box
+          sx={{
+            mx: 2,
+            padding: 2,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center', 
+            backgroundColor: 'warning.main',
+            color: 'white',
+            borderRadius: '8px',
+          }}
+        >
+          <Typography
+            sx={{ fontSize: '16px', fontWeight: '400' }}
+          >
+            Warning: Shipping information is missing!
+          </Typography>
+        </Box>
+      )}
+
       <Box
         sx={{ padding: 2, display: 'flex', justifyContent: 'center', mb: 4 }}
       >
