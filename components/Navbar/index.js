@@ -36,15 +36,15 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   ...(theme.palette.mode === 'light'
     ? {
-        boxShadow: theme.shadows[3],
-      }
+      boxShadow: theme.shadows[3],
+    }
     : {
-        backgroundColor: theme.palette.background.paper,
-        borderBottomColor: theme.palette.divider,
-        borderBottomStyle: 'solid',
-        borderBottomWidth: 1,
-        boxShadow: 'none',
-      }),
+      backgroundColor: theme.palette.background.paper,
+      borderBottomColor: theme.palette.divider,
+      borderBottomStyle: 'solid',
+      borderBottomWidth: 1,
+      boxShadow: 'none',
+    }),
 }));
 
 const Navbar = () => {
@@ -55,7 +55,7 @@ const Navbar = () => {
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);
   const { totalItems } = useSelector((state) => state.cart);
- 
+
   return (
     <NavbarRoot>
       <Toolbar
@@ -111,22 +111,24 @@ const Navbar = () => {
               </Button>
             </Link>
 
-            <Button
-              sx={{
-                display: 'inline-flex',
-                padding: '4px 16px',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: 'black',
-                borderRadius: 10,
-                backgroundColor: isStoreInfoActive ? '#DBDFD0' : 'transparent',
-                '&:hover': {
-                  backgroundColor: '#DBDFD0',
-                },
-              }}
-            >
-              Store Info
-            </Button>
+            <Link href="/restaurant/1" passHref>
+              <Button
+                sx={{
+                  display: 'inline-flex',
+                  padding: '4px 16px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: 'black',
+                  borderRadius: 10,
+                  backgroundColor: isStoreInfoActive ? '#DBDFD0' : 'transparent',
+                  '&:hover': {
+                    backgroundColor: '#DBDFD0',
+                  },
+                }}
+              >
+                Store Info
+              </Button>
+            </Link>
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
