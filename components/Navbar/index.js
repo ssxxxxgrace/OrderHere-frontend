@@ -50,6 +50,7 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
 const Navbar = () => {
   const router = useRouter();
   const isHomeActive = router.pathname === '/';
+  const isStoreInfoActive = router.pathname === '/restaurant/1';
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);
@@ -101,7 +102,7 @@ const Navbar = () => {
                   borderRadius: 10,
                   backgroundColor: isHomeActive ? '#DBDFD0' : 'transparent',
                   '&:hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#DBDFD0',
                   },
                 }}
               >
@@ -118,6 +119,10 @@ const Navbar = () => {
                 alignItems: 'center',
                 color: 'black',
                 borderRadius: 10,
+                backgroundColor: isStoreInfoActive ? '#DBDFD0' : 'transparent',
+                '&:hover': {
+                  backgroundColor: '#DBDFD0',
+                },
               }}
             >
               Store Info
