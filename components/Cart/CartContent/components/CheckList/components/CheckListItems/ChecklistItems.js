@@ -50,6 +50,19 @@ const CheckListItems = () => {
               }}
             >
               <Typography
+                onClick={() => handleDecreaseQuantity(item.dishId)}
+                sx={{
+                  color: 'text.dishSize',
+                  fontSize: '24px',
+                  mx: 1.25,
+                  ':hover': { cursor: 'pointer', opacity: 0.5 },
+                }}
+                disabled={item.quantity === 0}
+              >
+                -
+              </Typography>
+              <ListItemText primary={item.quantity} />
+              <Typography
                 onClick={() => handleIncreaseQuantity(item.dishId)}
                 sx={{
                   color: 'text.dishSize',
@@ -59,19 +72,6 @@ const CheckListItems = () => {
                 }}
               >
                 +
-              </Typography>
-              <ListItemText primary={item.quantity} />
-              <Typography
-                onClick={() => handleDecreaseQuantity(item.dishId)}
-                sx={{
-                  color: 'text.dishSize',
-                  fontSize: '24px',
-                  mx: 1,
-                  ':hover': { cursor: 'pointer', opacity: 0.5 },
-                }}
-                disabled={item.quantity === 0}
-              >
-                -
               </Typography>
             </Box>
           </Box>

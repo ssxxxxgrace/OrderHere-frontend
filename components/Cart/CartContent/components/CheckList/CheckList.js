@@ -2,13 +2,19 @@ import { Box, Typography, Divider, ButtonBase } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckListItems from './components/CheckListItems/ChecklistItems';
 import * as Action from '../../../../../store/actionTypes';
+import { placeOrder } from '../../../../../services/orderService';
+import { useRouter } from 'next/router';
 
 const CheckList = () => {
   const dispatch = useDispatch();
 
   const totalPrice = useSelector((state) => state.cart.totalPrice).toFixed(2);
+  const cartItems = useSelector((state) => state.cart.items);
 
   const shippingFee = 0;
+
+  const address = useSelector((state) => state.delivery.addressData);
+  const note = useSelector((state) => state.delivery.noteData);
 
   const handleClearCart = () => {
     dispatch({ type: Action.CLEAR_CART });
@@ -17,8 +23,35 @@ const CheckList = () => {
 
   const dineInState = useSelector((state) => state.dineIn);
 
-  const handleCheckOutClick = () => {
-    console.log('Dine In State:', dineInState);
+  const handleCheckout = async () => {
+    const orderData = {
+      userId: 1,
+      orderType: "delivery",
+      orderStatus: "pending",
+      discount: 0,
+      pickupTime: "2023-11-21T02:53:59.993Z",
+      address: address.address,
+      totalPrice: parseFloat(totalPrice),
+      note: note.note,
+      dishes: cartItems.map(item => ({
+        dishId: item.dishId,
+        dishName: item.dishName,
+        dishQuantity: item.quantity,
+        dishPrice: item.price
+      })),
+    };
+    console.log('Address:', address);
+    console.log('Note:', note);
+    console.log('order data:', orderData);
+
+    try {
+      const response = await placeOrder(orderData);
+      console.log('Order placed successfully:', response);
+      dispatch({ type: Action.CLEAR_CART });
+      router.push('/');
+    } catch (error) {
+      console.error('Error placing order:', error.response);
+    }
   };
 
   return (
@@ -112,6 +145,7 @@ const CheckList = () => {
         sx={{ padding: 2, display: 'flex', justifyContent: 'center', mb: 4 }}
       >
         <ButtonBase
+          onClick={handleCheckout}
           sx={{ backgroundColor: 'button.main', width: '100%', height: 40 }}
           onClick={handleCheckOutClick}
         >

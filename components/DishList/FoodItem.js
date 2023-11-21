@@ -73,19 +73,19 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
             padding: '0 8px',
           }}
         >
-          <IconButton onClick={handleAddToCart} sx={{ color: 'button.main' }}>
-            <AddIcon />
-          </IconButton>
-          <ListItemText
-            primary={quantity}
-            primaryTypographyProps={{ fontWeight: 600 }}
-          />
           <IconButton
             onClick={decrementQuantity}
             sx={{ color: 'button.main' }}
             disabled={quantity === 0}
           >
             <RemoveIcon />
+          </IconButton>
+          <ListItemText
+            primary={quantity}
+            primaryTypographyProps={{ fontWeight: 600 }}
+          />
+          <IconButton onClick={handleAddToCart} sx={{ color: 'button.main' }}>
+            <AddIcon />
           </IconButton>
         </Box>
         <Box sx={{ ml: 2, flexShrink: 0, width: '100px' }}>
