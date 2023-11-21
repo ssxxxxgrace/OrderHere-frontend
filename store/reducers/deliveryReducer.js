@@ -1,4 +1,3 @@
-// cartReducer.js
 import * as Action from '../actionTypes';
 
 const initialState = {

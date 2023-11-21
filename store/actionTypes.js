@@ -1,3 +1,5 @@
+import exp from "constants";
+
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
@@ -25,3 +27,6 @@ export const FETCH_RESTAURANT_ERROR = 'FETCH_RESTAURANT_ERROR';
 
 export const SET_ADDRESS_DATA = 'SET_ADDRESS_DATA';
 export const SET_NOTE_DATA = 'SET_NOTE_DATA';
+
+export const SET_PRICE_RANGE = 'SET_PRICE_RANGE';
+export const SET_FILTERED_DISHES = 'SET_FILTERED_DISHES';

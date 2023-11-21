@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Slider from '@mui/material/Slider';
 import { Typography, Box } from '@mui/material';
+import * as Action from '../../store/actionTypes';
 import { getDishes } from '../../services/Dish';
+
 
 const pricingFilterStyle = {
   background: '#FEF6E9',
@@ -35,6 +38,7 @@ const newTagStyle = {
 };
 
 const PricingFilter = () => {
+  const dispatch = useDispatch();
   const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
   const [values, setValues] = useState([0, 100]);
 
@@ -52,16 +56,20 @@ const PricingFilter = () => {
 
   const handleChange = (event, newValues) => {
     setValues(newValues);
+    dispatch({ type: Action.SET_PRICE_RANGE, payload: { min: newValues[0], max: newValues[1] } });
   };
+
 
   const marks = [
     {
-      value: priceRange.min,
-      label: `$${priceRange.min}`,
+      value: values[0],
+      label: `$${values[0]}`,
+      position: 'bottom',
     },
     {
-      value: priceRange.max,
-      label: `$${priceRange.max}`,
+      value: values[1],
+      label: `$${values[1]}`,
+      position: 'bottom',
     },
   ];
 
@@ -74,7 +82,7 @@ const PricingFilter = () => {
       <Slider
         value={values}
         onChange={handleChange}
-        valueLabelDisplay="auto"
+        valueLabelDisplay="off"
         marks={marks}
         sx={{
           color: '#AD343E',
