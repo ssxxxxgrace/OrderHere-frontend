@@ -14,7 +14,7 @@ import {
 import LoadingButton from '@mui/lab/LoadingButton';
 import Yup from '../../utils/yupValidation';
 import hotToast from '../../utils/hotToast';
-import { signup, uniqueUsername, uniqueEmail } from '../../services/Public';
+import { signup } from '../../services/Public';
 import loginAction from '../../store/actions/httpAction';
 import GoogleSignInBtn from './UI/GoogleSignInBtn';
 import FacebookSignInBtn from './UI/FacebookSignInBtn';
@@ -24,34 +24,29 @@ const Signup = ({ login }) => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      username: '',
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
       submit: null,
     },
     validationSchema: Yup.object({
-      email: Yup.string().sequence([
-        () =>
-          Yup.string()
-            .email('Must be a valid email')
-            .max(255)
-            .required('Email is required'),
-        () => Yup.string().unique('Email is already in use', uniqueEmail),
-      ]),
-      username: Yup.string().sequence([
-        () => Yup.string().max(20).required('Username is required'),
-        () => Yup.string().unique('Username is already taken', uniqueUsername),
-      ]),
+      firstname: Yup.string().max(255).required('firstname is required'),
+      lastname: Yup.string().max(255).required('lastname is required'),
+      email: Yup.string()
+        .email('Must be a valid email')
+        .max(255)
+        .required('Email is required'),
       password: Yup.string()
         .min(6, 'must be at least 6 characters long')
         .max(16)
         .required('Password is required'),
     }),
     onSubmit: async (values) => {
-      // preview mode
-      const { email, username, password } = values;
+      console.log('values', values);
+      const { firstname, lastname, email, password } = values;
       setLoading(true);
-      signup({ email, username, password })
+      signup(firstname + ' ' + lastname, firstname, lastname, password, email)
         .then(() => {
           hotToast('success', 'Signup Success');
           dispatch(
@@ -105,43 +100,34 @@ const Signup = ({ login }) => {
             Please Enter your Email Address to Start your Online Application
           </Typography>
           <Box sx={{ my: 3 }}>
-            <Grid container spacing={3}>
-              <Grid item>
-                <TextField
-                  error={Boolean(
-                    formik.touched.firstname && formik.errors.firstname,
-                  )}
-                  fullWidth
-                  helperText={formik.touched.username && formik.errors.username}
-                  label="firstname"
-                  margin="normal"
-                  name="firstname"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="firstname"
-                  value={formik.values.lastname}
-                  variant="outlined"
-                />
-              </Grid>
-
-              <Grid item>
-                <TextField
-                  error={Boolean(
-                    formik.touched.lastname && formik.errors.lastname,
-                  )}
-                  fullWidth
-                  helperText={formik.touched.username && formik.errors.username}
-                  label="lastname"
-                  margin="normal"
-                  name="lastname"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="firstname"
-                  value={formik.values.lastname}
-                  variant="outlined"
-                />
-              </Grid>
-            </Grid>
+            <TextField
+              error={Boolean(
+                formik.touched.firstname && formik.errors.firstname,
+              )}
+              fullWidth
+              helperText={formik.touched.firstname && formik.errors.firstname}
+              label="firstname"
+              margin="normal"
+              name="firstname"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="firstname"
+              value={formik.values.firstname}
+              variant="outlined"
+            />
+            <TextField
+              error={Boolean(formik.touched.lastname && formik.errors.lastname)}
+              fullWidth
+              helperText={formik.touched.lastname && formik.errors.lastname}
+              label="lastname"
+              margin="normal"
+              name="lastname"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="firstname"
+              value={formik.values.lastname}
+              variant="outlined"
+            />
 
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
@@ -178,41 +164,7 @@ const Signup = ({ login }) => {
                 fullWidth
                 size="large"
                 variant="contained"
-                onClick={() => {
-                  if (process.env.NEXT_PUBLIC_PREVIEW_ENABLED) {
-                    dispatch(
-                      loginAction(
-                        'asd@asd.com',
-                        '123456',
-                        () => {
-                          // preview mode
-                          if (process.env.NEXT_PUBLIC_PREVIEW_ENABLED) {
-                            hotToast(
-                              'success',
-                              `Preview Simulate Login Success`,
-                            );
-                            return;
-                          }
-                          hotToast('success', 'Login Success');
-                        },
-                        (fail) => {
-                          setLoading(false);
-                          if (
-                            fail &&
-                            fail.response &&
-                            fail.response.status === 403
-                          ) {
-                            hotToast('error', 'Invalid Email or Password');
-                          } else {
-                            hotToast('error', `Something wrong ${fail}`);
-                          }
-                        },
-                      ),
-                    );
-                  } else {
-                    formik.handleSubmit();
-                  }
-                }}
+                onClick={() => formik.handleSubmit()}
               >
                 SIGN UP
               </LoadingButton>

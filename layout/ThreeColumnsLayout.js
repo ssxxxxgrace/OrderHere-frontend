@@ -20,7 +20,7 @@ const ThreeColumnsLayout = ({ children, noFooter = false }) => {
             <Filter />
           </Grid>
           <Grid item>
-            <Container maxWidth={false}>{children}</Container>
+            <Container>{children}</Container>
           </Grid>
         </Grid>
         {!noFooter && <Footer />}
@@ -35,11 +35,7 @@ const ThreeColumnsLayout = ({ children, noFooter = false }) => {
       spacing={4}
       style={{ position: 'relative' }}
     >
-      <Grid
-        item
-        xs={3}
-        style={{ position: 'relative' }}
-      >
+      <Grid item xs={3} style={{ position: 'relative' }}>
         <Filter />
       </Grid>
       <Grid item xs={9} style={{ position: 'relative', flex: '1 1 auto' }}>
