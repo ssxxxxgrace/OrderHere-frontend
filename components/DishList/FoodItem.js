@@ -46,7 +46,17 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
   return (
     <>
       <Divider sx={{ border: 0, borderColor: 'border.main' }} />
-      <Box sx={{ display: 'flex', alignItems: 'center', marginY: 1.5 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginY: 1.5,
+          borderRadius: '10px',
+          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+          padding: '16px',
+        }}
+      >
         <Box
           component="img"
           sx={{ width: '180px', height: '180px', flexShrink: 0 }}
@@ -73,19 +83,19 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
             padding: '0 8px',
           }}
         >
-          <IconButton onClick={handleAddToCart} sx={{ color: 'button.main' }}>
-            <AddIcon />
-          </IconButton>
-          <ListItemText
-            primary={quantity}
-            primaryTypographyProps={{ fontWeight: 600 }}
-          />
           <IconButton
             onClick={decrementQuantity}
             sx={{ color: 'button.main' }}
             disabled={quantity === 0}
           >
             <RemoveIcon />
+          </IconButton>
+          <ListItemText
+            primary={quantity}
+            primaryTypographyProps={{ fontWeight: 600 }}
+          />
+          <IconButton onClick={handleAddToCart} sx={{ color: 'button.main' }}>
+            <AddIcon />
           </IconButton>
         </Box>
         <Box sx={{ ml: 2, flexShrink: 0, width: '100px' }}>
@@ -95,8 +105,10 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
         </Box>
         <Button
           sx={{
-            ml: 2,
+            mr: 5,
             backgroundColor: 'button.main',
+            fontSize: '13px',
+            width: '230px',
             color: '#fff',
             '&:hover': {
               backgroundColor: 'button.main',
@@ -104,7 +116,7 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
               transition: '0.3s',
             },
           }}
-          onClick={() => handleAddToCart()}
+          onClick={handleAddToCart}
         >
           ADD TO CART
         </Button>

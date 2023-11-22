@@ -76,6 +76,23 @@ const CartItem = ({ dishId, dishName, description, price, imageUrl }) => {
           >
             {' '}
             <ButtonBase
+              onClick={handleDecreaseQuantity}
+              sx={{
+                fontSize: '24px',
+                mx: 1.25,
+                ':hover': {
+                  cursor: 'pointer',
+                  opacity: 0.5,
+                },
+              }}
+            >
+              -
+            </ButtonBase>
+            <ListItemText
+              primary={item?.quantity}
+              primaryTypographyProps={{ fontWeight: 600 }}
+            />
+            <ButtonBase
               onClick={handleIncreaseQuantity}
               sx={{
                 fontSize: '20px',
@@ -87,23 +104,6 @@ const CartItem = ({ dishId, dishName, description, price, imageUrl }) => {
               }}
             >
               +
-            </ButtonBase>
-            <ListItemText
-              primary={item?.quantity}
-              primaryTypographyProps={{ fontWeight: 600 }}
-            />
-            <ButtonBase
-              onClick={handleDecreaseQuantity}
-              sx={{
-                fontSize: '24px',
-                mx: 0.5,
-                ':hover': {
-                  cursor: 'pointer',
-                  opacity: 0.5,
-                },
-              }}
-            >
-              -
             </ButtonBase>
           </Box>
         </Box>

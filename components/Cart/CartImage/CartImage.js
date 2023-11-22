@@ -4,7 +4,7 @@ const CartImage = () => {
   return (
     <Box
       sx={{
-        width: '1440px',
+        width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

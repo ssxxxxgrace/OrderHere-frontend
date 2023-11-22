@@ -26,7 +26,11 @@ const RestaurantInfoPage = () => {
   }
 
   return (
-    <Box>
+    <Box
+      sx={{
+        width: '100%',
+      }}
+    >
       <RestaurantInfoHeader />
       <RestaurantInfoContent data={restaurantData} />
       <Box

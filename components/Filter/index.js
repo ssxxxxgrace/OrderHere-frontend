@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Slider from '@mui/material/Slider';
 import { Typography, Box } from '@mui/material';
+import * as Action from '../../store/actionTypes';
+import { getDishes } from '../../services/Dish';
 
 const pricingFilterStyle = {
   background: '#FEF6E9',
@@ -34,22 +37,42 @@ const newTagStyle = {
 };
 
 const PricingFilter = () => {
-  const [price, setPrice] = useState(0);
+  const dispatch = useDispatch();
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
+  const [values, setValues] = useState([0, 100]);
+
+  useEffect(() => {
+    getDishes().then((data) => {
+      if (data && data.data) {
+        const prices = data.data.data.map((dish) => dish.price);
+        const minPrice = Math.floor(Math.min(...prices));
+        const maxPrice = Math.ceil(Math.max(...prices));
+        setPriceRange({ min: minPrice, max: maxPrice });
+        setValues([minPrice, maxPrice]);
+      }
+    });
+  }, []);
+
+  const handleChange = (event, newValues) => {
+    setValues(newValues);
+    dispatch({
+      type: Action.SET_PRICE_RANGE,
+      payload: { min: newValues[0], max: newValues[1] },
+    });
+  };
 
   const marks = [
     {
-      value: 0,
-      label: '$0',
+      value: values[0],
+      label: `$${values[0]}`,
+      position: 'bottom',
     },
     {
-      value: price,
-      label: `$${price}`,
+      value: values[1],
+      label: `$${values[1]}`,
+      position: 'bottom',
     },
   ];
-
-  function valuetext(value) {
-    return `${value}°C`;
-  }
 
   return (
     <Box sx={{ ...pricingFilterStyle, width: '100%' }}>
@@ -58,8 +81,9 @@ const PricingFilter = () => {
       </Typography>
       <Box sx={{ borderBottom: '1px dashed grey', width: '100%', my: 2 }} />
       <Slider
-        value={price}
-        onChange={(e, newValue) => setPrice(newValue)}
+        value={values}
+        onChange={handleChange}
+        valueLabelDisplay="off"
         marks={marks}
         sx={{
           color: '#AD343E',
@@ -71,10 +95,6 @@ const PricingFilter = () => {
             '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
               boxShadow: `0px 0px 0px 8px rgb(255 0 0 / 16%)`,
             },
-            '& .MuiSlider-valueLabel': {
-              backgroundColor: 'red',
-              color: '#fff',
-            },
           },
           '& .MuiSlider-track': {
             height: 8,
@@ -84,9 +104,12 @@ const PricingFilter = () => {
             opacity: 1,
             height: 8,
           },
+          '& .MuiSlider-markLabel': {
+            fontSize: '1.2rem',
+          },
         }}
-        min={0}
-        max={100}
+        min={priceRange.min}
+        max={priceRange.max}
       />
     </Box>
   );
