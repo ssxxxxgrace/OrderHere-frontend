@@ -3,9 +3,9 @@ import store, { saveState } from '../store';
 import { login } from '../../services/Public';
 import getRestaurantById from '../../pages/api/restaurantService';
 
-const loginSuccess = (response) => ({
+const loginSuccess = (token) => ({
   type: Action.LOGIN_SUCCESS,
-  payload: response.data,
+  payload: token,
 });
 
 const loginError = () => ({
@@ -15,7 +15,7 @@ const loginError = () => ({
 const loginAction = (email, password, success, fail) => (dispatch) => {
   login(email, password)
     .then((response) => {
-      dispatch(loginSuccess(response));
+      dispatch(loginSuccess(response.data.token));
       success(response);
     })
     .catch((error) => {
