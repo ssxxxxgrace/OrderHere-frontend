@@ -36,25 +36,30 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   ...(theme.palette.mode === 'light'
     ? {
-        boxShadow: theme.shadows[3],
-      }
+      boxShadow: theme.shadows[3],
+    }
     : {
-        backgroundColor: theme.palette.background.paper,
-        borderBottomColor: theme.palette.divider,
-        borderBottomStyle: 'solid',
-        borderBottomWidth: 1,
-        boxShadow: 'none',
-      }),
+      backgroundColor: theme.palette.background.paper,
+      borderBottomColor: theme.palette.divider,
+      borderBottomStyle: 'solid',
+      borderBottomWidth: 1,
+      boxShadow: 'none',
+    }),
 }));
 
 const Navbar = () => {
   const router = useRouter();
-  const isHomeActive = router.pathname === '/';
+  console.log('Current Path:', currentPath);
+  const currentPath = router.pathname;
+  const isHomeActive = currentPath === '/';
+  const { asPath } = useRouter();
+  const isStoreInfoActive = asPath.startsWith('/restaurant/');
+  console.log('Current store:', currentPath);
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);
   const { totalItems } = useSelector((state) => state.cart);
- 
+
   return (
     <NavbarRoot>
       <Toolbar
@@ -101,7 +106,7 @@ const Navbar = () => {
                   borderRadius: 10,
                   backgroundColor: isHomeActive ? '#DBDFD0' : 'transparent',
                   '&:hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#DBDFD0',
                   },
                 }}
               >
@@ -110,18 +115,24 @@ const Navbar = () => {
               </Button>
             </Link>
 
-            <Button
-              sx={{
-                display: 'inline-flex',
-                padding: '4px 16px',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: 'black',
-                borderRadius: 10,
-              }}
-            >
-              Store Info
-            </Button>
+            <Link href="/restaurant/1" passHref>
+              <Button
+                sx={{
+                  display: 'inline-flex',
+                  padding: '4px 16px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: 'black',
+                  borderRadius: 10,
+                  backgroundColor: isStoreInfoActive ? '#DBDFD0' : 'transparent',
+                  '&:hover': {
+                    backgroundColor: '#DBDFD0',
+                  },
+                }}
+              >
+                Store Info
+              </Button>
+            </Link>
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
@@ -130,7 +141,14 @@ const Navbar = () => {
             variant="outlined"
             placeholder="Search"
             size="small"
-            sx={{ marginRight: '20px' }}
+            sx={{
+              marginRight: '20px',
+              backgroundColor: '#F2F2F2',
+              borderRadius: '20px',
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '20px',
+              }
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

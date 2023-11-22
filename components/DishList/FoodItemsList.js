@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import FoodItem from '/components/DishList/FoodItem';
 import { Box, Divider, CircularProgress, Alert } from '@mui/material';
 import { getDishes } from '../../services/Dish';
@@ -8,11 +9,17 @@ const FoodItemsList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const priceRange = useSelector((state) => state.filter.priceRange);
+
   useEffect(() => {
     setIsLoading(true);
     getDishes()
       .then((response) => {
-        setDishes(response.data.data);
+        const filteredDishes = response.data.data.filter(
+          (dish) => dish.price >= priceRange.min && dish.price <= priceRange.max
+        );
+        // setDishes(response.data.data);
+        setDishes(filteredDishes);
         setError(null);
       })
       .catch((error) => {
@@ -22,7 +29,7 @@ const FoodItemsList = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [priceRange]);
 
   console.log(dishes);
 
