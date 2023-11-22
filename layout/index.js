@@ -4,10 +4,14 @@ import { Box } from '@mui/material';
 const LayoutRoot = styled('div')(() => ({
   position: 'relative',
   display: 'flex',
+  flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  // justifyContent: 'center',
+  justifyContent: 'flex-start',
   width: '100vw',
   paddingTop: 64,
+  paddingBottom:0,
+  minHeight: '100%'
 }));
 const Layout = ({ children }) => {
   return (
@@ -20,6 +24,8 @@ const Layout = ({ children }) => {
           flexDirection: 'column',
           alignItems: 'center',
           width: '100%',
+          minHeight: '100%',
+          // minHeight: '100%',
           flexGrow: 1,
           py: 4,
         }}
