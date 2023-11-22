@@ -17,15 +17,6 @@ export const registerSignDialog = () => ({
   type: Action.REGISTER_SIGN_DIALOG,
 });
 
-const setJWT = (token) => ({
-  type: Action.SET_JWT,
-  payload: token,
-});
-
-export const setJWTAction = (token) => (dispatch) => {
-  dispatch(setJWT(token));
-};
-
 export const logoutAction = () => (dispatch) => {
   dispatch({
     type: Action.LOGOUT,
