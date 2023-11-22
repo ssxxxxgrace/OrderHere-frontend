@@ -12,7 +12,7 @@ export default function PayPage() {
 
   useEffect(() => {
     // Need to adjust for the real backend
-    fetch('http://localhost:4242/create-payment-intent', {
+    fetch('http://localhost:8080/v1/public/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ items: [{ id: 'xl-tshirt' }] }),
