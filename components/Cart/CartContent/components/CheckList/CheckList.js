@@ -24,17 +24,17 @@ const CheckList = () => {
   const handleCheckout = async () => {
     const orderData = {
       userId: 1,
-      orderType: "delivery",
-      orderStatus: "pending",
+      orderType: 'delivery',
+      orderStatus: 'pending',
       discount: 0,
       address: address.address,
       totalPrice: parseFloat(totalPrice),
       note: note.note,
-      dishes: cartItems.map(item => ({
+      dishes: cartItems.map((item) => ({
         dishId: item.dishId,
         dishName: item.dishName,
         dishQuantity: item.quantity,
-        dishPrice: item.price
+        dishPrice: item.price,
       })),
     };
     console.log('Address:', address);
@@ -43,7 +43,7 @@ const CheckList = () => {
 
     if (!address.name || !address.phone || !address.address) {
       console.log('Warning: Shipping information is missing!');
-      return; 
+      return;
     }
 
     try {
@@ -54,7 +54,6 @@ const CheckList = () => {
     } catch (error) {
       console.error('Error placing order:', error.response);
     }
-
   };
 
   return (
@@ -152,15 +151,13 @@ const CheckList = () => {
             padding: 2,
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center', 
+            alignItems: 'center',
             backgroundColor: 'warning.main',
             color: 'white',
             borderRadius: '8px',
           }}
         >
-          <Typography
-            sx={{ fontSize: '16px', fontWeight: '400' }}
-          >
+          <Typography sx={{ fontSize: '16px', fontWeight: '400' }}>
             Warning: Shipping information is missing!
           </Typography>
         </Box>

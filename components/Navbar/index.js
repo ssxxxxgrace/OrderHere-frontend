@@ -36,15 +36,15 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   ...(theme.palette.mode === 'light'
     ? {
-      boxShadow: theme.shadows[3],
-    }
+        boxShadow: theme.shadows[3],
+      }
     : {
-      backgroundColor: theme.palette.background.paper,
-      borderBottomColor: theme.palette.divider,
-      borderBottomStyle: 'solid',
-      borderBottomWidth: 1,
-      boxShadow: 'none',
-    }),
+        backgroundColor: theme.palette.background.paper,
+        borderBottomColor: theme.palette.divider,
+        borderBottomStyle: 'solid',
+        borderBottomWidth: 1,
+        boxShadow: 'none',
+      }),
 }));
 
 const Navbar = () => {
@@ -86,7 +86,7 @@ const Navbar = () => {
                 src="/image/Logo-Nav.png"
                 width={350}
                 height={75}
-                alt="logo-nav"     
+                alt="logo-nav"
               />
             </Box>
           </NextLink>
@@ -124,7 +124,9 @@ const Navbar = () => {
                   alignItems: 'center',
                   color: 'black',
                   borderRadius: 10,
-                  backgroundColor: isStoreInfoActive ? '#DBDFD0' : 'transparent',
+                  backgroundColor: isStoreInfoActive
+                    ? '#DBDFD0'
+                    : 'transparent',
                   '&:hover': {
                     backgroundColor: '#DBDFD0',
                   },
@@ -147,7 +149,7 @@ const Navbar = () => {
               borderRadius: '20px',
               '& .MuiOutlinedInput-root': {
                 borderRadius: '20px',
-              }
+              },
             }}
             InputProps={{
               endAdornment: (

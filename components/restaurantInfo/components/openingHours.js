@@ -8,15 +8,11 @@ const OpeningHours = ({ data }) => {
 
   return (
     <Box sx={{ mt: 4 }}>
-      <Typography
-        variant="h5"
-        component="h3"
-        sx={{ fontSize: '36px', textDecoration: 'underline' }}
-      >
+      <Typography variant="h5" component="h3" sx={{ marginBottom: 2 }}>
         Opening Hours
       </Typography>
       {data.map((entry) => (
-        <Typography key={entry.dayOfWeek} sx={{ fontSize: '28px' }}>
+        <Typography key={entry.dayOfWeek} sx={{ fontSize: '20px' }}>
           {capitalizeFirstLetter(entry.dayOfWeek)}:{' '}
           {entry.openingTime === 'Closed'
             ? 'Closed'

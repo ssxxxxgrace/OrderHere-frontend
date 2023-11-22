@@ -10,12 +10,12 @@ const filterReducer = (state = initialState, { type, payload }) => {
     case Action.SET_PRICE_RANGE:
       return {
         ...state,
-        priceRange: payload
+        priceRange: payload,
       };
     case Action.SET_FILTERED_DISHES:
       return {
         ...state,
-        filteredDishes: payload
+        filteredDishes: payload,
       };
     default:
       return state;

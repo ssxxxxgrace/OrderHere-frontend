@@ -7,7 +7,7 @@ const Address = () => {
   const [formData, setFormData] = useState({
     phone: '',
     name: '',
-    address: ''
+    address: '',
   });
 
   const dispatch = useDispatch();
@@ -24,10 +24,12 @@ const Address = () => {
         newErrors.phone = /^\d{10}$/.test(value) ? '' : 'Invalid phone number';
         break;
       case 'name':
-        newErrors.name = value.length <= 20 ? '' : 'Name should not exceed 20 characters';
+        newErrors.name =
+          value.length <= 20 ? '' : 'Name should not exceed 20 characters';
         break;
       case 'address':
-        newErrors[name] = value.length <= 200 ? '' : 'Should not exceed 200 characters';
+        newErrors[name] =
+          value.length <= 200 ? '' : 'Should not exceed 200 characters';
         break;
       default:
         break;

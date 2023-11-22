@@ -8,16 +8,12 @@ import IconButton from '@mui/material/IconButton';
 const Contact = ({ data }) => {
   return (
     <Box sx={{ mt: 4 }}>
-      <Typography
-        variant="h5"
-        component="h3"
-        sx={{ fontSize: '36px', textDecoration: 'underline' }}
-      >
+      <Typography variant="h5" component="h3" sx={{ marginBottom: 2 }}>
         Contact
       </Typography>
-      <Typography sx={{ fontSize: '28px' }}>{data.contactNumber}</Typography>
-      <Typography sx={{ fontSize: '28px' }}>{data.email}</Typography>
-      <Typography sx={{ fontSize: '28px' }}>{data.address}</Typography>
+      <Typography sx={{ fontSize: '20px' }}>{data.contactNumber}</Typography>
+      <Typography sx={{ fontSize: '20px' }}>{data.email}</Typography>
+      <Typography sx={{ fontSize: '20px' }}>{data.address}</Typography>
       <Box>
         <IconButton
           href="https://facebook.com"

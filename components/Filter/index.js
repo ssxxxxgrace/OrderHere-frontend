@@ -5,7 +5,6 @@ import { Typography, Box } from '@mui/material';
 import * as Action from '../../store/actionTypes';
 import { getDishes } from '../../services/Dish';
 
-
 const pricingFilterStyle = {
   background: '#FEF6E9',
   padding: '20px',
@@ -43,9 +42,9 @@ const PricingFilter = () => {
   const [values, setValues] = useState([0, 100]);
 
   useEffect(() => {
-    getDishes().then(data => {
+    getDishes().then((data) => {
       if (data && data.data) {
-        const prices = data.data.data.map(dish => dish.price);
+        const prices = data.data.data.map((dish) => dish.price);
         const minPrice = Math.floor(Math.min(...prices));
         const maxPrice = Math.ceil(Math.max(...prices));
         setPriceRange({ min: minPrice, max: maxPrice });
@@ -56,9 +55,11 @@ const PricingFilter = () => {
 
   const handleChange = (event, newValues) => {
     setValues(newValues);
-    dispatch({ type: Action.SET_PRICE_RANGE, payload: { min: newValues[0], max: newValues[1] } });
+    dispatch({
+      type: Action.SET_PRICE_RANGE,
+      payload: { min: newValues[0], max: newValues[1] },
+    });
   };
-
 
   const marks = [
     {
