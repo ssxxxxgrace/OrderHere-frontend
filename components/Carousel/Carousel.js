@@ -32,7 +32,7 @@ const Carousel = () => {
   ];
 
   const titleStyle = {
-    color: '#fff', 
+    color: '#fff',
     textAlign: 'center',
     zIndex: 2,
   };
@@ -57,7 +57,7 @@ const Carousel = () => {
     justifyContent: 'space-between',
     alignItems: 'center',
     height: '300px',
-    width: '1440px',
+    width: '100%',
     backgroundImage: `url(${images[activeIndex]})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -70,6 +70,7 @@ const Carousel = () => {
         size="small"
         onClick={() => setActiveIndex(index)}
         sx={{
+          color: activeIndex === index ? 'white' : 'rgba(255, 255, 255, 0.5)',
           color: activeIndex === index ? 'white' : 'rgba(255, 255, 255, 0.5)', 
         }}
       >
@@ -77,7 +78,6 @@ const Carousel = () => {
       </IconButton>
     ));
   };
-
 
   return (
     <Box sx={imageBannerStyle}>
@@ -99,6 +99,7 @@ const Carousel = () => {
       <Box
         sx={{
           position: 'absolute',
+          bottom: 10,
           bottom: 10, 
           left: '50%',
           transform: 'translateX(-50%)',
