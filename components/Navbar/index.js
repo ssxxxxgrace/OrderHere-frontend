@@ -160,10 +160,6 @@ const Navbar = () => {
             }}
           />
 
-          {/* <>
-            {isLogin || <Sign />}
-            <AccountButton isLogin={isLogin} />
-          </> */}
           <AccountButton isLogin={isLogin} />
         </>
         <Link href="/cart" passHref>
