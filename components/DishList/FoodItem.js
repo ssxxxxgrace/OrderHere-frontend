@@ -43,6 +43,8 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
 
+  
+
   return (
     <>
       <Divider sx={{ border: 0, borderColor: 'border.main' }} />
@@ -57,6 +59,9 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
           padding: '16px',
         }}
       >
+        
+        
+
         <Box
           component="img"
           sx={{ width: '180px', height: '180px', flexShrink: 0 }}
@@ -121,6 +126,7 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
           ADD TO CART
         </Button>
       </Box>
+      
     </>
   );
 };
