@@ -78,7 +78,6 @@ const Carousel = () => {
     ));
   };
 
-  // ...其他样式保持不变
 
   return (
     <Box sx={imageBannerStyle}>
