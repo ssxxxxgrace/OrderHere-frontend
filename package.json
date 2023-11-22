@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint && npm run lint:all",
+    "lint": "next lint --no-cache && npm run lint:all",
     "export": "next build && next export",
     "test": "jest -c jest.config.js --colors --coverage --passWithNoTests",
     "test:watch": "jest -c jest.config.js --colors --coverage --passWithNoTests --watch",
@@ -18,6 +18,7 @@
     "prettier": "prettier -c .prettierrc \"{pages,components,utils,store}/**/*.{js,jsx}\" --write"
   },
   "dependencies": {
+    "@date-io/dayjs": "^2.17.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
@@ -25,8 +26,12 @@
     "@mui/lab": "^5.0.0-alpha.151",
     "@mui/material": "^5.14.16",
     "@mui/system": "^5.14.16",
+    "@stripe/react-stripe-js": "^2.3.1",
+    "@stripe/stripe-js": "^2.1.11",
+    "@mui/x-date-pickers": "^6.18.1",
     "axios": "^0.25.0",
     "cropperjs": "^1.5.12",
+    "dayjs": "^1.11.10",
     "formik": "^2.2.9",
     "html-react-parser": "^1.4.8",
     "isomorphic-dompurify": "^0.18.0",
@@ -35,12 +40,13 @@
     "moment": "^2.29.1",
     "net": "^1.0.2",
     "next": "^14.0.1",
-    "next-remove-imports": "^1.0.6",
+    "next-auth": "^4.24.5",
+    "next-remove-imports": "^1.0.12",
     "nextjs-progressbar": "^0.0.14",
-    "react": "^17.0.0 || ^18.0.0",
+    "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-cropper": "^2.1.8",
-    "react-dom": "^17.0.0 || ^18.0.0",
+    "react-dom": "^18.2.0",
     "react-draggable": "^4.4.4",
     "react-dropzone": "^12.0.4",
     "react-hot-toast": "^2.2.0",
@@ -59,7 +65,7 @@
     "@redux-devtools/extension": "^3.2.2",
     "@testing-library/dom": "^9.3.3",
     "@testing-library/jest-dom": "^6.1.4",
-    "@testing-library/react": "^14.0.0",
+    "@testing-library/react": "^14.1.0",
     "@testing-library/user-event": "^14.5.1",
     "eslint": "^8.13.0",
     "eslint-config-next": "^14.0.1",
@@ -78,10 +84,6 @@
     "lint-staged": ">=10",
     "prettier": "^2.5.1",
     "sass-lint": "^1.13.1"
-  },
-  "peerDependencies": {
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
   },
   "eslintConfig": {
     "extends": [

@@ -25,6 +25,10 @@ const BootstrapDialogTitle = ({ onClose }) => {
             right: 8,
             top: 8,
             color: (theme) => theme.palette.grey[500],
+            '&:hover': {
+              backgroundColor: '#d32f2f',
+              color: (theme) => 'rgba(255,255,255,1)',
+            },
           }}
         >
           <CloseIcon />
@@ -36,7 +40,14 @@ const BootstrapDialogTitle = ({ onClose }) => {
 
 const SignDialog = ({ children, isOpen, onClose }) => {
   return (
-    <BootstrapDialog open={isOpen}>
+    <BootstrapDialog
+      open={isOpen}
+      sx={{
+        '.MuiDialog-paper': {
+          backgroundColor: '#FEF6E9',
+        },
+      }}
+    >
       <BootstrapDialogTitle onClose={onClose} />
       <DialogContent>{children}</DialogContent>
     </BootstrapDialog>
