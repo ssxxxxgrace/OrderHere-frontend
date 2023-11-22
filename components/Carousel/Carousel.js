@@ -17,7 +17,6 @@ const Carousel = () => {
     );
   };
 
-  // 设置自动轮播
   useEffect(() => {
     const intervalId = setInterval(nextImage, 10000);
     return () => clearInterval(intervalId);
@@ -33,7 +32,7 @@ const Carousel = () => {
   ];
 
   const titleStyle = {
-    color: '#fff', // 根据您的设计调整文字颜色
+    color: '#fff', 
     textAlign: 'center',
     zIndex: 2,
   };
@@ -50,7 +49,7 @@ const Carousel = () => {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.3)', // 调整为您需要的遮罩颜色和透明度
+    backgroundColor: 'rgba(0,0,0,0.3)',
   };
 
   const imageBannerStyle = {
@@ -59,7 +58,7 @@ const Carousel = () => {
     alignItems: 'center',
     height: '300px',
     width: '1440px',
-    backgroundImage: `url(${images[activeIndex]})`, // 设置背景图片为当前活动的图片
+    backgroundImage: `url(${images[activeIndex]})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     position: 'relative',
@@ -71,7 +70,7 @@ const Carousel = () => {
         size="small"
         onClick={() => setActiveIndex(index)}
         sx={{
-          color: activeIndex === index ? 'white' : 'rgba(255, 255, 255, 0.5)', // 当前页为白色，其他为半透明
+          color: activeIndex === index ? 'white' : 'rgba(255, 255, 255, 0.5)', 
         }}
       >
         <FiberManualRecordIcon fontSize="small" />
@@ -101,7 +100,7 @@ const Carousel = () => {
       <Box
         sx={{
           position: 'absolute',
-          bottom: 10, // 或者您需要的值
+          bottom: 10, 
           left: '50%',
           transform: 'translateX(-50%)',
           display: 'flex',
