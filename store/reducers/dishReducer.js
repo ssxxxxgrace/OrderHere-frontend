@@ -1,22 +1,19 @@
 import * as Action from '../actionTypes';
 
-
 const initialState = {
-  dishes: [],     
-  isLoading: false, 
-  error: null,      
+  dishes: [],
+  isLoading: false,
+  error: null,
 };
 
 const dishesReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-
     case Action.ADD_DISH_START:
       return {
         ...state,
         isLoading: true,
         error: null,
       };
-
 
     case Action.ADD_DISH_SUCCESS:
       return {
@@ -31,7 +28,6 @@ const dishesReducer = (state = initialState, { type, payload }) => {
         isLoading: false,
         error: payload,
       };
-
 
     default:
       return state;

@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import FoodItem from '/components/DishList/FoodItem';
-import { Box, Divider, CircularProgress, Alert, IconButton } from '@mui/material';
-import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
+import {
+  Box,
+  Divider,
+  CircularProgress,
+  Alert,
+  IconButton,
+  Button,
+} from '@mui/material';
+import {
+  Add as AddIcon,
+  Construction,
+  Remove as RemoveIcon,
+} from '@mui/icons-material';
 import { getDishes } from '../../services/Dish';
 import AddDishModal from './AddDishModal';
 import { useDispatch } from 'react-redux';
 import { addDishStart, addDishSuccess, addDishError } from './AddDishModal';
-
+import { postDishes } from '../../services/Dish';
 
 const FoodItemsList = () => {
   const [dishes, setDishes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isAddDishModalOpen, setAddDishModalOpen] = useState(false);
+  const [dishAdditionCount, setDishAdditionCount] = useState(0);
 
   const dispatch = useDispatch();
   const handleAddNewDishClick = () => {
@@ -26,25 +38,15 @@ const FoodItemsList = () => {
 
   const priceRange = useSelector((state) => state.filter.priceRange);
 
-  
-
   const handleAddDishSubmit = async (newDishData) => {
-
     dispatch(addDishStart());
     try {
-      const response = await fetch('/api/dishes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newDishData),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const response = await postDishes(newDishData);
+
+      if (response) {
+        dispatch(addDishSuccess(response.data.data));
+        setDishAdditionCount((count) => count + 1);
       }
-      const data = await response.json();
-      dispatch(addDishSuccess(data));
-      setDishes([...dishes, data]);
     } catch (error) {
       dispatch(addDishError(error.toString()));
     }
@@ -70,7 +72,7 @@ const FoodItemsList = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [priceRange]);
+  }, [priceRange, dishAdditionCount]);
 
   console.log(dishes);
 
@@ -118,18 +120,32 @@ const FoodItemsList = () => {
           imageUrl={dish.imageUrl}
         />
       ))}
-      
-      <Divider sx={{ borderColor: 'border.main' }} />
 
-      <IconButton
-        onClick={handleAddNewDishClick}
+      <Box
         sx={{
-          color: 'button.main',
-          marginLeft: 50 
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
-        <AddIcon />
-      </IconButton>
+        <Button
+          onClick={handleAddNewDishClick}
+          sx={{
+            mt: 5,
+            mr: 5,
+            backgroundColor: 'button.main',
+            fontSize: '14px',
+            width: '170px',
+            color: '#fff',
+            '&:hover': {
+              backgroundColor: 'button.main',
+              opacity: 0.6,
+              transition: '0.3s',
+            },
+          }}
+        >
+          ADD NEW DISH
+        </Button>
+      </Box>
 
       <AddDishModal
         open={isAddDishModalOpen}
