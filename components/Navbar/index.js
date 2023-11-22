@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -79,9 +79,9 @@ const Navbar = () => {
             >
               <Image
                 src="/image/Logo-Nav.png"
-                width="348px"
-                height="80px"
-                alt="logo-nav"
+                width={350}
+                height={75}
+                alt="logo-nav"     
               />
             </Box>
           </NextLink>

@@ -15,13 +15,13 @@ const ThreeColumnsLayout = ({ children, noFooter = false }) => {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <Grid item width="95vw">
+          <Grid item width="100vw">
             <Filter />
           </Grid>
           <Grid item>
             <Container maxWidth={false}>{children}</Container>
           </Grid>
-          <Grid item width="95vw">
+          <Grid item width="100vw">
             Right
           </Grid>
         </Grid>
@@ -38,13 +38,13 @@ const ThreeColumnsLayout = ({ children, noFooter = false }) => {
     >
       <Grid
         item
-        xs={2.75}
+        xs={3}
         // style={{ position: 'fixed', left: '-30px', top: '64px', width: '23%' }}
         style={{ position: 'relative' }}
       >
         <Filter />
       </Grid>
-      <Grid item xs={6.5} style={{ position: 'relative' }}>
+      <Grid item xs={6.5} style={{ position: 'relative',flex: '1 1 auto' }}>
         {children}
       </Grid>
       <Grid
