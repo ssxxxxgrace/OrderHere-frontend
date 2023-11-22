@@ -1,4 +1,4 @@
-import exp from "constants";
+import exp from 'constants';
 
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';

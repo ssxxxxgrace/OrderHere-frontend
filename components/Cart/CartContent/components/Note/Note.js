@@ -5,7 +5,7 @@ import * as Action from '../../../../../store/actionTypes';
 
 const Note = () => {
   const [formData, setFormData] = useState({
-    note: ''
+    note: '',
   });
 
   const dispatch = useDispatch();
@@ -21,7 +21,8 @@ const Note = () => {
     let newErrors = { ...errors };
     switch (name) {
       case 'note':
-        newErrors[name] = value.length <= 200 ? '' : 'Should not exceed 200 characters';
+        newErrors[name] =
+          value.length <= 200 ? '' : 'Should not exceed 200 characters';
         break;
       default:
         break;

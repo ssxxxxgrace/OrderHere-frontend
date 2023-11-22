@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { signIn, useSession } from 'next-auth/react';
-import { Button, Box, Typography} from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 
 const loginWithGoogle = () =>
   signIn('google', { callbackUrl: 'http://localhost:3000' });
@@ -21,7 +21,7 @@ const GoogleSignInBtn = ({ children }) => {
     <Button
       onClick={loginWithGoogle}
       variant="outlined"
-      style={{ backgroundColor: 'white', width: '90%', maxWidth: '250px'}}
+      style={{ backgroundColor: 'white', width: '90%', maxWidth: '250px' }}
     >
       <Box display="flex" alignItems="center">
         <Image

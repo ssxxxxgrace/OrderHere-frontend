@@ -16,7 +16,8 @@ const FoodItemsList = () => {
     getDishes()
       .then((response) => {
         const filteredDishes = response.data.data.filter(
-          (dish) => dish.price >= priceRange.min && dish.price <= priceRange.max
+          (dish) =>
+            dish.price >= priceRange.min && dish.price <= priceRange.max,
         );
         // setDishes(response.data.data);
         setDishes(filteredDishes);
@@ -67,7 +68,6 @@ const FoodItemsList = () => {
 
   return (
     <>
-      <Divider sx={{ borderColor: 'border.main' }} />
       {dishes.map((dish) => (
         <FoodItem
           key={dish.dishId}

@@ -13,7 +13,6 @@ import {
   loginSignDialog,
 } from '../../store/actions/signAction';
 
-
 const AccountButton = ({ isLogin }) => {
   const anchorRef = useRef(null);
   const [openPopover, setOpenPopover] = useState(false);
@@ -22,8 +21,6 @@ const AccountButton = ({ isLogin }) => {
   //state to manage signIn dialog
   const { isOpen, content } = useSelector((state) => state.sign);
   const dispatch = useDispatch();
-
-
 
   const handleButtonClick = () => {
     if (!isLogin) {
@@ -38,12 +35,12 @@ const AccountButton = ({ isLogin }) => {
       {/* Open the SignIn Dialog is isLogin is false  */}
       {isOpen && (
         <SignDialog isOpen={isOpen} onClose={() => dispatch(closeSignDialog())}>
-        {content === 'login' ? (
-          <Login register={() => dispatch(registerSignDialog())} />
-        ) : (
-          <Signup login={() => dispatch(loginSignDialog())} />
-        )}
-      </SignDialog>
+          {content === 'login' ? (
+            <Login register={() => dispatch(registerSignDialog())} />
+          ) : (
+            <Signup login={() => dispatch(loginSignDialog())} />
+          )}
+        </SignDialog>
       )}
 
       {/* Open the AccountPopover Dialog is isLogin is true  */}
