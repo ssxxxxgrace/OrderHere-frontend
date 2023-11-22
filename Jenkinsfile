@@ -1,14 +1,20 @@
 pipeline {
     agent any 
-    enviornment{
+    tools{
+        nodejs "Node16"
+    }
+    environment{
         Vercel_Token = credentials('lawbb-vercel-orderhere-front-end')
     }
-    tools {nodejs "nodejs"}
+    
     stages {
-        stage('environment') {
+        stage('Environment') {
             steps {
+                //sh 'strings /lib64/libc.so.6 |grep GLIBC_'
+                sh 'node -v'
                 sh 'npm install'
-                sh 'npm start'
+                sh 'npm install next'
+                
             }
         }
         stage('Build') {
@@ -18,12 +24,15 @@ pipeline {
         }
         stage('Test'){
             steps{
-                sh 'node -v'
+               
                 sh 'npm run test'
             }
         }
-        stage('deploy'){
-            sh 'vercel --token = $Vercel_Token --prod --confirm'
+        stage('Deploy'){
+            steps{
+              sh 'vercel --token = $Vercel_Token --prod --confirm'  
+            }
+            
         }
     }
 }
