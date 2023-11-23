@@ -9,18 +9,6 @@ const History = () => {
     const [orders, setOrders] = useState([]);
     const [restaurants, setRestaurants] = useState({});
     const active = useSelector(state => state.history.active);
-
-    // useEffect(() => {
-    //     const userId = '1';
-    //     const restaurantInfo = {};
-    //     getUserOrder(userId)
-    //         .then((response) => setOrders(response.data))
-    //         .catch((error) => console.error('Fetching orders failed', error));
-
-    //     getRestaurantInfo('1')
-    //         .then((response) => setOrders(response.data))
-    //         .catch((error) => console.error('Fetching orders failed', error));
-    // }, []);
     useEffect(() => {
         const userId = '1';
         const restaurantInfo = {};
@@ -45,7 +33,16 @@ const History = () => {
 
     // console.log('orders by id:', orders)
     // console.log('restaurant name:', restaurants)
-    const filteredOrders = active === 'all' ? orders : orders.filter(order => order.orderType === active);
+    const filteredOrders = orders.filter(order => {
+        if (active === 'all') {
+            return true;
+        }
+        let formattedActive = active;
+        if (active === 'dinein') {
+            formattedActive = 'dine_in';
+        }
+        return order.orderType === formattedActive;
+    });
     console.log('orders with different type:', filteredOrders)
 
     const getStatusColor = (status) => {
