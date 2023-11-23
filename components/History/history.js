@@ -1,23 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserOrder } from '../../services/orderService';
+import { getRestaurantInfo } from '../../services/Restuarant';
 import { Grid, Box } from '@mui/material';
 
 
 const History = () => {
     const [orders, setOrders] = useState([]);
+    const [restaurants, setRestaurants] = useState({});
     const active = useSelector(state => state.history.active);
 
+    // useEffect(() => {
+    //     const userId = '1';
+    //     const restaurantInfo = {};
+    //     getUserOrder(userId)
+    //         .then((response) => setOrders(response.data))
+    //         .catch((error) => console.error('Fetching orders failed', error));
+
+    //     getRestaurantInfo('1')
+    //         .then((response) => setOrders(response.data))
+    //         .catch((error) => console.error('Fetching orders failed', error));
+    // }, []);
     useEffect(() => {
         const userId = '1';
+        const restaurantInfo = {};
+
         getUserOrder(userId)
-            .then((response) => setOrders(response.data))
-            .catch((error) => console.error('Fetching orders failed', error));
+            .then((response) => {
+                setOrders(response.data);
+                response.data.forEach(order => {
+                    getRestaurantInfo(order.restaurantId)
+                        .then(restaurantResponse => {
+                            restaurantInfo[order.restaurantId] = restaurantResponse.data.name;
+                            setRestaurants(prevRestaurants => ({
+                                ...prevRestaurants,
+                                [order.restaurantId]: restaurantResponse.data.name
+                            }));
+                        })
+                        .catch(error => console.error('Fetching restaurant info failed', error));
+                });
+            })
+            .catch(error => console.error('Fetching orders failed', error));
     }, []);
 
-    console.log('orders by id:', orders)
+    // console.log('orders by id:', orders)
+    // console.log('restaurant name:', restaurants)
     const filteredOrders = active === 'all' ? orders : orders.filter(order => order.orderType === active);
-    console.log('orders type:', filteredOrders)
+    console.log('orders with different type:', filteredOrders)
 
     const getStatusColor = (status) => {
         if (!status) return '#D1D5DB';
@@ -65,9 +94,9 @@ const History = () => {
             }}>
                 {filteredOrders.map((order, index) => (
                     <React.Fragment key={index}>
-                        <Grid item xs={2.4} sx={{ marginTop: '2em' }}>{order.userName}</Grid>
+                        <Grid item xs={2.4} sx={{ marginTop: '2em' }}>{restaurants[order.restaurantId]}</Grid>
                         <Grid item xs={2.4} sx={{ marginTop: '2em' }}>{order.orderId}</Grid>
-                        <Grid item xs={2.4} sx={{ marginTop: '2em' }}>{order.pickupTime}</Grid>
+                        <Grid item xs={2.4} sx={{ marginTop: '2em' }}>{new Date(order.updatedTime).toISOString().split('T')[0]}</Grid>
                         <Grid item xs={2.4} sx={{ marginTop: '2em' }}>${order.totalPrice}</Grid>
                         <Grid item xs={2.4} sx={{ marginTop: '2em' }}>
                             <Box sx={{
