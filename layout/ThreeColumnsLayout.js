@@ -5,6 +5,7 @@ import Filter from '../components/Filter';
 const ThreeColumnsLayout = ({ children, noFooter = false }) => {
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
+
   if (mobileDevice) {
     return (
       <>
@@ -15,20 +16,18 @@ const ThreeColumnsLayout = ({ children, noFooter = false }) => {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <Grid item width="95vw">
+          <Grid item width="100vw">
             <Filter />
           </Grid>
           <Grid item>
-            <Container maxWidth={false}>{children}</Container>
-          </Grid>
-          <Grid item width="95vw">
-            Right
+            <Container>{children}</Container>
           </Grid>
         </Grid>
         {!noFooter && <Footer />}
       </>
     );
   }
+
   return (
     <Grid
       container
@@ -36,23 +35,11 @@ const ThreeColumnsLayout = ({ children, noFooter = false }) => {
       spacing={4}
       style={{ position: 'relative' }}
     >
-      <Grid
-        item
-        xs={2.75}
-        // style={{ position: 'fixed', left: '-30px', top: '64px', width: '23%' }}
-        style={{ position: 'relative' }}
-      >
+      <Grid item xs={3} style={{ position: 'relative' }}>
         <Filter />
       </Grid>
-      <Grid item xs={6.5} style={{ position: 'relative' }}>
+      <Grid item xs={9} style={{ position: 'relative', flex: '1 1 auto' }}>
         {children}
-      </Grid>
-      <Grid
-        item
-        xs={2.75}
-        style={{ position: 'fixed', right: '5px', top: '64px', width: '23%' }}
-      >
-        Right
       </Grid>
       {!noFooter && <Footer />}
     </Grid>

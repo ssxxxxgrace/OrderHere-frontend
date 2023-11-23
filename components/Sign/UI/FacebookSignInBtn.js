@@ -21,7 +21,7 @@ const GoogleSignInBtn = ({ children }) => {
     <Button
       onClick={loginWithFacebook}
       variant="outlined"
-      style={{ backgroundColor: 'white', width: '90%', maxWidth: '250px'}}
+      style={{ backgroundColor: 'white', width: '90%', maxWidth: '250px' }}
     >
       <Box display="flex" alignItems="center">
         <Image

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -49,13 +49,17 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
 
 const Navbar = () => {
   const router = useRouter();
-  const isHomeActive = router.pathname === '/';
-  const isStoreInfoActive = router.pathname === '/restaurant/1';
+  console.log('Current Path:', currentPath);
+  const currentPath = router.pathname;
+  const isHomeActive = currentPath === '/';
+  const { asPath } = useRouter();
+  const isStoreInfoActive = asPath.startsWith('/restaurant/');
+  console.log('Current store:', currentPath);
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);
   const { totalItems } = useSelector((state) => state.cart);
- 
+
   return (
     <NavbarRoot>
       <Toolbar
@@ -80,8 +84,8 @@ const Navbar = () => {
             >
               <Image
                 src="/image/Logo-Nav.png"
-                width="348px"
-                height="80px"
+                width={350}
+                height={75}
                 alt="logo-nav"
               />
             </Box>
@@ -111,22 +115,26 @@ const Navbar = () => {
               </Button>
             </Link>
 
-            <Button
-              sx={{
-                display: 'inline-flex',
-                padding: '4px 16px',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: 'black',
-                borderRadius: 10,
-                backgroundColor: isStoreInfoActive ? '#DBDFD0' : 'transparent',
-                '&:hover': {
-                  backgroundColor: '#DBDFD0',
-                },
-              }}
-            >
-              Store Info
-            </Button>
+            <Link href="/restaurant/1" passHref>
+              <Button
+                sx={{
+                  display: 'inline-flex',
+                  padding: '4px 16px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: 'black',
+                  borderRadius: 10,
+                  backgroundColor: isStoreInfoActive
+                    ? '#DBDFD0'
+                    : 'transparent',
+                  '&:hover': {
+                    backgroundColor: '#DBDFD0',
+                  },
+                }}
+              >
+                Store Info
+              </Button>
+            </Link>
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
@@ -135,7 +143,14 @@ const Navbar = () => {
             variant="outlined"
             placeholder="Search"
             size="small"
-            sx={{ marginRight: '20px' }}
+            sx={{
+              marginRight: '20px',
+              backgroundColor: '#F2F2F2',
+              borderRadius: '20px',
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '20px',
+              },
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -145,10 +160,6 @@ const Navbar = () => {
             }}
           />
 
-          {/* <>
-            {isLogin || <Sign />}
-            <AccountButton isLogin={isLogin} />
-          </> */}
           <AccountButton isLogin={isLogin} />
         </>
         <Link href="/cart" passHref>

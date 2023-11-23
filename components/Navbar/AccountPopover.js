@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -19,11 +19,8 @@ import { logoutAction } from '../../store/actions/signAction';
 const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
   const dispatch = useDispatch();
-  const { myDetail } = useSelector((state) => state.sign);
-  const { disconnect } = useWSContext();
 
   const handleLogout = () => {
-    disconnect(myDetail.username);
     dispatch(logoutAction());
     onClose();
   };
@@ -44,7 +41,7 @@ const AccountPopover = (props) => {
     >
       <NextLink
         href={{
-          pathname: `/profile/${myDetail.username}`,
+          pathname: `/profile/username`,
         }}
         passHref
       >
@@ -57,7 +54,7 @@ const AccountPopover = (props) => {
           }}
         >
           <Avatar
-            src={myDetail.headImgUrl}
+            src="headImgUrl"
             sx={{
               height: 40,
               width: 40,
@@ -69,16 +66,16 @@ const AccountPopover = (props) => {
               ml: 1,
             }}
           >
-            <Typography variant="body1">{myDetail.username}</Typography>
+            <Typography variant="body1">username</Typography>
             <Typography color="textSecondary" variant="body2">
-              {myDetail.role.roleName}
+              roleName
             </Typography>
           </Box>
         </Box>
       </NextLink>
       <Divider />
       <Box sx={{ my: 1 }}>
-        {myDetail.role.roleName === 'admin' && (
+        {/* {myDetail.role.roleName === 'admin' && (
           <NextLink href="/admin/users" passHref>
             <MenuItem component="a">
               <ListItemIcon>
@@ -89,7 +86,7 @@ const AccountPopover = (props) => {
               />
             </MenuItem>
           </NextLink>
-        )}
+        )} */}
         <NextLink href="/setting" passHref>
           <MenuItem component="a">
             <ListItemIcon>

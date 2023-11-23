@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
 
-export default function EmptyCart() {
+const EmptyCart = () => {
   return (
     <Container maxWidth="sm">
       <Box
@@ -14,7 +14,7 @@ export default function EmptyCart() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '80vh',
+          height: '100vh',
           textAlign: 'center',
           marginTop: 20,
         }}
@@ -33,10 +33,23 @@ export default function EmptyCart() {
         >
           <img src="/icons/cart/EmptyCartIcon.svg" alt="EmptyCart" />
         </Box>
-        <Typography fontSize="60px" fontFamily={'DM Sans'} gutterBottom>
+        <Typography
+          fontSize="45px"
+          gutterBottom
+          fontWeight="500"
+          sx={{
+            marginTop: 4,
+          }}
+        >
           Your Cart is Empty
         </Typography>
-        <Typography fontSize="30px" fontFamily={'DM Sans'} color="#595959">
+        <Typography
+          fontSize="20px"
+          color="#595959"
+          sx={{
+            marginTop: 2,
+          }}
+        >
           Looks like you haven’t added anything to your cart yet
         </Typography>
         <Link href="/" passHref>
@@ -44,10 +57,13 @@ export default function EmptyCart() {
             variant="contained"
             color="primary"
             sx={{
-              marginTop: 3,
-              backgroundColor: '#AD343E',
+              marginTop: 8,
+              marginBottom: 10,
+              backgroundColor: 'button.main',
               '&:hover': {
-                backgroundColor: '#AD343F',
+                backgroundColor: 'button.main',
+                opacity: 0.7,
+                transition: '0.3s',
               },
               borderRadius: '8px',
               padding: '8px, 16px, 8px, 16px',
@@ -62,4 +78,6 @@ export default function EmptyCart() {
       </Box>
     </Container>
   );
-}
+};
+
+export default EmptyCart;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import image from '../../../public/image/cart-bg.png';
 
 const RestaurantInfoHeader = () => {
   return (
