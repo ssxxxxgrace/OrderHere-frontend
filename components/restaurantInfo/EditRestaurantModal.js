@@ -71,7 +71,13 @@ export const EditRestaurantModal = ({ restaurantId, initialData, onClose, onUpda
 
     return (
         <Modal open onClose={onClose} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Box sx={{ backgroundColor: 'white', padding: 4, borderRadius: 2 }}>
+            <Box sx={{
+                backgroundColor: 'white',
+                padding: 4,
+                borderRadius: 2,
+                maxHeight: '80vh',
+                overflowY: 'auto'
+            }}>
                 <Typography variant="h6" sx={{ marginBottom: 2 }}>
                     Edit Restaurant Info
                 </Typography>
