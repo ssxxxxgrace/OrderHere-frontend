@@ -71,7 +71,7 @@ const Carousel = () => {
         onClick={() => setActiveIndex(index)}
         sx={{
           color: activeIndex === index ? 'white' : 'rgba(255, 255, 255, 0.5)',
-          color: activeIndex === index ? 'white' : 'rgba(255, 255, 255, 0.5)', 
+          color: activeIndex === index ? 'white' : 'rgba(255, 255, 255, 0.5)',
         }}
       >
         <FiberManualRecordIcon fontSize="small" />
@@ -100,7 +100,7 @@ const Carousel = () => {
         sx={{
           position: 'absolute',
           bottom: 10,
-          bottom: 10, 
+          bottom: 10,
           left: '50%',
           transform: 'translateX(-50%)',
           display: 'flex',
