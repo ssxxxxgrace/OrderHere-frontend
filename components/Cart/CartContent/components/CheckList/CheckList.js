@@ -6,7 +6,6 @@ import { placeOrder } from '../../../../../services/orderService';
 import { useRouter } from 'next/router';
 
 const CheckList = () => {
-
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -22,7 +21,6 @@ const CheckList = () => {
     dispatch({ type: Action.CLEAR_CART });
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
-
 
   const handleCheckout = async () => {
     router.push('/pay');
