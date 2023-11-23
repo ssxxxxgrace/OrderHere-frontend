@@ -7,11 +7,14 @@ import {
 import { Button, Box, Typography } from '@mui/material';
 import styles from './PaymentForm.module.css';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import * as Action from '../../../store/actionTypes';
 
 export default function PaymentForm() {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +36,7 @@ export default function PaymentForm() {
       switch (paymentIntent.status) {
         case 'succeeded':
           setMessage('Payment succeeded!');
+          dispatch({ type: Action.CLEAR_CART });
           router.push('/pay/success');
           break;
         case 'processing':
@@ -72,6 +76,7 @@ export default function PaymentForm() {
       setMessage(error.message);
       router.push('/pay/failure');
     } else {
+      dispatch({ type: Action.CLEAR_CART });
       router.push('/pay/success');
     }
   };
