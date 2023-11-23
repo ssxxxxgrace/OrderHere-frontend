@@ -73,8 +73,13 @@ const RenderPages = ({ title, pages }) => (
 const Footer = () => {
   return (
     <NextClientOnly>
-      <Container maxWidth="false">
-        <Box sx={{ mt: 8, py: 5, backgroundColor: "#333", width: '100.6vw', minHeight:'100%',color: "#fff", paddingLeft: ['12px', '72px'], paddingRight: ['12px', '72px'], paddingTop: '100px', paddingBottom: '60px' }}>
+      <Container maxWidth="false" sx={{
+        paddingLeft: { xs: '0px', sm: '0px' },
+        paddingRight: { xs: '0px', sm: '0px' },
+        paddingTop: { xs: '0px', sm: '0px' },
+        paddingBottom: { xs: '0px', sm: '0px' },
+      }}>
+        <Box sx={{ mt: 8, py: 5, backgroundColor: "#333", width: '100.6vw', minHeight: '100%', color: "#fff", paddingLeft: ['12px', '72px'], paddingRight: ['12px', '72px'], paddingTop: '100px', paddingBottom: '60px' }}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={3}>
               <Box display="flex" alignItems="center" mb={2} sx={{ marginBottom: '20px' }}>
