@@ -45,7 +45,6 @@ const Note = () => {
         helperText={errors.note}
         onChange={handleInputChange}
         rows={4}
-        onChange={handleNoteChange}
         sx={{
           '& .MuiOutlinedInput-root': {
             borderRadius: '30px',

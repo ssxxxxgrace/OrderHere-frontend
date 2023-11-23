@@ -170,7 +170,6 @@ const CheckList = () => {
         <ButtonBase
           onClick={handleCheckout}
           sx={{ backgroundColor: 'button.main', width: '100%', height: 40 }}
-          onClick={handleCheckOutClick}
         >
           <Typography sx={{ marginRight: 2, color: 'white' }}>
             Check Out
