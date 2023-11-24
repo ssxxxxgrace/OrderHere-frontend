@@ -1,3 +1,4 @@
+import { signOut } from 'next-auth/react';
 import * as Action from '../actionTypes';
 import store, { saveState } from '../store';
 
@@ -21,5 +22,6 @@ export const logoutAction = () => (dispatch) => {
   dispatch({
     type: Action.LOGOUT,
   });
+  signOut({callbackUrl: 'http://localhost:3000'})
   saveState(store.getState());
 };

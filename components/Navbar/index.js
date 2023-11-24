@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   AppBar,
   Box,
@@ -19,6 +19,9 @@ import AccountButton from './AccountButton';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from 'next/link';
+import { signIn, useSession } from 'next-auth/react';
+import { useEffect } from 'react';
+import loginAction, { loginOrCreateUser } from '../../store/actions/httpAction';
 
 export const styleNew = {
   title: {
@@ -59,6 +62,15 @@ const Navbar = () => {
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);
   const { totalItems } = useSelector((state) => state.cart);
+  const { data: session, error } = useSession();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (session && !isLogin) {
+      console.log('we have session');
+      dispatch(loginOrCreateUser(session));
+    }
+  });
 
   return (
     <NavbarRoot>
