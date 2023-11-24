@@ -21,7 +21,6 @@ const CheckList = () => {
     dispatch({ type: Action.CLEAR_CART });
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
-
   const handleCheckout = async () => {
     router.push('/pay');
     // const orderData = {
