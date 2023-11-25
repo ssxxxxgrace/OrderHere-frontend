@@ -5,21 +5,46 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 
+import {useDispatch} from "react-redux";
+import {updateDineInData} from "../../../../../store/actions/dineInAction";
+
 const DineIn = () => {
+  const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedTime, setSelectedTime] = useState(dayjs());
   const [personCount, setPersonCount] = useState('');
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const handleDateChange = (date) => {
     setSelectedDate(dayjs(date));
+    const formattedDate = dayjs(date).format('YYYY-MM-DD');
+    dispatch(updateDineInData({ selectedDate: formattedDate }));
   };
 
   const handleTimeChange = (time) => {
     setSelectedTime(dayjs(time));
+
+    const formattedTime = dayjs(time).format('HH:mm');
+    dispatch(updateDineInData({ selectedTime: formattedTime }));
+
   };
 
   const handlePersonCountChange = (event) => {
     setPersonCount(event.target.value);
+
+    dispatch(updateDineInData({ personCount: event.target.value }));
+  };
+
+  const handleNameChange = (event) => {
+      setName(event.target.value);
+      dispatch(updateDineInData({ name: event.target.value }));
+  };
+
+  const handlePhoneNumberChange = (event) => {
+      setPhoneNumber(event.target.value);
+      dispatch(updateDineInData({ phoneNumber: event.target.value }));
+
   };
 
   const disablePastDates = (date) => {
@@ -125,6 +150,9 @@ const DineIn = () => {
                 height: 'auto',
               },
             }}
+
+            onChange={handleNameChange}
+
           />
 
           <TextField
@@ -144,6 +172,9 @@ const DineIn = () => {
                 height: 'auto',
               },
             }}
+
+            onChange={handlePhoneNumberChange}
+
           />
         </Box>
 

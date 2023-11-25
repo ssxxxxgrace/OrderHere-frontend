@@ -1,10 +1,11 @@
 pipeline {
     agent any 
-    tools{
-        nodejs "Node16"
-    }
+
+
     environment{
         Vercel_Token = credentials('lawbb-vercel-orderhere-front-end')
+        PATH = "/usr/local/lib/node/nodejs/bin:${PATH}"
+
     }
     
     stages {
@@ -30,7 +31,9 @@ pipeline {
         }
         stage('Deploy'){
             steps{
-              sh 'vercel --token = $Vercel_Token --prod --confirm'  
+
+              sh 'vercel --token $Vercel_Token --prod --yes --name order-here-front-end-lawbb-test'  
+
             }
             
         }
