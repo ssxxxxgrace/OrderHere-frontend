@@ -28,6 +28,7 @@ export const SET_NOTE_DATA = 'SET_NOTE_DATA';
 export const SET_PRICE_RANGE = 'SET_PRICE_RANGE';
 export const SET_FILTERED_DISHES = 'SET_FILTERED_DISHES';
 
+
 export const ADD_DISH_START = 'ADD_DISH_START';
 export const ADD_DISH_SUCCESS = 'ADD_DISH_SUCCESS';
 export const ADD_DISH_ERROR = 'ADD_DISH_ERROR';

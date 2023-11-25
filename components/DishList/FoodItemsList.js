@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import { useSelector } from 'react-redux';
 import FoodItem from '/components/DishList/FoodItem';
 import {
@@ -20,10 +21,12 @@ import { useDispatch } from 'react-redux';
 import { addDishStart, addDishSuccess, addDishError } from './AddDishModal';
 import { postDishes } from '../../services/Dish';
 
+
 const FoodItemsList = () => {
   const [dishes, setDishes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const [isAddDishModalOpen, setAddDishModalOpen] = useState(false);
   const [dishAdditionCount, setDishAdditionCount] = useState(0);
 
@@ -72,7 +75,9 @@ const FoodItemsList = () => {
       .finally(() => {
         setIsLoading(false);
       });
+
   }, [priceRange, dishAdditionCount]);
+
 
   console.log(dishes);
 
@@ -121,6 +126,7 @@ const FoodItemsList = () => {
         />
       ))}
 
+
       <Box
         sx={{
           display: 'flex',
@@ -152,6 +158,7 @@ const FoodItemsList = () => {
         handleClose={handleCloseModal}
         handleSubmit={handleAddDishSubmit}
       />
+
     </>
   );
 };

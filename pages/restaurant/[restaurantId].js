@@ -1,16 +1,21 @@
+
 import { Box, Button } from '@mui/material';
+
 import { useRouter } from 'next/router';
 import RestaurantInfoHeader from '../../components/restaurantInfo/components/restaurantInfoHeader';
 import RestaurantInfoContent from '../../components/restaurantInfo/components/restaurantInfoContent';
 import Contact from '../../components/restaurantInfo/components/contact';
 import OpeningHours from '../../components/restaurantInfo/components/openingHours';
+
 import { EditRestaurantModal } from '../../components/restaurantInfo/EditRestaurantModal';
 import { useEffect, useState } from 'react';
 import { getRestaurantInfo } from '../../services/Restuarant';
 
+
 const RestaurantInfoPage = () => {
   const router = useRouter();
   const { restaurantId } = router.query;
+
   const [loading, setLoading] = useState(false);
   const [restaurantData, setRestaurantData] = useState(null);
   const [error, setError] = useState(null);
@@ -59,6 +64,7 @@ const RestaurantInfoPage = () => {
     }
   };
 
+
   return (
     <Box
       sx={{
@@ -66,6 +72,7 @@ const RestaurantInfoPage = () => {
       }}
     >
       <RestaurantInfoHeader />
+
       <Box
         sx={{
           display: 'flex',
@@ -97,6 +104,7 @@ const RestaurantInfoPage = () => {
           />
         )}
       </Box>
+
       <RestaurantInfoContent data={restaurantData} />
       <Box
         sx={{

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Box, Typography } from '@mui/material';
 
 const FailurePage = () => {
@@ -69,3 +70,4 @@ const FailurePage = () => {
 };
 
 export default FailurePage;
+

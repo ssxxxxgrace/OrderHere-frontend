@@ -4,6 +4,7 @@ import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+
 import {useDispatch} from "react-redux";
 import {updateDineInData} from "../../../../../store/actions/dineInAction";
 
@@ -23,12 +24,15 @@ const DineIn = () => {
 
   const handleTimeChange = (time) => {
     setSelectedTime(dayjs(time));
+
     const formattedTime = dayjs(time).format('HH:mm');
     dispatch(updateDineInData({ selectedTime: formattedTime }));
+
   };
 
   const handlePersonCountChange = (event) => {
     setPersonCount(event.target.value);
+
     dispatch(updateDineInData({ personCount: event.target.value }));
   };
 
@@ -40,6 +44,7 @@ const DineIn = () => {
   const handlePhoneNumberChange = (event) => {
       setPhoneNumber(event.target.value);
       dispatch(updateDineInData({ phoneNumber: event.target.value }));
+
   };
 
   const disablePastDates = (date) => {
@@ -145,7 +150,9 @@ const DineIn = () => {
                 height: 'auto',
               },
             }}
+
             onChange={handleNameChange}
+
           />
 
           <TextField
@@ -165,7 +172,9 @@ const DineIn = () => {
                 height: 'auto',
               },
             }}
+
             onChange={handlePhoneNumberChange}
+
           />
         </Box>
 
