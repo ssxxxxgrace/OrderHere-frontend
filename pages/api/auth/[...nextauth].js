@@ -14,18 +14,30 @@ export const authOptions = {
       authorization: {
         params: {
           prompt: 'consent',
-          access_type: 'offline',
-          response_type: 'code',
+          scope: 'openid email profile',
         },
       },
     }),
-
     // Facebook Provideer
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID,
       clientSecret: process.env.FACEBOOK_SECRET,
     }),
   ],
+  callbacks: {
+    async session({ session, user, token }) {
+      session.token = token;
+      session.user = user;
+      return session;
+    },
+    async jwt({ token, user, account }) {
+      if (account && user) {
+        token.account = account;
+        token.user = user;
+      }
+      return token;
+    },
+  },
 };
 
 export default NextAuth(authOptions);

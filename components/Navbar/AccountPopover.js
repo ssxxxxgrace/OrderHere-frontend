@@ -15,6 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { logoutAction } from '../../store/actions/signAction';
+import { signOut } from 'next-auth/react';
 
 const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -22,6 +23,7 @@ const AccountPopover = (props) => {
 
   const handleLogout = () => {
     dispatch(logoutAction());
+    signOut({ redirect: `http://localhost:3000` });
     onClose();
   };
 

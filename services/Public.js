@@ -14,3 +14,13 @@ export const signup = (userName, firstName, lastName, password, email) =>
       email,
     },
   });
+
+export const loginByOathProvider = (provider,openId,email,username,avatarUrl) =>
+  http(`/v1/public/users/login/${provider}/${openId}`, {
+    method: 'POST',
+    data: {
+      username,
+      email,
+      avatarUrl,
+    },
+  });

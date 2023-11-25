@@ -1,6 +1,6 @@
 import * as Action from '../actionTypes';
 import store, { saveState } from '../store';
-import { login } from '../../services/Public';
+import { login, loginByOathProvider } from '../../services/Public';
 import getRestaurantById from '../../pages/api/restaurantService';
 
 const loginSuccess = (token) => ({
@@ -12,7 +12,7 @@ const loginError = () => ({
   type: Action.LOGIN_ERROR,
 });
 
-const loginAction = (email, password, success, fail) => (dispatch) => {
+export const loginAction = (email, password, success, fail) => (dispatch) => {
   login(email, password)
     .then((response) => {
       dispatch(loginSuccess(response.data.token));
@@ -42,4 +42,20 @@ export const fetchRestaurant = (restaurantId) => async (dispatch) => {
   }
 };
 
-export default loginAction;
+export const loginWithOauthProviderAction =
+  (provider, openId, email, username, avatarUrl, success, fail) =>
+  (dispatch) => {
+    loginByOathProvider(provider, openId, email, username, avatarUrl)
+      .then((response) => {
+        dispatch(loginSuccess(response.data));
+        // console.log(`We are here in loginWithOathProviderAction function`)
+        // console.log(response.data);
+        success(response);
+      })
+      .catch((error) => {
+        console.log('login fail');
+        dispatch(loginError());
+        fail(error);
+      })
+      .then(() => saveState(store.getState()));
+  };
