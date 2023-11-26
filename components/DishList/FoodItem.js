@@ -128,7 +128,15 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
           ADD TO CART
         </Button>
       </Box>
-      <DishPopup dishId={dishId} open={popupOpen} onClose={togglePopup} />
+      <DishPopup
+        dishId={dishId}
+        dishName={dishName}
+        description={description}
+        price={price}
+        imageUrl={imageUrl}
+        open={popupOpen}
+        onClose={togglePopup}
+      />
     </>
   );
 };
