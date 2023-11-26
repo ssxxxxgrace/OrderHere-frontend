@@ -47,7 +47,6 @@ export const EditRestaurantModal = ({
     event.preventDefault();
     setLoading(true);
     try {
-      console.log(formData);
       await updateRestaurant(restaurantId, formData);
       if (onUpdate) {
         onUpdate();

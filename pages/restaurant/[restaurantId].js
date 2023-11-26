@@ -21,11 +21,9 @@ const RestaurantInfoPage = () => {
       setLoading(true);
       getRestaurantInfo(restaurantId)
         .then((response) => {
-          console.log('Fetched data:', response.data);
           setRestaurantData(response.data);
         })
         .catch((err) => {
-          console.error('Error fetching data:', err);
           setError(err);
         })
         .finally(() => {
