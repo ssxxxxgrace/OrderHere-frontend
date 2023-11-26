@@ -8,9 +8,10 @@ import { Button, Box, Typography } from '@mui/material';
 import styles from './PaymentForm.module.css';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import * as Action from '../../../store/actionTypes';
+import * as Action from '../../store/actionTypes';
+import {sendPayResult} from "../../services/Payment";
 
-export default function PaymentForm() {
+export default function PaymentForm({paymentId}) {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
@@ -19,42 +20,6 @@ export default function PaymentForm() {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (!stripe) {
-      return;
-    }
-
-    // Extract the client secret from the query parameters
-    const query = new URLSearchParams(window.location.search);
-    const clientSecret = query.get('payment_intent_client_secret');
-
-    if (!clientSecret) {
-      return;
-    }
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
-        case 'succeeded':
-          setMessage('Payment succeeded!');
-          dispatch({ type: Action.CLEAR_CART });
-          router.push('/pay/success');
-          break;
-        case 'processing':
-          setMessage('Your payment is processing.');
-          break;
-        case 'requires_payment_method':
-        case 'requires_confirmation':
-        case 'requires_action':
-          setMessage('Your payment was not successful, please try again.');
-          router.push('/pay/failure');
-          break;
-        default:
-          setMessage('Something went wrong.');
-          router.push('/pay/failure');
-          break;
-      }
-    });
-  }, [stripe, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,9 +39,19 @@ export default function PaymentForm() {
 
     if (error) {
       setMessage(error.message);
+      const paymentResultDto = {
+        paymentId: paymentId,
+        result: 'failure'
+      };
+      sendPayResult(paymentResultDto)
       router.push('/pay/failure');
     } else {
       dispatch({ type: Action.CLEAR_CART });
+      const paymentResultDto = {
+        paymentId: paymentId,
+        result: 'success'
+      };
+      sendPayResult(paymentResultDto);
       router.push('/pay/success');
     }
   };

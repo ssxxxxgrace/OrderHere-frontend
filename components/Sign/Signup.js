@@ -43,7 +43,6 @@ const Signup = ({ login }) => {
         .required('Password is required'),
     }),
     onSubmit: async (values) => {
-      console.log('values', values);
       const { firstname, lastname, email, password } = values;
       setLoading(true);
       signup(firstname + ' ' + lastname, firstname, lastname, password, email)

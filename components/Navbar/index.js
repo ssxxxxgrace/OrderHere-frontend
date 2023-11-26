@@ -53,12 +53,12 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
 
 const Navbar = () => {
   const router = useRouter();
-  console.log('Current Path:', currentPath);
+  // console.log('Current Path:', currentPath);
   const currentPath = router.pathname;
   const isHomeActive = currentPath === '/';
   const { asPath } = useRouter();
   const isStoreInfoActive = asPath.startsWith('/restaurant/');
-  console.log('Current store:', currentPath);
+  // console.log('Current store:', currentPath);
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);
