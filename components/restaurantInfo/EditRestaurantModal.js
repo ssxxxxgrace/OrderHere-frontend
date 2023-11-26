@@ -10,7 +10,7 @@ import {
   InputLabel,
 } from '@mui/material';
 import { useState } from 'react';
-import { updateRestaurant } from '../../services/Restuarant';
+import { updateRestaurant } from '../../services/Restaurant';
 
 export const EditRestaurantModal = ({
   restaurantId,

@@ -6,7 +6,7 @@ import Contact from '../../components/restaurantInfo/components/contact';
 import OpeningHours from '../../components/restaurantInfo/components/openingHours';
 import { EditRestaurantModal } from '../../components/restaurantInfo/EditRestaurantModal';
 import { useEffect, useState } from 'react';
-import { getRestaurantInfo } from '../../services/Restuarant';
+import { getRestaurantInfo } from '../../services/Restaurant';
 
 const RestaurantInfoPage = () => {
   const router = useRouter();

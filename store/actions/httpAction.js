@@ -1,7 +1,7 @@
 import * as Action from '../actionTypes';
 import store, { saveState } from '../store';
 import { login, loginByOathProvider } from '../../services/Public';
-import getRestaurantById from '../../pages/api/restaurantService';
+import getRestaurantInfo from '../../services/Restaurant';
 
 const loginSuccess = (token) => ({
   type: Action.LOGIN_SUCCESS,
@@ -32,8 +32,6 @@ export const loginWithOauthProviderAction =
     loginByOathProvider(provider, openId, email, username, avatarUrl)
       .then((response) => {
         dispatch(loginSuccess(response.data));
-        // console.log(`We are here in loginWithOathProviderAction function`)
-        // console.log(response.data);
         success(response);
       })
       .catch((error) => {
@@ -48,7 +46,7 @@ export const fetchRestaurant = (restaurantId) => async (dispatch) => {
   dispatch({ type: Action.FETCH_RESTAURANT_START });
 
   try {
-    const response = await getRestaurantById(restaurantId);
+    const response = await getRestaurantInfo(restaurantId);
     dispatch({
       type: Action.FETCH_RESTAURANT_SUCCESS,
       payload: response,

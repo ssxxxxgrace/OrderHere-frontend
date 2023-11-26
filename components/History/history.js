@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserOrder } from '../../services/orderService';
-import { getRestaurantInfo } from '../../services/Restuarant';
+import { getRestaurantInfo } from '../../services/Restaurant';
 import { Grid, Box } from '@mui/material';
 
 
