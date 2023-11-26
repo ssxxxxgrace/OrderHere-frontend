@@ -12,6 +12,7 @@ import {
 
 import { useDispatch } from 'react-redux';
 import LogoutIcon from '@mui/icons-material/Logout';
+import HistoryIcon from '@mui/icons-material/History';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { logoutAction } from '../../store/actions/signAction';
@@ -105,6 +106,17 @@ const AccountPopover = (props) => {
             </ListItemIcon>
             <ListItemText
               primary={<Typography variant="body1">Logout</Typography>}
+            />
+          </MenuItem>
+        </NextLink>
+        <Divider />
+        <NextLink href="/history" passHref>
+          <MenuItem>
+            <ListItemIcon>
+              <HistoryIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText
+              primary={<Typography variant="body1">Order History</Typography>}
             />
           </MenuItem>
         </NextLink>
