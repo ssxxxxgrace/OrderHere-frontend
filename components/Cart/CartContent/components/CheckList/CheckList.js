@@ -6,6 +6,7 @@ import { placeOrder } from '../../../../../services/orderService';
 import { useRouter } from 'next/router';
 
 const CheckList = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const totalPrice = useSelector((state) => state.cart.totalPrice).toFixed(2);
@@ -20,40 +21,40 @@ const CheckList = () => {
     dispatch({ type: Action.CLEAR_CART });
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
-
   const handleCheckout = async () => {
-    const orderData = {
-      userId: 1,
-      orderType: 'delivery',
-      orderStatus: 'pending',
-      discount: 0,
-      address: address.address,
-      totalPrice: parseFloat(totalPrice),
-      note: note.note,
-      dishes: cartItems.map((item) => ({
-        dishId: item.dishId,
-        dishName: item.dishName,
-        dishQuantity: item.quantity,
-        dishPrice: item.price,
-      })),
-    };
-    console.log('Address:', address);
-    console.log('Note:', note);
-    console.log('order data:', orderData);
+    router.push('/pay');
+    // const orderData = {
+    //   userId: 1,
+    //   orderType: 'delivery',
+    //   orderStatus: 'pending',
+    //   discount: 0,
+    //   address: address.address,
+    //   totalPrice: parseFloat(totalPrice),
+    //   note: note.note,
+    //   dishes: cartItems.map((item) => ({
+    //     dishId: item.dishId,
+    //     dishName: item.dishName,
+    //     dishQuantity: item.quantity,
+    //     dishPrice: item.price,
+    //   })),
+    // };
+    // console.log('Address:', address);
+    // console.log('Note:', note);
+    // console.log('order data:', orderData);
 
-    if (!address.name || !address.phone || !address.address) {
-      console.log('Warning: Shipping information is missing!');
-      return;
-    }
+    // if (!address.name || !address.phone || !address.address) {
+    //   console.log('Warning: Shipping information is missing!');
+    //   return;
+    // }
 
-    try {
-      const response = await placeOrder(orderData);
-      console.log('Order placed successfully:', response);
-      dispatch({ type: Action.CLEAR_CART });
-      router.push('/');
-    } catch (error) {
-      console.error('Error placing order:', error.response);
-    }
+    // try {
+    //   const response = await placeOrder(orderData);
+    //   console.log('Order placed successfully:', response);
+    //   dispatch({ type: Action.CLEAR_CART });
+    //   router.push('/');
+    // } catch (error) {
+    //   console.error('Error placing order:', error.response);
+    // }
   };
 
   return (
