@@ -4,8 +4,8 @@ import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import {useDispatch} from "react-redux";
-import {updateDineInData} from "../../../../../store/actions/dineInAction";
+import { useDispatch } from 'react-redux';
+import { updateDineInData } from '../../../../../store/actions/dineInAction';
 
 const DineIn = () => {
   const dispatch = useDispatch();
@@ -33,13 +33,13 @@ const DineIn = () => {
   };
 
   const handleNameChange = (event) => {
-      setName(event.target.value);
-      dispatch(updateDineInData({ name: event.target.value }));
+    setName(event.target.value);
+    dispatch(updateDineInData({ name: event.target.value }));
   };
 
   const handlePhoneNumberChange = (event) => {
-      setPhoneNumber(event.target.value);
-      dispatch(updateDineInData({ phoneNumber: event.target.value }));
+    setPhoneNumber(event.target.value);
+    dispatch(updateDineInData({ phoneNumber: event.target.value }));
   };
 
   const disablePastDates = (date) => {

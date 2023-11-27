@@ -66,7 +66,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { data: session, error } = useSession();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (session && !isLogin) {
       //extract data from session token
       const provider = session.token.account.provider;
@@ -82,17 +82,16 @@ const Navbar = () => {
           email,
           username,
           avatarUrl,
-          ()=>{
-            console.log("login sucess")
+          () => {
+            console.log('login success');
           },
-          (fail)=>{
-            console.log("login fail")
-          }
+          (fail) => {
+            console.log('login fail');
+          },
         ),
       );
     }
-  })
-
+  });
 
   return (
     <NavbarRoot>

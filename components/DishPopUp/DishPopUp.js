@@ -19,7 +19,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../store/actionTypes';
 import { width } from '@mui/system';
 
-
 const DishPopup = ({
   dishId,
   dishName,
@@ -38,14 +37,11 @@ const DishPopup = ({
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
-
         const response = await getIngredientsByDish(dishId);
-
 
         const ingredientDetailsPromises = response.data.map((ingredient) =>
           getIngredient(ingredient.ingredientId),
         );
-
 
         const ingredientsDetails = await Promise.all(ingredientDetailsPromises);
 
