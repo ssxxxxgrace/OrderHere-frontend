@@ -6,8 +6,9 @@ const backendHttpInstance = () => {
   const axiosInstance = axios.create();
   axiosInstance.defaults.baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-  axiosInstance.defaults.headers.common.Authorization =
-    store.getState().token || '';
+  axiosInstance.defaults.headers.common.Authorization = store.getState().sign.token
+    ?  store.getState().sign.token
+    : '';
 
   axiosInstance.interceptors.response.use(
     (config) => config,

@@ -83,7 +83,7 @@ const Navbar = () => {
           username,
           avatarUrl,
           ()=>{
-            console.log("login sucess")
+            console.log("login success")
           },
           (fail)=>{
             console.log("login fail")
