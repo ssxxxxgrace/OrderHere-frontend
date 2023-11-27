@@ -9,4 +9,4 @@ export const postDishes = (dishData) => http(`/v1/public/dish`, {
     },
     data: JSON.stringify(dishData)
   });
-  
+
