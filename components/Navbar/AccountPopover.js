@@ -24,7 +24,7 @@ const AccountPopover = (props) => {
 
   const handleLogout = () => {
     dispatch(logoutAction());
-    signOut({ redirect: `http://localhost:3000` });
+    signOut({ redirect: "/" });
     onClose();
   };
 
