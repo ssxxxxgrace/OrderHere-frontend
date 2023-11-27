@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../store/actionTypes';
 import { width } from '@mui/system';
 
-// 弹窗组件
+
 const DishPopup = ({
   dishId,
   dishName,
@@ -38,21 +38,20 @@ const DishPopup = ({
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
-        // 首先获取原始 ingredients 数据
+
         const response = await getIngredientsByDish(dishId);
 
-        // 对于每个 ingredient，使用其 ID 获取完整的详情
+
         const ingredientDetailsPromises = response.data.map((ingredient) =>
           getIngredient(ingredient.ingredientId),
         );
 
-        // 等待所有的 ingredient 详情请求完成
+
         const ingredientsDetails = await Promise.all(ingredientDetailsPromises);
 
-        // 将原始 ingredients 数据与获取到的名称合并
         const ingredientsWithNames = response.data.map((ingredient, index) => ({
           ...ingredient,
-          name: ingredientsDetails[index].data.name, // 假设每个ingredient的响应中都有一个data对象，它包含了name属性
+          name: ingredientsDetails[index].data.name,
         }));
 
         setIngredients(ingredientsWithNames);
