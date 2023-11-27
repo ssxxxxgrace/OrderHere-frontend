@@ -23,7 +23,6 @@ export default function PayPage() {
       currency: currency,
     };
 
-    console.log(paymentPostDto);
     createPayment(paymentPostDto)
         .then(response => {
           if (response.status !== 201) {

@@ -10,7 +10,7 @@ import {
   InputLabel,
 } from '@mui/material';
 import { useState } from 'react';
-import { updateRestaurant } from '../../services/Restuarant';
+import { updateRestaurant } from '../../services/Restaurant';
 
 export const EditRestaurantModal = ({
   restaurantId,
@@ -47,7 +47,6 @@ export const EditRestaurantModal = ({
     event.preventDefault();
     setLoading(true);
     try {
-      console.log(formData);
       await updateRestaurant(restaurantId, formData);
       if (onUpdate) {
         onUpdate();

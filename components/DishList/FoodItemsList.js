@@ -74,8 +74,6 @@ const FoodItemsList = () => {
       });
   }, [priceRange, dishAdditionCount]);
 
-  console.log(dishes);
-
   if (isLoading) {
     return (
       <Box
