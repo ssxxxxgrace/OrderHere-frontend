@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from '../../components/Payment/PaymentForm';
-import {createPayment} from "../../services/Payment";
+import { createPayment } from '../../services/Payment';
 import { useSelector } from 'react-redux';
 
 const stripePromise = loadStripe(
@@ -24,24 +24,25 @@ export default function PayPage() {
     };
 
     createPayment(paymentPostDto)
-        .then(response => {
-          if (response.status !== 201) {
-            throw new Error(`Server responded with status ${response.status}`);
-          }
-          const data = response.data;
-          if (data.clientSecret && data.paymentId) {
-            setClientSecret(data.clientSecret);
-            setPaymentId(data.paymentId);
-          } else {
-            console.error('Client secret or payment ID not found in response:', data);
-          }
-        })
-        .catch(error => {
-          console.error('Error creating payment intent:', error);
-        });
+      .then((response) => {
+        if (response.status !== 201) {
+          throw new Error(`Server responded with status ${response.status}`);
+        }
+        const data = response.data;
+        if (data.clientSecret && data.paymentId) {
+          setClientSecret(data.clientSecret);
+          setPaymentId(data.paymentId);
+        } else {
+          console.error(
+            'Client secret or payment ID not found in response:',
+            data,
+          );
+        }
+      })
+      .catch((error) => {
+        console.error('Error creating payment intent:', error);
+      });
   }, [orderId, amount, currency]);
-
-
 
   const appearance = {
     theme: 'stripe',
@@ -56,7 +57,7 @@ export default function PayPage() {
     <div className="App">
       {clientSecret ? (
         <Elements stripe={stripePromise} options={options}>
-          <PaymentForm paymentId={paymentId} clientSecret={clientSecret}/>
+          <PaymentForm paymentId={paymentId} clientSecret={clientSecret} />
         </Elements>
       ) : (
         <p>Loading...</p>

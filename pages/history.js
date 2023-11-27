@@ -1,5 +1,5 @@
 import Content from '../components/History';
-import Footer from '../layout/Footer'
+import Footer from '../layout/Footer';
 
 const OrderHistoryhistory = () => {
   return (

@@ -9,9 +9,9 @@ import styles from './PaymentForm.module.css';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import * as Action from '../../store/actionTypes';
-import {sendPayResult} from "../../services/Payment";
+import { sendPayResult } from '../../services/Payment';
 
-export default function PaymentForm({paymentId}) {
+export default function PaymentForm({ paymentId }) {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
@@ -19,7 +19,6 @@ export default function PaymentForm({paymentId}) {
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,15 +40,15 @@ export default function PaymentForm({paymentId}) {
       setMessage(error.message);
       const paymentResultDto = {
         paymentId: paymentId,
-        result: 'failure'
+        result: 'failure',
       };
-      sendPayResult(paymentResultDto)
+      sendPayResult(paymentResultDto);
       router.push('/pay/failure');
     } else {
       dispatch({ type: Action.CLEAR_CART });
       const paymentResultDto = {
         paymentId: paymentId,
-        result: 'success'
+        result: 'success',
       };
       sendPayResult(paymentResultDto);
       router.push('/pay/success');
