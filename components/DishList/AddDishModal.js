@@ -12,20 +12,34 @@ import {
   ADD_DISH_SUCCESS,
   ADD_DISH_ERROR,
 } from '../../store/actionTypes';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const AddDishModal = ({ open, handleClose, handleSubmit }) => {
   const [newDish, setNewDish] = useState({
     dishName: '',
     description: '',
     price: '',
-    imageUrl: '',
     restaurantId: 1,
     availability: true,
+    imageFile: null,
   });
 
+  const [imageName, setImageName] = useState("");
+
+  const handleDeleteFile = () => {
+    setImageName("");
+    setNewDish({ ...newDish, imageFile: null });
+  };
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewDish({ ...newDish, [name]: value });
+    const { name, value, files } = e.target;
+
+    if (name === "imageFile") {
+      setNewDish({ ...newDish, imageFile: files[0] });
+      setImageName(files[0].name);
+    } else {
+      setNewDish({ ...newDish, [name]: value });
+    }
   };
 
   const handleFormSubmit = () => {
@@ -58,13 +72,30 @@ const AddDishModal = ({ open, handleClose, handleSubmit }) => {
           margin="normal"
           onChange={handleChange}
         />
-        <TextField
-          name="imageUrl"
-          label="Image URL"
-          fullWidth
-          margin="normal"
-          onChange={handleChange}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: 16 }}>
+          <Button
+            variant="contained"
+            component="label"
+            style={{ marginRight: 8 }}
+          >
+            Upload Image
+            <input
+              type="file"
+              hidden
+              onChange={handleChange}
+              name="imageFile"
+            />
+          </Button>
+          {imageName && (
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+      {imageName}
+              <DeleteIcon
+                onClick={handleDeleteFile}
+                style={{ cursor: 'pointer', marginLeft: 8 }}
+              />
+    </span>
+          )}
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
