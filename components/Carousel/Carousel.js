@@ -24,11 +24,11 @@ const Carousel = () => {
 
   const images = [
     '/image/Dish1.png',
-    '/image/Dish2.png',
-    '/image/instagram1.png',
-    '/image/instagram2.png',
-    '/image/instagram3.png',
-    '/image/instagram4.png',
+    '/image/carouselImage1.webp',
+    '/image/carouselImage2.webp',
+    '/image/carouselImage3.webp',
+    '/image/carouselImage4.webp',
+    '/image/carouselImage5.webp',
   ];
 
   const titleStyle = {
