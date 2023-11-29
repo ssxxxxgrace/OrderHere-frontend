@@ -8,8 +8,8 @@ const LayoutRoot = styled('div')(() => ({
   alignItems: 'center',
   // justifyContent: 'center',
   justifyContent: 'flex-start',
-  width: '100vw',
-  paddingTop: 64,
+  width: '100%',
+  paddingTop: 50,
   paddingBottom:0,
   minHeight: '100%'
 }));
