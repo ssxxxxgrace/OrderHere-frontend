@@ -1,0 +1,31 @@
+.dishPopup .MuiDialog-paper {
+  background-color: #f4f4f4;
+  padding: 0;
+  width: 50%;
+}
+
+.dishImage {
+  width: 100%;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.dishTitle {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-left: 30px;
+}
+
+.dishIngredients {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+  margin-left: 30px;
+}
+
+.dishPrice {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+}

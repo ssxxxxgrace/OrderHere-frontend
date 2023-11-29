@@ -1,3 +1,4 @@
+import { signOut } from 'next-auth/react';
 import * as Action from '../actionTypes';
 import store, { saveState } from '../store';
 
@@ -18,6 +19,9 @@ export const registerSignDialog = () => ({
 });
 
 export const logoutAction = () => (dispatch) => {
+  //clear the NextAuth session
+  // signOut({ redirect: `http://localhost:3000` });
+
   dispatch({
     type: Action.LOGOUT,
   });

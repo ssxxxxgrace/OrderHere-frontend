@@ -19,6 +19,10 @@ import AccountButton from './AccountButton';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { loginWithOauthProviderAction } from '../../store/actions/httpAction';
 
 export const styleNew = {
   title: {
@@ -49,16 +53,45 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
 
 const Navbar = () => {
   const router = useRouter();
-  // console.log('Current Path:', currentPath);
   const currentPath = router.pathname;
   const isHomeActive = currentPath === '/';
   const { asPath } = useRouter();
   const isStoreInfoActive = asPath.startsWith('/restaurant/');
-  // console.log('Current store:', currentPath);
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);
   const { totalItems } = useSelector((state) => state.cart);
+
+  //use session login user
+  const dispatch = useDispatch();
+  const { data: session, error } = useSession();
+
+  useEffect(() => {
+    if (session && !isLogin) {
+      //extract data from session token
+      const provider = session.token.account.provider;
+      const providerAccountId = session.token.account.providerAccountId;
+      const username = session.token.user.name;
+      const email = session.token.user.email;
+      const avatarUrl = session.token.user.image;
+      //dispatch loginAction
+      dispatch(
+        loginWithOauthProviderAction(
+          provider,
+          providerAccountId,
+          email,
+          username,
+          avatarUrl,
+          () => {
+            console.log('login success');
+          },
+          (fail) => {
+            console.log('login fail');
+          },
+        ),
+      );
+    }
+  });
 
   return (
     <NavbarRoot>

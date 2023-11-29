@@ -16,12 +16,11 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import loginAction from '../../store/actions/httpAction';
+import { loginAction } from '../../store/actions/httpAction';
 import { closeSignDialog } from '../../store/actions/signAction';
 import hotToast from '../../utils/hotToast';
 import GoogleSignInBtn from './UI/GoogleSignInBtn';
 import FacebookSignInBtn from './UI/FacebookSignInBtn';
-import { flexbox } from '@mui/system';
 
 const Login = ({ register }) => {
   const [isLoading, setLoading] = useState(false);

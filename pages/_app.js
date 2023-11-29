@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
+import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import { Toaster } from 'react-hot-toast';
 import Router from 'next/router';
@@ -33,21 +34,23 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
 
   return (
     <ReduxProvider store={store}>
-      <NextNProgress />
-      <Head>
-        <title>OrderHere</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
       <SessionProvider session={session}>
         <ThemeProvider theme={createTheme()}>
-          <CssBaseline />
-          <Layout>
-            <NextClientOnly>
-              <Toaster position="top-center" reverseOrder={false} />
-              <Navbar />
-            </NextClientOnly>
-            {isLoading ? <Loading /> : <Component {...pageProps} />}
-          </Layout>
+          <Container maxWidth="md" style={{ padding: 0, margin: 'auto' }}>
+            <CssBaseline />
+            <Head>
+              <title>OrderHere</title>
+              <meta name="viewport" content="initial-scale=1, width=device-width" />
+            </Head>
+            <NextNProgress />
+            <Layout>
+              <NextClientOnly>
+                <Toaster position="top-center" reverseOrder={false} />
+                <Navbar />
+              </NextClientOnly>
+              {isLoading ? <Loading /> : <Component {...pageProps} />}
+            </Layout>
+          </Container>
         </ThemeProvider>
       </SessionProvider>
     </ReduxProvider>

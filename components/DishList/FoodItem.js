@@ -10,12 +10,18 @@ import {
 } from '@mui/material';
 import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import * as Action from '../../store/actionTypes';
+import DishPopup from '../DishPopUp/DishPopUp';
 
 const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const item = cartItems.find((item) => item.dishId === dishId);
   const quantity = item ? item.quantity : 0;
+  const [popupOpen, setPopupOpen] = React.useState(false);
+
+  const togglePopup = () => {
+    setPopupOpen(!popupOpen);
+  };
 
   const handleAddToCart = () => {
     if (quantity === 0) {
@@ -62,6 +68,7 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
           sx={{ width: '180px', height: '180px', flexShrink: 0 }}
           src={imageUrl}
           alt={dishName}
+          onClick={togglePopup}
         />
         <Box sx={{ ml: 1, flexShrink: 0, width: '250px' }}>
           <Typography sx={{ fontSize: '20px', fontWeight: '600' }}>
@@ -121,6 +128,15 @@ const FoodItem = ({ dishId, dishName, description, price, imageUrl }) => {
           ADD TO CART
         </Button>
       </Box>
+      <DishPopup
+        dishId={dishId}
+        dishName={dishName}
+        description={description}
+        price={price}
+        imageUrl={imageUrl}
+        open={popupOpen}
+        onClose={togglePopup}
+      />
     </>
   );
 };
