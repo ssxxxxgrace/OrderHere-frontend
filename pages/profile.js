@@ -7,8 +7,6 @@ export default function ProfilePage() {
 const isLogin = useSelector((state) => state.sign.isLogin);
 const token = useSelector((state) => state.sign.token);
 
-console.log(isLogin);
-console.log(token);
     return (
         <>
             <Box sx={{ width: '100%', overflow: 'hidden'}}>

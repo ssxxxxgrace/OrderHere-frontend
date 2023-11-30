@@ -19,15 +19,14 @@ export default function ProfileForm() {
     const [loading, setLoading] = useState(false);
     const [error, serError] = useState(null);
     const [originalProfile, setOriginalProfile] = useState({
-        userName: 'user1',
+        userName: '',
         firstName: '',
         lastName: '',
         email: '',
-        password: '111222333',
         points: '',
         language: 'English',
         privacy: 'Public',
-        avatarUrl: '/user.png',
+        avatarUrl: '',
     });
     const [profile, setProfile] = useState(originalProfile);
 
@@ -35,9 +34,27 @@ export default function ProfileForm() {
         setLoading(true);
         try {
             const response = await getUserProfileTest();
-            // Assuming the response structure matches your state structure
-            setProfile(response.data);
-            setOriginalProfile(response.data);
+            console.log(response.data);
+            setProfile({
+                userName: response.data.username,
+                firstName: response.data.firstname,
+                lastName: response.data.lastname,
+                email: response.data.email,
+                points: response.data.point,
+                avatarUrl: response.data.avatarUrl,
+                language: 'English',
+                privacy: 'Public',
+            });
+            setOriginalProfile({
+                userName: response.data.username,
+                firstName: response.data.firstname,
+                lastName: response.data.lastname,
+                email: response.data.email,
+                points: response.data.point,
+                avatarUrl: response.data.avatarUrl,
+                language: 'English',
+                privacy: 'Public',
+            });
         } catch (error) {
             console.error('Error fetching user profile:', error);
             serError(error);
@@ -66,7 +83,6 @@ export default function ProfileForm() {
         setEditMode(!editMode);
     };
 
-    // Handle form submit
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -77,7 +93,7 @@ export default function ProfileForm() {
                 lastname: profile.lastName,
                 avatarUrl: profile.avatarUrl,
             }
-            await updateUserProfileTest(1, userProfileUpdateDTO);
+            await updateUserProfile(userProfileUpdateDTO);
             setOriginalProfile(profile);
         } catch (error) {
             console.error('Error updating user profile:', error);
@@ -156,26 +172,14 @@ export default function ProfileForm() {
                                     name="email"
                                     type="email"
                                     value={profile.email}
-                                    onChange={handleChange}
                                     margin="normal"
-                                    disabled={!editMode}
-                                />
-                                <TextField
-                                    fullWidth
-                                    label="Password"
-                                    name="password"
-                                    type={editMode ? 'text' : 'password'}
-                                    value={profile.password}
-                                    onChange={handleChange}
-                                    margin="normal"
-                                    disabled={!editMode}
+                                    disabled={true}
                                 />
                                 <TextField
                                     fullWidth
                                     label="Points"
                                     name="points"
                                     value={profile.points}
-                                    // onChange={handleChange}
                                     margin="normal"
                                     disabled={true}
                                 />
