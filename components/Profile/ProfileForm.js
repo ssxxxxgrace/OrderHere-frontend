@@ -1,33 +1,55 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
     Avatar,
     Box,
     Button,
-    Container, Divider, FormControl,
+    Container, FormControl,
     FormControlLabel,
     Grid,
     Paper, Radio,
-    RadioGroup, Switch,
+    RadioGroup,
     TextField,
     Typography
 } from "@mui/material";
+import {updateUserProfile, updateUserProfileTest} from "../../services/Profile";
+import {getUserProfileTest} from "../../services/Profile";
 
 export default function ProfileForm() {
     const [editMode, setEditMode] = useState(false);
-    const [profile, setProfile] = useState({
+    const [loading, setLoading] = useState(false);
+    const [error, serError] = useState(null);
+    const [originalProfile, setOriginalProfile] = useState({
+        userName: 'user1',
         firstName: '',
         lastName: '',
         email: '',
-        password: '',
+        password: '111222333',
         points: '',
         language: 'English',
-        privacy: 'Only administrators and other instructors can view my profile information',
+        privacy: 'Public',
         avatarUrl: '/user.png',
-
-        // add other fields as necessary
     });
+    const [profile, setProfile] = useState(originalProfile);
 
-    // Handle input change
+    const fetchUserProfile = async () => {
+        setLoading(true);
+        try {
+            const response = await getUserProfileTest();
+            // Assuming the response structure matches your state structure
+            setProfile(response.data);
+            setOriginalProfile(response.data);
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+            serError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserProfile();
+    }, []);
+
     const handleChange = (e) => {
         setProfile({
             ...profile,
@@ -36,14 +58,34 @@ export default function ProfileForm() {
     };
 
     const handleEdit = () => {
+        if (editMode) {
+            setProfile(originalProfile);
+        } else {
+            setOriginalProfile(profile);
+        }
         setEditMode(!editMode);
     };
 
     // Handle form submit
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // You might want to handle the update logic here
-        setEditMode(false); // Turn off edit mode on form submit
+        setLoading(true);
+        try {
+            const userProfileUpdateDTO = {
+                username: profile.userName,
+                firstname: profile.firstName,
+                lastname: profile.lastName,
+                avatarUrl: profile.avatarUrl,
+            }
+            await updateUserProfileTest(1, userProfileUpdateDTO);
+            setOriginalProfile(profile);
+        } catch (error) {
+            console.error('Error updating user profile:', error);
+            serError(error);
+        } finally {
+            setLoading(false);
+        }
+        setEditMode(false);
     };
 
     return (
@@ -52,7 +94,7 @@ export default function ProfileForm() {
                 <Box
                     sx={{
                         height: 150,
-                        filter: 'blur(8px)',
+                        filter: 'blur(7px)',
                         backgroundImage: 'url(/image/cart-bg.png)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
@@ -62,14 +104,14 @@ export default function ProfileForm() {
                 />
                 <Avatar
                     src={profile.avatarUrl}
-                    alt={`${profile.firstName} ${profile.lastName}`}
+                    alt={`${profile.userName}`}
                     sx={{
-                        width: 100, // Adjust based on your design
-                        height: 100, // Adjust based on your design
+                        width: 100,
+                        height: 100,
                         border: '3px solid white',
                         position: 'absolute',
                         left: '50%',
-                        transform: 'translateX(-50%) translateY(20%)', // Center the avatar and pull it down 50% of its height
+                        transform: 'translateX(-50%) translateY(20%)',
                         bottom: 0,
                         backgroundColor: 'background.paper',
                     }}
@@ -79,87 +121,120 @@ export default function ProfileForm() {
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2} alignItems="flex-start">
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6">Basic Information</Typography>
-                            <TextField
-                                fullWidth
-                                label="First Name"
-                                name="firstName"
-                                value={profile.firstName}
-                                onChange={handleChange}
-                                margin="normal"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Last Name"
-                                name="lastName"
-                                value={profile.lastName}
-                                onChange={handleChange}
-                                margin="normal"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Email"
-                                name="email"
-                                type="email"
-                                value={profile.email}
-                                onChange={handleChange}
-                                margin="normal"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Password"
-                                name="password"
-                                type="password"
-                                value={profile.password}
-                                onChange={handleChange}
-                                margin="normal"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Points"
-                                name="points"
-                                value={profile.points}
-                                // onChange={handleChange}
-                                margin="normal"
-                            />
-                        </Grid>
-
-                        <Grid item md={6} sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <Divider orientation="vertical" flexItem sx={{ backgroundColor: 'divider' }}/>
+                            <Paper variant={"outlined"} sx={{ padding: 2 }}>
+                                <Typography variant="h6">Basic Information</Typography>
+                                <TextField
+                                    fullWidth
+                                    label="User Name"
+                                    name="userName"
+                                    value={profile.userName}
+                                    onChange={handleChange}
+                                    margin="normal"
+                                    disabled={!editMode}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="First Name"
+                                    name="firstName"
+                                    value={profile.firstName}
+                                    onChange={handleChange}
+                                    margin="normal"
+                                    disabled={!editMode}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Last Name"
+                                    name="lastName"
+                                    value={profile.lastName}
+                                    onChange={handleChange}
+                                    margin="normal"
+                                    disabled={!editMode}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Email"
+                                    name="email"
+                                    type="email"
+                                    value={profile.email}
+                                    onChange={handleChange}
+                                    margin="normal"
+                                    disabled={!editMode}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Password"
+                                    name="password"
+                                    type={editMode ? 'text' : 'password'}
+                                    value={profile.password}
+                                    onChange={handleChange}
+                                    margin="normal"
+                                    disabled={!editMode}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Points"
+                                    name="points"
+                                    value={profile.points}
+                                    // onChange={handleChange}
+                                    margin="normal"
+                                    disabled={true}
+                                />
+                            </Paper>
                         </Grid>
 
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6">System Settings</Typography>
-                            <FormControl component="fieldset" margin="normal">
-                                <Typography>Language</Typography>
-                                <RadioGroup
-                                    name="language"
-                                    value={profile.language}
-                                    onChange={handleChange}
-                                >
-                                    <FormControlLabel value="English" control={<Radio />} label="English" />
-                                    <FormControlLabel value="Chinese" control={<Radio />} label="Chinese" />
-                                </RadioGroup>
-                            </FormControl>
+                            <Paper variant={"outlined"} sx={{ padding: 2 }}>
+                                <Typography variant="h6">System Settings</Typography>
+                                <Box>
+                                    <FormControl component="fieldset" margin="normal" disabled={!editMode}>
+                                        <Typography>Language</Typography>
+                                        <RadioGroup
+                                            name="language"
+                                            value={profile.language}
+                                            onChange={handleChange}
+                                        >
+                                            <FormControlLabel value="English" control={<Radio />} label="English" />
+                                            <FormControlLabel value="Chinese" control={<Radio />} label="Chinese" />
+                                        </RadioGroup>
+                                    </FormControl>
+                                </Box>
 
-                            <FormControl component="fieldset" margin="normal">
-                                <Typography>Privacy Settings</Typography>
-                                <RadioGroup
-                                    name="privacy"
-                                    value={profile.privacy}
-                                    onChange={handleChange}
-                                >
-                                    <FormControlLabel value="Public" control={<Radio />} label="Public" />
-                                    <FormControlLabel value="Private" control={<Radio />} label="Private" />
-                                </RadioGroup>
-                            </FormControl>
+                                <Box>
+                                    <FormControl component="fieldset" margin="normal" disabled={!editMode}>
+                                        <Typography>Privacy Settings</Typography>
+                                        <RadioGroup
+                                            name="privacy"
+                                            value={profile.privacy}
+                                            onChange={handleChange}
+                                        >
+                                            <FormControlLabel value="Public" control={<Radio />} label="Public" />
+                                            <FormControlLabel value="Private" control={<Radio />} label="Private" />
+                                        </RadioGroup>
+                                    </FormControl>
+                                </Box>
+                            </Paper>
+
+
                         </Grid>
                     </Grid>
-                    <Box textAlign="center" sx={{mt: 1}}>
-                        <Button variant="contained" color="primary" sx={{ marginRight: 1 }} onClick={handleEdit}>
+                    <Box textAlign="center" sx={{mt: 3}}>
+                        <Button variant="contained" color="primary" onClick={handleEdit}
+                                sx={{
+                                    marginRight: 1,
+                                    width: '120px',
+                                    height: '40px',
+                                    borderRadius: '40px',
+                                    backgroundColor: '#AD343E'
+                        }} >
                             {editMode ? 'Cancel' : 'Edit'}
                         </Button>
-                        <Button type="submit" variant="contained" color="secondary">
+                        <Button type="submit" variant="contained" color="secondary" onClick={handleSubmit} disabled={!editMode}
+                        sx ={{
+                            width: '120px',
+                            height: '40px',
+                            borderRadius: '40px',
+                            backgroundColor: '#AD343E'
+                        }}>
                             Save
                         </Button>
                     </Box>
