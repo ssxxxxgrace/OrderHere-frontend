@@ -11,30 +11,32 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {updateUserProfile, updateUserProfileTest} from "../../services/Profile";
-import {getUserProfileTest} from "../../services/Profile";
+import { updateUserProfile } from "../../services/Profile";
+import { getUserProfile } from "../../services/Profile";
 
 export default function ProfileForm() {
     const [editMode, setEditMode] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, serError] = useState(null);
-    const [originalProfile, setOriginalProfile] = useState({
+
+    const defaultProfile = {
         userName: '',
         firstName: '',
         lastName: '',
         email: '',
-        points: '',
+        points: 0,
+        avatarUrl: '',
         language: 'English',
         privacy: 'Public',
-        avatarUrl: '',
-    });
-    const [profile, setProfile] = useState(originalProfile);
+    };
+
+    const [originalProfile, setOriginalProfile] = useState(defaultProfile);
+    const [profile, setProfile] = useState(defaultProfile);
 
     const fetchUserProfile = async () => {
         setLoading(true);
         try {
-            const response = await getUserProfileTest();
-            console.log(response.data);
+            const response = await getUserProfile();
             setProfile({
                 userName: response.data.username,
                 firstName: response.data.firstname,
@@ -119,7 +121,7 @@ export default function ProfileForm() {
                     }}
                 />
                 <Avatar
-                    src={profile.avatarUrl}
+                    src={profile?.avatarUrl}
                     alt={`${profile.userName}`}
                     sx={{
                         width: 100,
