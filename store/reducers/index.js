@@ -5,6 +5,7 @@ import restaurantReducer from './restaurantReducer';
 import deliveryReducer from './deliveryReducer';
 import filterReducer from './filterReducer';
 import historyReducer from './historyReducer';
+import ingredientReducer from './ingredientReducer';
 
 export default combineReducers({
   sign: signReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   delivery: deliveryReducer,
   filter: filterReducer,
   history: historyReducer,
+  ingredient: ingredientReducer,
 });
