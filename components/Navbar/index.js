@@ -65,6 +65,7 @@ const Navbar = () => {
   //use session login user
   const dispatch = useDispatch();
   const { data: session, error } = useSession();
+  console.log('session data from next-auth', session);
 
   useEffect(() => {
     if (session && !isLogin) {
@@ -75,21 +76,21 @@ const Navbar = () => {
       const email = session.token.user.email;
       const avatarUrl = session.token.user.image;
       //dispatch loginAction
-      dispatch(
-        loginWithOauthProviderAction(
-          provider,
-          providerAccountId,
-          email,
-          username,
-          avatarUrl,
-          () => {
-            console.log('login success');
-          },
-          (fail) => {
-            console.log('login fail');
-          },
-        ),
-      );
+      // dispatch(
+      //   loginWithOauthProviderAction(
+      //     provider,
+      //     providerAccountId,
+      //     email,
+      //     username,
+      //     avatarUrl,
+      //     () => {
+      //       console.log('login success');
+      //     },
+      //     (fail) => {
+      //       console.log('login fail');
+      //     },
+      //   ),
+      // );
     }
   });
 

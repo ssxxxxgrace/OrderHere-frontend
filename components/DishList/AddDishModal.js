@@ -24,17 +24,17 @@ const AddDishModal = ({ open, handleClose, handleSubmit }) => {
     imageFile: null,
   });
 
-  const [imageName, setImageName] = useState("");
+  const [imageName, setImageName] = useState('');
 
   const handleDeleteFile = () => {
-    setImageName("");
+    setImageName('');
     setNewDish({ ...newDish, imageFile: null });
   };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
-    if (name === "imageFile") {
+    if (name === 'imageFile') {
       setNewDish({ ...newDish, imageFile: files[0] });
       setImageName(files[0].name);
     } else {
@@ -88,12 +88,12 @@ const AddDishModal = ({ open, handleClose, handleSubmit }) => {
           </Button>
           {imageName && (
             <span style={{ display: 'flex', alignItems: 'center' }}>
-      {imageName}
+              {imageName}
               <DeleteIcon
                 onClick={handleDeleteFile}
                 style={{ cursor: 'pointer', marginLeft: 8 }}
               />
-    </span>
+            </span>
           )}
         </div>
       </DialogContent>

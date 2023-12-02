@@ -3,7 +3,7 @@ import store, { saveState } from '../store';
 import { login, loginByOathProvider } from '../../services/Public';
 import getRestaurantInfo from '../../services/Restaurant';
 
-const loginSuccess = (token) => ({
+export const loginSuccess = (token) => ({
   type: Action.LOGIN_SUCCESS,
   payload: token,
 });

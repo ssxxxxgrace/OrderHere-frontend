@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
@@ -16,14 +16,25 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { loginAction } from '../../store/actions/httpAction';
 import { closeSignDialog } from '../../store/actions/signAction';
 import hotToast from '../../utils/hotToast';
 import GoogleSignInBtn from './UI/GoogleSignInBtn';
 import FacebookSignInBtn from './UI/FacebookSignInBtn';
+import { signIn, useSession } from 'next-auth/react';
+import { getCsrfToken } from 'next-auth/react';
+import { loginSuccess } from '../../store/actions/httpAction';
 
 const Login = ({ register }) => {
+  /** state */
   const [isLoading, setLoading] = useState(false);
+  const [csrfValue, setCsrfValue] = useState();
+  const { data: session, error } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    getCsrfToken().then(setCsrfValue);
+  }, []);
+
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -40,31 +51,26 @@ const Login = ({ register }) => {
         .max(16)
         .required('Password is required'),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const { email, password } = values;
-      setLoading(true);
-      dispatch(
-        loginAction(
-          email,
-          password,
-          () => {
-            // preview mode
-            if (process.env.NEXT_PUBLIC_PREVIEW_ENABLED) {
-              hotToast('success', `Preview Simulate Login Success`);
-              return;
-            }
-            hotToast('success', 'Login Success');
-          },
-          (fail) => {
-            setLoading(false);
-            if (fail && fail.response && fail.response.status === 403) {
-              hotToast('error', 'Invalid Email or Password');
-            } else {
-              hotToast('error', `Something wrong ${fail}`);
-            }
-          },
-        ),
-      );
+      const res = await signIn('credentials', {
+        redirect: false,
+        email: email,
+        password: password,
+        callbackUrl: '/',
+      });
+      console.log('authentication response ==========>', res);
+
+      //check response
+      if (res.status === 200 && res.ok) {
+        //show indication
+        hotToast('success', 'login success');
+        const jwtToken = session.token.user.jwt;
+        dispatch(loginSuccess(jwtToken));
+        //redirect to the home page
+      } else {
+        hotToast('error', 'Invalid Email or Password');
+      }
     },
   });
 
@@ -92,6 +98,7 @@ const Login = ({ register }) => {
       }}
     >
       <Container maxWidth="md">
+        <input name="csrfToken" type="hidden" defaultValue={csrfValue} />
         <form onSubmit={formik.handleSubmit}>
           <Typography align="center">
             <Image src="/logo.png" height="55" width="55" alt="logo" />
