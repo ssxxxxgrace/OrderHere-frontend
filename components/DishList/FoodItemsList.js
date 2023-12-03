@@ -63,6 +63,7 @@ const FoodItemsList = () => {
         );
         // setDishes(response.data.data);
         setDishes(filteredDishes);
+        console.log(filteredDishes);
         setError(null);
       })
       .catch((error) => {
@@ -116,6 +117,7 @@ const FoodItemsList = () => {
           description={dish.description}
           price={dish.price}
           imageUrl={dish.imageUrl}
+          rating={dish.rating}
         />
       ))}
 
