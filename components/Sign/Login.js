@@ -24,7 +24,7 @@ import GoogleSignInBtn from './UI/GoogleSignInBtn';
 import FacebookSignInBtn from './UI/FacebookSignInBtn';
 
 
-const Login = ({ register }) => {
+const Login = ({ register, forgetpassword }) => {
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik({
