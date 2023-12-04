@@ -76,21 +76,21 @@ const Navbar = () => {
       const email = session.token.user.email;
       const avatarUrl = session.token.user.image;
       //dispatch loginAction
-      // dispatch(
-      //   loginWithOauthProviderAction(
-      //     provider,
-      //     providerAccountId,
-      //     email,
-      //     username,
-      //     avatarUrl,
-      //     () => {
-      //       console.log('login success');
-      //     },
-      //     (fail) => {
-      //       console.log('login fail');
-      //     },
-      //   ),
-      // );
+      dispatch(
+        loginWithOauthProviderAction(
+          provider,
+          providerAccountId,
+          email,
+          username,
+          avatarUrl,
+          () => {
+            console.log('login success');
+          },
+          (fail) => {
+            console.log('login fail');
+          },
+        ),
+      );
     }
   });
 

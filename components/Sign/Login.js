@@ -20,9 +20,10 @@ import { closeSignDialog } from '../../store/actions/signAction';
 import hotToast from '../../utils/hotToast';
 import GoogleSignInBtn from './UI/GoogleSignInBtn';
 import FacebookSignInBtn from './UI/FacebookSignInBtn';
-import { signIn, useSession } from 'next-auth/react';
+import { getSession, signIn, useSession } from 'next-auth/react';
 import { getCsrfToken } from 'next-auth/react';
 import { loginSuccess } from '../../store/actions/httpAction';
+import store, { saveState } from '../../store/store';
 
 const Login = ({ register }) => {
   /** state */
@@ -53,24 +54,26 @@ const Login = ({ register }) => {
     }),
     onSubmit: async (values) => {
       const { email, password } = values;
-      const res = await signIn('credentials', {
+      signIn('credentials', {
         redirect: false,
         email: email,
         password: password,
         callbackUrl: '/',
-      });
-      console.log('authentication response ==========>', res);
+      })
+        .then((response) => {
+          hotToast('success', 'login success');
+          console.log('=============>', response);
 
-      //check response
-      if (res.status === 200 && res.ok) {
-        //show indication
-        hotToast('success', 'login success');
-        const jwtToken = session.token.user.jwt;
-        dispatch(loginSuccess(jwtToken));
-        //redirect to the home page
-      } else {
-        hotToast('error', 'Invalid Email or Password');
-      }
+          getSession().then((session) => {
+            const jwtToken = session.token.user.jwt;
+            dispatch(loginSuccess(jwtToken));
+          });
+        })
+        .catch((error) => {
+          hotToast('error', 'Invalid Email or Password');
+          console.error('login fail', error);
+        })
+        .then(() => saveState(store.getState()));
     },
   });
 
