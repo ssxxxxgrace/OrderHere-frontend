@@ -8,22 +8,23 @@ const buttonGroupStyles = {
   backgroundColor: '#fff',
 };
 
-const Category = () => {
-  const [categories, setCategories] = useState([]);
+const Category = ({categories: initialData}) => {
+  // const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(initialData);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await getCategoriesByRestaurant();
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const response = await getCategoriesByRestaurant();
 
-        setCategories(response.data);
-      } catch (error) {
-        console.error('Error fetching categories: ', error);
-      }
-    };
+  //       setCategories(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching categories: ', error);
+  //     }
+  //   };
 
-    fetchCategories();
-  }, []);
+  //   fetchCategories();
+  // }, []);
 
   return (
     <Box sx={{ width: '100%', ...buttonGroupStyles }}>

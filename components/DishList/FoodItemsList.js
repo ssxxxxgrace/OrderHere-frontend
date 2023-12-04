@@ -9,19 +9,16 @@ import {
   IconButton,
   Button,
 } from '@mui/material';
-import {
-  Add as AddIcon,
-  Construction,
-  Remove as RemoveIcon,
-} from '@mui/icons-material';
 import { getDishes } from '../../services/Dish';
 import AddDishModal from './AddDishModal';
 import { useDispatch } from 'react-redux';
 import { addDishStart, addDishSuccess, addDishError } from './AddDishModal';
 import { postDishes } from '../../services/Dish';
 
-const FoodItemsList = () => {
-  const [dishes, setDishes] = useState([]);
+const FoodItemsList = ({ dishes: initialDishes }) => {
+  // const [dishes, setDishes] = useState([]);
+  // console.log('initial:', initialDishes)
+  const [dishes, setDishes] = useState(initialDishes);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isAddDishModalOpen, setAddDishModalOpen] = useState(false);
@@ -54,26 +51,31 @@ const FoodItemsList = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    getDishes()
-      .then((response) => {
-        const filteredDishes = response.data.data.filter(
-          (dish) =>
-            dish.price >= priceRange.min && dish.price <= priceRange.max,
-        );
-        // setDishes(response.data.data);
-        setDishes(filteredDishes);
-        console.log(filteredDishes);
-        setError(null);
-      })
-      .catch((error) => {
-        console.error('Error fetching dishes:', error);
-        setError('Failed to fetch dishes');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [priceRange, dishAdditionCount]);
+    // setIsLoading(true);
+    // getDishes()
+    //   .then((response) => {
+    //     const filteredDishes = response.data.data.filter(
+    //       (dish) =>
+    //         dish.price >= priceRange.min && dish.price <= priceRange.max,
+    //     );
+    //     // setDishes(response.data.data);
+    //     setDishes(filteredDishes);
+    //     console.log(filteredDishes);
+    //     setError(null);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error fetching dishes:', error);
+    //     setError('Failed to fetch dishes');
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
+    const filteredDishes = initialDishes.filter(
+      (dish) => dish.price >= priceRange.min && dish.price <= priceRange.max,
+    );
+    setDishes(filteredDishes);
+    setError(null);
+  }, [priceRange, dishAdditionCount, initialDishes]);
 
   if (isLoading) {
     return (
