@@ -62,8 +62,6 @@ const Login = ({ register }) => {
       })
         .then((response) => {
           hotToast('success', 'login success');
-          console.log('=============>', response);
-
           getSession().then((session) => {
             const jwtToken = session.token.user.jwt;
             dispatch(loginSuccess(jwtToken));

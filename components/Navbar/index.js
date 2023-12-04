@@ -80,6 +80,7 @@ const Navbar = () => {
     if (session && session.token.account && !isLogin) {
       const { provider, providerAccountId } = session.token.account;
       const { username, email, avatarUrl } = session.token.user;
+      if (provider === 'credentials') return;
       dispatch(
         loginWithOauthProviderAction(
           provider,
