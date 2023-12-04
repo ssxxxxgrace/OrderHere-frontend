@@ -183,6 +183,7 @@ const DishPopup = ({
   };
 
   const handleImageChange = (event) => {
+    //TODO
     const file = event.target.files[0];
   };
 

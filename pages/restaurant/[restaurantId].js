@@ -8,29 +8,53 @@ import { EditRestaurantModal } from '../../components/restaurantInfo/EditRestaur
 import { useEffect, useState } from 'react';
 import { getRestaurantInfo } from '../../services/Restaurant';
 
-const RestaurantInfoPage = () => {
+export async function getStaticPaths() {
+  return {
+    paths: [{ params: { restaurantId: '1' } }],
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  try {
+    const response = await getRestaurantInfo(params.restaurantId);
+    // console.log('restaurant-response:', response.data)
+    return {
+      props: {
+        restaurantData: response.data,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching restaurant info:', error);
+    return { props: { restaurantData: null } };
+  }
+}
+
+const RestaurantInfoPage = ({ restaurantData: initialData }) => {
   const router = useRouter();
   const { restaurantId } = router.query;
   const [loading, setLoading] = useState(false);
-  const [restaurantData, setRestaurantData] = useState(null);
+  // console.log('restaurant-info-data:', initialData)
+  const [restaurantData, setRestaurantData] = useState(initialData);
   const [error, setError] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (restaurantId) {
-      setLoading(true);
-      getRestaurantInfo(restaurantId)
-        .then((response) => {
-          setRestaurantData(response.data);
-        })
-        .catch((err) => {
-          setError(err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  }, [restaurantId]);
+  // useEffect(() => {
+  //   if (restaurantId) {
+  //     setLoading(true);
+  //     getRestaurantInfo(restaurantId)
+  //       .then((response) => {
+  //         setRestaurantData(response.data);
+  //       })
+  //       .catch((err) => {
+  //         setError(err);
+  //       })
+  //       .finally(() => {
+  //         setLoading(false);
+  //       });
+  //   }
+  // }, [restaurantId]);
+
 
   if (!restaurantId || loading) {
     return <div>Loading...</div>;
