@@ -35,7 +35,7 @@ export const loginWithOauthProviderAction =
         success(response);
       })
       .catch((error) => {
-        console.log('login fail');
+        // console.log('login fail');
         dispatch(loginError());
         fail(error);
       })

@@ -21,7 +21,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { loginWithOauthProviderAction } from '../../store/actions/httpAction';
 
 export const styleNew = {
@@ -62,20 +62,24 @@ const Navbar = () => {
   const { isLogin } = useSelector((state) => state.sign);
   const { totalItems } = useSelector((state) => state.cart);
 
+  const [sessionToken, setSessionToken] = useState();
+
   //use session login user
   const dispatch = useDispatch();
-  const { data: session, error } = useSession();
-  console.log('session data from next-auth', session);
 
+  //set state for google session data
+  const { data: session, error } = useSession();
   useEffect(() => {
-    if (session && !isLogin) {
-      //extract data from session token
-      const provider = session.token.account.provider;
-      const providerAccountId = session.token.account.providerAccountId;
-      const username = session.token.user.name;
-      const email = session.token.user.email;
-      const avatarUrl = session.token.user.image;
-      //dispatch loginAction
+    if (session && session.token) {
+      setSessionToken(session.token);
+    }
+  }, [session]);
+
+  //when session.token change and user is not login ==> login user
+  useEffect(() => {
+    if (session && session.token.account && !isLogin) {
+      const { provider, providerAccountId } = session.token.account;
+      const { username, email, avatarUrl } = session.token.user;
       dispatch(
         loginWithOauthProviderAction(
           provider,
@@ -92,7 +96,7 @@ const Navbar = () => {
         ),
       );
     }
-  });
+  }, [sessionToken]);
 
   return (
     <NavbarRoot>
