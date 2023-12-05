@@ -79,7 +79,7 @@ const Login = ({ register, forgetpassword }) => {
 
   const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
   const resetPassword = () => {
-    dispatch(closeSignDialog());
+    // dispatch(closeSignDialog());
     setIsResetPasswordModalOpen(true);
   }
   
