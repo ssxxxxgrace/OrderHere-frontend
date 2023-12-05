@@ -3,20 +3,19 @@ import Image from 'next/image';
 import { signIn, useSession } from 'next-auth/react';
 import { Button, Typography, Box } from '@mui/material';
 
+/**
+ * handle facebook login action
+ */
 const loginWithFacebook = () =>
   signIn('facebook', { callbackUrl: 'http://localhost:3000' });
 
-const GoogleSignInBtn = ({ children }) => {
-  const { data: session, error } = useSession();
-  const handleLogin = () => {
-    if (!session) {
-      loginWithFacebook();
-    }
-  };
-
+/**
+ * Facebook Login button component
+ */
+const FacebookSignInBtn = ({ children }) => {
   return (
     <Button
-      onClick={handleLogin}
+      onClick={loginWithFacebook}
       variant="outlined"
       style={{ backgroundColor: 'white', width: '90%', maxWidth: '250px' }}
     >
@@ -33,4 +32,4 @@ const GoogleSignInBtn = ({ children }) => {
   );
 };
 
-export default GoogleSignInBtn;
+export default FacebookSignInBtn;

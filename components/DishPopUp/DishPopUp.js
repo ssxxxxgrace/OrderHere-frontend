@@ -22,7 +22,13 @@ import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
-import { getIngredientsByDish, getIngredient, createIngredient, deleteIngredient, updateIngredient } from '../../services/Ingredient';
+import {
+  getIngredientsByDish,
+  getIngredient,
+  createIngredient,
+  deleteIngredient,
+  updateIngredient,
+} from '../../services/Ingredient';
 import styles from './DishPopup.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../store/actionTypes';
@@ -50,7 +56,7 @@ const DishPopup = ({
   // const unselectedIngredients = useSelector((state) => state.ingredient.unselectedIngredients);
   // console.log('unselect', unselectedIngredients)
 
-  console.log('show dish is:', dishId)
+  // console.log('show dish is:', dishId);
   useEffect(() => {
     getIngredientsByDish(dishId)
       .then((response) => {
@@ -61,12 +67,14 @@ const DishPopup = ({
           .then((ingredientsResponses) => {
             const details = ingredientsResponses.map((ingredientResponse) => ({
               id: ingredientResponse.data.ingredientId,
-              name: ingredientResponse.data.name
+              name: ingredientResponse.data.name,
             }));
             setIngredientDetails(details);
             setTempIngredientDetails(details);
           })
-          .catch((error) => console.error('Fetching ingredient info failed', error));
+          .catch((error) =>
+            console.error('Fetching ingredient info failed', error),
+          );
       })
       .catch((error) => console.error('Fetching dishes failed', error));
   }, [dishId]);
@@ -105,27 +113,28 @@ const DishPopup = ({
     if (isEditMode) {
       setTempIngredientDetails([...ingredientDetails]);
     }
-    console.log('Entering edit mode');
+    // console.log('Entering edit mode');
     setIsEditMode(!isEditMode);
   };
 
-
   const handleIngredientChange = (event, index) => {
     const newName = event.target.value;
-    const capitalizedNewName = newName.charAt(0).toUpperCase() + newName.slice(1);
+    const capitalizedNewName =
+      newName.charAt(0).toUpperCase() + newName.slice(1);
     const newDetails = [...tempIngredientDetails];
     newDetails[index] = {
       ...newDetails[index],
-      name: capitalizedNewName
+      name: capitalizedNewName,
     };
     setTempIngredientDetails(newDetails);
   };
 
-
   const saveIngredients = async () => {
-    const isAnyEmpty = tempIngredientDetails.some(ingredient => !ingredient.name.trim());
+    const isAnyEmpty = tempIngredientDetails.some(
+      (ingredient) => !ingredient.name.trim(),
+    );
     if (isAnyEmpty) {
-      alert("Ingredient names cannot be empty.");
+      alert('Ingredient names cannot be empty.');
       return;
     }
     let updatedIngredients = [...tempIngredientDetails];
@@ -134,14 +143,26 @@ const DishPopup = ({
       try {
         if (ingredient.isNew) {
           try {
-            const response = await createIngredient({ dishId: dishId, name: ingredient.name, unit: "grams", quantityValue: 1 });
-            console.log('resonse', response.data);
-            updatedIngredients[i] = { ...ingredient, id: response.data, isNew: false };
+            const response = await createIngredient({
+              dishId: dishId,
+              name: ingredient.name,
+              unit: 'grams',
+              quantityValue: 1,
+            });
+            // console.log('resonse', response.data);
+            updatedIngredients[i] = {
+              ...ingredient,
+              id: response.data,
+              isNew: false,
+            };
           } catch (error) {
             console.error('Error creating ingredient:', error.response);
           }
         } else {
-          await updateIngredient({ ingredientId: ingredient.id, name: ingredient.name });
+          await updateIngredient({
+            ingredientId: ingredient.id,
+            name: ingredient.name,
+          });
         }
       } catch (error) {
         console.error('Error updating ingredient:', error.response);
@@ -158,24 +179,33 @@ const DishPopup = ({
       name: '',
       isNew: true,
     };
-    setTempIngredientDetails(prevIngredients => [...prevIngredients, newIngredientDetail]);
+    setTempIngredientDetails((prevIngredients) => [
+      ...prevIngredients,
+      newIngredientDetail,
+    ]);
   };
 
   const deleteIngredientItem = async (dishId, ingredientId) => {
-    const ingredientToDelete = tempIngredientDetails.find(ingredient => ingredient.id === ingredientId);
+    const ingredientToDelete = tempIngredientDetails.find(
+      (ingredient) => ingredient.id === ingredientId,
+    );
     if (!ingredientToDelete.name.trim() || ingredientToDelete.isNew) {
-      const updatedIngredients = tempIngredientDetails.filter(ingredient => ingredient.id !== ingredientId);
+      const updatedIngredients = tempIngredientDetails.filter(
+        (ingredient) => ingredient.id !== ingredientId,
+      );
       setTempIngredientDetails(updatedIngredients);
     } else {
       try {
         const response = await deleteIngredient({
           dishId: dishId,
-          ingredientId: ingredientId
+          ingredientId: ingredientId,
         });
-        console.log('Delete ingredient successfully:', response);
-        const updatedIngredients = tempIngredientDetails.filter(ingredient => ingredient.id !== ingredientId);
+        // console.log('Delete ingredient successfully:', response);
+        const updatedIngredients = tempIngredientDetails.filter(
+          (ingredient) => ingredient.id !== ingredientId,
+        );
         setTempIngredientDetails(updatedIngredients);
-        setDeleteDialogOpen(false)
+        setDeleteDialogOpen(false);
       } catch (error) {
         console.error('Error delete ingredient:', error.response);
       }
@@ -189,21 +219,31 @@ const DishPopup = ({
 
   return (
     <Dialog open={open} onClose={onClose} className={styles.dishPopup}>
-      <DialogContent style={{ padding: 0, maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}>
+      <DialogContent
+        style={{
+          padding: 0,
+          maxHeight: 'calc(100vh - 200px)',
+          overflowY: 'auto',
+        }}
+      >
         {isEditMode ? (
           <Box position="relative" display="inline-block">
-            <img src={imageUrl} alt={dishName} style={{ width: '100%', height: 'auto' }} />
+            <img
+              src={imageUrl}
+              alt={dishName}
+              style={{ width: '100%', height: 'auto' }}
+            />
             <Box
               sx={{
-                position: "absolute",
+                position: 'absolute',
                 top: 0,
                 left: 0,
                 right: 0,
                 bottom: 0,
-                bgcolor: "rgba(0, 0, 0, 0.5)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                bgcolor: 'rgba(0, 0, 0, 0.5)',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
                 cursor: 'pointer',
               }}
             >
@@ -215,23 +255,34 @@ const DishPopup = ({
                 onChange={handleImageChange}
               />
               <label htmlFor="icon-button-file">
-                <IconButton color="primary" aria-label="upload picture" component="span">
-                  <InsertPhotoOutlinedIcon style={{ fontSize: 200, color: 'white' }} />
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <InsertPhotoOutlinedIcon
+                    style={{ fontSize: 200, color: 'white' }}
+                  />
                 </IconButton>
               </label>
             </Box>
           </Box>
         ) : (
-          <img src={imageUrl} alt={dishName} style={{ width: '100%', height: 'auto' }} />
+          <img
+            src={imageUrl}
+            alt={dishName}
+            style={{ width: '100%', height: 'auto' }}
+          />
         )}
 
-
-        <DialogContentText className={styles.dishTitle}
+        <DialogContentText
+          className={styles.dishTitle}
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-          }}>
+          }}
+        >
           {dishName}
           <IconButton
             onClick={toggleEditMode}
@@ -242,9 +293,10 @@ const DishPopup = ({
               paddingInline: 2,
               fontWeight: 600,
               '&:hover': {
-                backgroundColor: '#BF5B5F'
-              }
-            }}>
+                backgroundColor: '#BF5B5F',
+              },
+            }}
+          >
             Edit
           </IconButton>
         </DialogContentText>
@@ -254,15 +306,33 @@ const DishPopup = ({
         </DialogContentText>
 
         <DialogContentText sx={{ overflowY: 'auto' }}>
-          <Box sx={{ backgroundColor: '#ededed', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', pt: 1, pb: 1 }} onClick={toggleCollapse}>
-            <Typography variant="Ingredients" sx={{ ml: 4, color: 'black', fontSize: '1.2em', fontWeight: 600 }}>
-              Ingredients, {isCollapsed ? 'Click to expand.' : 'Un-tick to remove.'}
+          <Box
+            sx={{
+              backgroundColor: '#ededed',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              pt: 1,
+              pb: 1,
+            }}
+            onClick={toggleCollapse}
+          >
+            <Typography
+              variant="Ingredients"
+              sx={{ ml: 4, color: 'black', fontSize: '1.2em', fontWeight: 600 }}
+            >
+              Ingredients,{' '}
+              {isCollapsed ? 'Click to expand.' : 'Un-tick to remove.'}
             </Typography>
             <IconButton>
               {isCollapsed ? <AddIcon /> : <RemoveIcon />}
             </IconButton>
           </Box>
-          <Collapse in={!isCollapsed} sx={{ ml: 2, color: '#666', marginBlock: 1, fontWeight: 400 }}>
+          <Collapse
+            in={!isCollapsed}
+            sx={{ ml: 2, color: '#666', marginBlock: 1, fontWeight: 400 }}
+          >
             <List>
               {tempIngredientDetails.map((ingredient, index) => (
                 <ListItem
@@ -274,9 +344,23 @@ const DishPopup = ({
                   }}
                   key={ingredient.id}
                 >
-                  <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Box
+                    sx={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
                     {isEditMode ? (
-                      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Box
+                        sx={{
+                          width: '100%',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}
+                      >
                         <TextField
                           label="Ingredient Name"
                           value={ingredient.name}
@@ -286,7 +370,7 @@ const DishPopup = ({
 
                         <HighlightOffRoundedIcon
                           onClick={() => {
-                            console.log('Deleting ingredient:', ingredient);
+                            // console.log('Deleting ingredient:', ingredient);
                             if (!ingredient.name.trim() || ingredient.isNew) {
                               deleteIngredientItem(dishId, ingredient.id);
                             } else {
@@ -298,7 +382,7 @@ const DishPopup = ({
                             flexGrow: 1,
                             cursor: 'pointer',
                             transition: 'transform 0.3s ease-in-out',
-                            '&:hover': { transform: 'rotate(90deg)' }
+                            '&:hover': { transform: 'rotate(90deg)' },
                           }}
                         />
                         <Dialog
@@ -307,31 +391,49 @@ const DishPopup = ({
                           onClose={() => setDeleteDialogOpen(false)}
                           aria-describedby="alert-dialog-slide-description"
                         >
-                          <DialogTitle>{"Delete ingredient permanently"}</DialogTitle>
+                          <DialogTitle>
+                            {'Delete ingredient permanently'}
+                          </DialogTitle>
                           <DialogContent>
                             <DialogContentText id="alert-dialog-slide-description">
-                              If you confirm to delete this ingredient, it will be permanently deleted.
-                              Do you want to delete it right now?
+                              If you confirm to delete this ingredient, it will
+                              be permanently deleted. Do you want to delete it
+                              right now?
                             </DialogContentText>
                           </DialogContent>
                           <DialogActions>
-                            <Button onClick={() => setDeleteDialogOpen(false)}>No</Button>
-                            <Button onClick={() => deleteIngredientItem(dishId, selectedIngredientId)}>
+                            <Button onClick={() => setDeleteDialogOpen(false)}>
+                              No
+                            </Button>
+                            <Button
+                              onClick={() =>
+                                deleteIngredientItem(
+                                  dishId,
+                                  selectedIngredientId,
+                                )
+                              }
+                            >
                               Yes
                             </Button>
                           </DialogActions>
                         </Dialog>
                       </Box>
                     ) : (
-                      <Typography sx={{ flexGrow: 1 }}>{ingredient.name}</Typography>
+                      <Typography sx={{ flexGrow: 1 }}>
+                        {ingredient.name}
+                      </Typography>
                     )}
                     <Checkbox
-                      {...label} defaultChecked
+                      {...label}
+                      defaultChecked
                       onChange={(e) => {
                         if (!e.target.checked) {
                           dispatch({
                             type: Action.SET_UNSELECTED_INGREDIENT,
-                            payload: { dish: dishName, ingredient: ingredient.name }
+                            payload: {
+                              dish: dishName,
+                              ingredient: ingredient.name,
+                            },
                           });
                         }
                       }}
@@ -362,8 +464,9 @@ const DishPopup = ({
                     cursor: 'pointer',
                     '&:hover': {
                       backgroundColor: 'rgba(128, 128, 128, 0.25)',
-                    }
-                  }}>
+                    },
+                  }}
+                >
                   <AddCircleRoundedIcon style={{ fontSize: 40 }} />
                 </Box>
 
@@ -380,8 +483,8 @@ const DishPopup = ({
                     marginLeft: 'auto',
                     marginRight: 'auto',
                     '&:hover': {
-                      backgroundColor: '#BF5B5F'
-                    }
+                      backgroundColor: '#BF5B5F',
+                    },
                   }}
                 >
                   Save
@@ -455,7 +558,7 @@ const DishPopup = ({
           </Button>
         </DialogActions>
       </Box>
-    </Dialog >
+    </Dialog>
   );
 };
 
