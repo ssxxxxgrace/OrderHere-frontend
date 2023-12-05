@@ -10,6 +10,7 @@ import {
   closeSignDialog,
   registerSignDialog,
   loginSignDialog,
+  forgetpasswordSignDialog,
 } from '../../store/actions/signAction';
 
 const AccountButton = ({ isLogin }) => {
@@ -36,7 +37,7 @@ const AccountButton = ({ isLogin }) => {
           {content === 'login' ? (
             <Login 
               register={() => dispatch(registerSignDialog())} 
-              forgetPassword={() => dispatch(forgetPasswordSignDialog())} />
+              forgetPassword={() => dispatch(forgetpasswordSignDialog())} />
             
           ) : (
             <Signup login={() => dispatch(loginSignDialog())} />
