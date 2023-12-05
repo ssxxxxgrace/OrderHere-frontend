@@ -105,7 +105,7 @@ const PricingFilter = () => {
             height: 8,
           },
           '& .MuiSlider-markLabel': {
-            fontSize: '1.2rem',
+            fontSize: '1.0rem',
           },
         }}
         min={priceRange.min}

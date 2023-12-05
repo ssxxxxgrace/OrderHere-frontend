@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Router from 'next/router';
+import ForgetPassword from './ForgetPassword';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
@@ -22,7 +23,8 @@ import hotToast from '../../utils/hotToast';
 import GoogleSignInBtn from './UI/GoogleSignInBtn';
 import FacebookSignInBtn from './UI/FacebookSignInBtn';
 
-const Login = ({ register }) => {
+
+const Login = ({ register, forgetpassword }) => {
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -74,9 +76,17 @@ const Login = ({ register }) => {
     setIsRememberMeChecked(event.target.checked);
   };
 
+
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
   const resetPassword = () => {
     dispatch(closeSignDialog());
-    Router.push('/password-email');
+    setIsResetPasswordModalOpen(true);
+  }
+  
+  const notresetPassword = () => {
+    // dispatch(closeSignDialog());
+    setIsResetPasswordModalOpen(false);
+    // Router.push('/password-email', undefined, {shallow: true} );
   };
 
   return (
@@ -150,7 +160,12 @@ const Login = ({ register }) => {
               <Grid item xs={4}>
                 <Typography color="textSecondary" variant="body2">
                   <Button onClick={resetPassword}>Forget password?</Button>
+                  
                 </Typography>
+                <ForgetPassword
+                  open={isResetPasswordModalOpen}
+                  onClose={notresetPassword}
+                />
               </Grid>
             </Grid>
 

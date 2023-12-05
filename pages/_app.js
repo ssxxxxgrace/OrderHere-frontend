@@ -19,6 +19,8 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import Footer from '../layout/Footer';
+
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +38,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
     <ReduxProvider store={store}>
       <SessionProvider session={session}>
         <ThemeProvider theme={createTheme()}>
-          <Container maxWidth="md" style={{ padding: 0, margin: 'auto' }}>
+          <Container maxWidth="lg" style={{ padding: 0, margin: 'auto' }}>
             <CssBaseline />
             <Head>
               <title>OrderHere</title>
@@ -48,9 +50,11 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
                 <Toaster position="top-center" reverseOrder={false} />
                 <Navbar />
               </NextClientOnly>
-              {isLoading ? <Loading /> : <Component {...pageProps} />}
+              {isLoading ? <Loading /> : <Component {...pageProps} />}    
             </Layout>
+            
           </Container>
+          <Footer/>
         </ThemeProvider>
       </SessionProvider>
     </ReduxProvider>
