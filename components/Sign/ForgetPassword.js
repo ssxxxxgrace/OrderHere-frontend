@@ -17,7 +17,7 @@ import { forgetPasswordAction } from '../../store/actions/httpAction';
 import { forgetpassword } from '../../services/Public';
 import hotToast from '../../utils/hotToast';
 
-const ForgetPassword = ({ open, onClose }) => {
+const ForgetPassword = ({ open, onClose, onEmailSent = () => {} }) => {
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -35,6 +35,7 @@ const ForgetPassword = ({ open, onClose }) => {
         .then(() => {
           setSubmitting(false); 
           hotToast('success', 'Reset link sent to your email.');
+          onEmailSent(true, values.email);
           onClose(); 
         })
         .catch((error) => {
@@ -42,7 +43,8 @@ const ForgetPassword = ({ open, onClose }) => {
           if (error && error.response && error.response.status === 403) {
             hotToast('error', 'Permission denied or invalid request.');
           } else {
-            hotToast('error', `Something went wrong: ${error}`);
+            hotToast('error', `Your entered email is not registered.`);
+            onEmailSent(false);
           }
         });
     },
@@ -96,9 +98,9 @@ const ForgetPassword = ({ open, onClose }) => {
               sx={{
                 mt: 3, 
                 mb: 2, 
-                backgroundColor: '#AD343E', // Set the background color
+                backgroundColor: '#AD343E', 
                 '&:hover': {
-                  backgroundColor: '#931F1D' // Darken the color slightly on hover
+                  backgroundColor: '#931F1D' 
                 }
               }}
             >

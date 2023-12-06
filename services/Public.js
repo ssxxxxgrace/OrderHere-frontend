@@ -16,10 +16,10 @@ export const signup = (userName, firstName, lastName, password, email) =>
   });
 
 export const forgetpassword = (email) => 
-  http(`/forget-password`, { method: 'POST', data: { email } });
+  http(`/v1/public/users/forget-password`, { method: 'POST', data: { email } });
 
 export const resetpassword = (email, code, newPassword) =>
-  http('/reset', {
+  http(`/v1/public/users/reset`, {
     method: 'POST',
     data: {
       email,
