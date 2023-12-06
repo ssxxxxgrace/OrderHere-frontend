@@ -177,8 +177,6 @@ const Login = ({ register}) => {
                 <Button onClick={handleOpenForgetPasswordModal}>Forget password?</Button>
                   <ForgetPassword
                     open={isForgetPasswordModalOpen}
-                    // onClose={handleCloseForgetPasswordModal}
-                    // onEmailSent={(emailSent) => handleCloseForgetPasswordModal(emailSent)}
                     onClose={handleCloseForgetPasswordModal}
                     onEmailSent={(emailSent, userEmail) => handleCloseForgetPasswordModal(emailSent, userEmail)}
                   />

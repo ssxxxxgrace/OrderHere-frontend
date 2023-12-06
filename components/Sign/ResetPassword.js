@@ -26,7 +26,6 @@ const ResetPassword = ({ open, onClose, email }) => {
     validationSchema: Yup.object({
       code: Yup.string()
         .required('Verification code is required'),
-        // .matches(/^\d{6}$/, 'Verification code must be 6 digits'),
       newPassword: Yup.string()
         .min(6, 'must be at least 6 characters long')
         .max(16)
@@ -38,7 +37,7 @@ const ResetPassword = ({ open, onClose, email }) => {
         .then((response) => {
           setLoading(false);
           hotToast('success', 'Password reset successful.');
-          onClose(); // or navigate to login page or dashboard
+          onClose(); 
         })
         .catch((error) => {
           setLoading(false);
@@ -78,11 +77,11 @@ const ResetPassword = ({ open, onClose, email }) => {
               fullWidth
               id="code"
               label="Verification Code"
-              name="code" // This should match the key in initialValues
+              name="code" 
               autoComplete="off"
               autoFocus
               onChange={formik.handleChange}
-              value={formik.values.code} // This should match the key in initialValues
+              value={formik.values.code}
               error={formik.touched.code && Boolean(formik.errors.code)}
               helperText={formik.touched.code && formik.errors.code}
             />
