@@ -46,7 +46,7 @@ const AccountPopover = (props) => {
     >
       <NextLink
         href={{
-          pathname: `/profile/username`,
+          pathname: `/profile`,
         }}
         passHref
       >

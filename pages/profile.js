@@ -14,9 +14,6 @@ const [shouldRenderProfile, setShouldRenderProfile] = useState(false);
 
     return (
         <div>
-            <Box sx={{ width: '100%', overflow: 'hidden'}}>
-                <img src="/image/ProfileHeader.svg" alt="Profile Header" alt="Profile Header" width="100%" />
-            </Box>
             {setShouldRenderProfile ? <ProfileForm /> : <LoginFirst />}
         </div>
     );
