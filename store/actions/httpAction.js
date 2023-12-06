@@ -4,7 +4,7 @@ import store, { saveState } from '../store';
 import { login, loginByOathProvider } from '../../services/Public';
 import getRestaurantInfo from '../../services/Restaurant';
 
-const loginSuccess = (token) => ({
+export const loginSuccess = (token) => ({
   type: Action.LOGIN_SUCCESS,
   payload: token,
 });
@@ -60,7 +60,7 @@ export const loginWithOauthProviderAction =
         success(response);
       })
       .catch((error) => {
-        console.log('login fail');
+        // console.log('login fail');
         dispatch(loginError());
         fail(error);
       })

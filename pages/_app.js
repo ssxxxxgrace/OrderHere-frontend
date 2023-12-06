@@ -42,7 +42,10 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
             <CssBaseline />
             <Head>
               <title>OrderHere</title>
-              <meta name="viewport" content="initial-scale=1, width=device-width" />
+              <meta
+                name="viewport"
+                content="initial-scale=1, width=device-width"
+              />
             </Head>
             <NextNProgress />
             <Layout>

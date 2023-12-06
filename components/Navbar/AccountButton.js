@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Avatar, Box, ButtonBase } from '@mui/material';
 import AccountPopover from './AccountPopover';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,10 +12,13 @@ import {
   loginSignDialog,
   forgetpasswordSignDialog,
 } from '../../store/actions/signAction';
+import { useSession } from 'next-auth/react';
 
 const AccountButton = ({ isLogin }) => {
   const anchorRef = useRef(null);
   const [openPopover, setOpenPopover] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState("headImgUrl");
+  const { data: session } = useSession();
 
   //state to manage signIn dialog
   const { isOpen, content } = useSelector((state) => state.sign);
@@ -28,6 +31,12 @@ const AccountButton = ({ isLogin }) => {
       setOpenPopover(isLogin);
     }
   };
+
+    useEffect(() => {
+        if (session && session.user) {
+            setAvatarUrl(session.user.image);
+        }
+    }, [session]);
 
   return (
     <>
@@ -70,7 +79,7 @@ const AccountButton = ({ isLogin }) => {
             height: 40,
             width: 40,
           }}
-          src={isLogin ? '/user.png' : ''}
+          src={isLogin && avatarUrl ? avatarUrl : ''}
         />
       </Box>
       {isLogin && (

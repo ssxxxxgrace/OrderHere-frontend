@@ -17,11 +17,16 @@ import HistoryIcon from '@mui/icons-material/History';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { logoutAction } from '../../store/actions/signAction';
 import { signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import {useEffect, useState} from "react";
 
 const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
   const dispatch = useDispatch();
   const router = useRouter();
+  const { data: session } = useSession();
+  const [username, setUsername] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState("headImgUrl");
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
@@ -29,6 +34,11 @@ const AccountPopover = (props) => {
     onClose();
     router.push('/');
   };
+
+  useEffect(() => {
+    setUsername(session.user.name);
+    setAvatarUrl(session.user.image);
+  }, [session]);
 
   return (
     <Popover
@@ -46,7 +56,7 @@ const AccountPopover = (props) => {
     >
       <NextLink
         href={{
-          pathname: `/profile/username`,
+          pathname: `/profile`,
         }}
         passHref
       >
@@ -59,7 +69,7 @@ const AccountPopover = (props) => {
           }}
         >
           <Avatar
-            src="headImgUrl"
+            src={avatarUrl}
             sx={{
               height: 40,
               width: 40,
@@ -71,7 +81,7 @@ const AccountPopover = (props) => {
               ml: 1,
             }}
           >
-            <Typography variant="body1">username</Typography>
+            <Typography variant="body1">{username}</Typography>
             <Typography color="textSecondary" variant="body2">
               roleName
             </Typography>

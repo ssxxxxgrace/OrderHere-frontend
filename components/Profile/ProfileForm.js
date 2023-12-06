@@ -9,15 +9,21 @@ import {
     Paper, Radio,
     RadioGroup,
     TextField,
-    Typography
+    Typography,
+    Snackbar,
+    Alert
 } from "@mui/material";
-import { updateUserProfile } from "../../services/Profile";
-import { getUserProfile } from "../../services/Profile";
+import BorderColorSharpIcon from '@mui/icons-material/BorderColorSharp';
+import { updateUserProfile, getUserProfile, updateUserAvatar } from "../../services/Profile";
 
 export default function ProfileForm() {
     const [editMode, setEditMode] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, serError] = useState(null);
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('info');
 
     const defaultProfile = {
         userName: '',
@@ -76,6 +82,50 @@ export default function ProfileForm() {
         });
     };
 
+    const handleAvatarChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('imageFile', file);
+
+            try {
+                setLoading(true);
+                const response = await updateUserAvatar(formData);
+                if (response.status === 200) {
+                    console.log(response.data);
+                    setProfile({
+                        ...profile,
+                        avatarUrl: response.data
+                    });
+                    setOriginalProfile({
+                        ...originalProfile,
+                        avatarUrl: response.data
+                    });
+                    setSnackbarMessage('Avatar change successful!');
+                    setSnackbarSeverity('success');
+                } else {
+                    setSnackbarMessage('Failed to update avatar.');
+                    setSnackbarSeverity('error');
+                }
+            } catch (error) {
+                console.error('Error updating avatar:', error);
+                setSnackbarMessage('Failed to update avatar.');
+                setSnackbarSeverity('error');
+            } finally {
+                setSnackbarOpen(true);
+                setLoading(false);
+            }
+        }
+    };
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackbarOpen(false);
+    };
+
+
     const handleEdit = () => {
         if (editMode) {
             setProfile(originalProfile);
@@ -93,14 +143,18 @@ export default function ProfileForm() {
                 username: profile.userName,
                 firstname: profile.firstName,
                 lastname: profile.lastName,
-                avatarUrl: profile.avatarUrl,
             }
             await updateUserProfile(userProfileUpdateDTO);
             setOriginalProfile(profile);
+            setSnackbarMessage('User information change successful!');
+            setSnackbarSeverity('success');
         } catch (error) {
             console.error('Error updating user profile:', error);
             serError(error);
+            setSnackbarMessage('Failed to update user information.');
+            setSnackbarSeverity('error');
         } finally {
+            setSnackbarOpen(true);
             setLoading(false);
         }
         setEditMode(false);
@@ -112,8 +166,8 @@ export default function ProfileForm() {
                 <Box
                     sx={{
                         height: 150,
-                        filter: 'blur(7px)',
-                        backgroundImage: 'url(/image/cart-bg.png)',
+                        filter: 'blur(5px)',
+                        backgroundImage: 'url(/image/ProfileHeader.svg)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         borderTopLeftRadius: 'borderRadius',
@@ -134,6 +188,23 @@ export default function ProfileForm() {
                         backgroundColor: 'background.paper',
                     }}
                 />
+
+                    <Button
+                        component="label"
+                        sx={{
+                            position: 'absolute',
+                            left: '54%',
+                            bottom: '-10%',
+                            transform: 'translateX(-50%)',
+                        }}
+                    >
+                        <BorderColorSharpIcon />
+                        <input
+                            type="file"
+                            hidden
+                            onChange={handleAvatarChange}
+                        />
+                    </Button>
             </Box>
             <Paper elevation={3} sx={{ padding: 3 }}>
                 <form onSubmit={handleSubmit}>
@@ -246,6 +317,11 @@ export default function ProfileForm() {
                     </Box>
                 </form>
             </Paper>
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </Container>
     );
 }

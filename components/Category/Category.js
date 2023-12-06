@@ -27,16 +27,18 @@ const Category = ({categories: initialData}) => {
   // }, []);
 
   return (
-    <Box sx={{ width: '100%', ...buttonGroupStyles }}>
+    <Box sx={{ width: '100%', overflowX: 'auto', ...buttonGroupStyles }}>
       <Stack
         direction="row"
-        justifyContent="center"
+        justifyContent="flex-start"
         alignItems="center"
         spacing={2}
         sx={{
           '& > *': {
-            flex: '1 1 auto',
+              flex: '0 0 auto',
+              minWidth: 'fit-content',
           },
+            flexWrap: 'nowrap',
         }}
       >
         {categories.map((category) => (
@@ -45,12 +47,14 @@ const Category = ({categories: initialData}) => {
             variant="outlined"
             color="secondary"
             sx={{
-              borderRadius: '20px',
-              color: 'black',
-              borderColor: 'black',
+                // marginLeft: 3,
+                backgroundColor: 'white',
+                fontSize: '13px',
+                width: '120px',
+                color: 'black',
               '&:hover': {
-                borderColor: 'black',
-                backgroundColor: '',
+                backgroundColor: 'button.main',
+                color: 'white',
               },
             }}
           >
