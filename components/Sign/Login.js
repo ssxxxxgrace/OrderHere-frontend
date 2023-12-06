@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import ForgetPassword from './ForgetPassword';
 import ResetPassword from './ResetPassword';
 import { useFormik } from 'formik';
@@ -32,7 +32,7 @@ const Login = ({ register }) => {
   const [isLoading, setLoading] = useState(false);
   const [csrfValue, setCsrfValue] = useState();
   const { data: session, error } = useSession();
-  // const router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     getCsrfToken().then(setCsrfValue);
