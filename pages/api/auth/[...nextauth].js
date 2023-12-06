@@ -41,6 +41,7 @@ export const authOptions = {
             return {
               id: userId,
               name: userName,
+              image: userAvatar,
               token: jwtObject,
               jwt: token,
             };
