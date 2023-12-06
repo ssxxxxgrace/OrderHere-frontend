@@ -32,7 +32,7 @@ const Login = ({ register }) => {
   const [isLoading, setLoading] = useState(false);
   const [csrfValue, setCsrfValue] = useState();
   const { data: session, error } = useSession();
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     getCsrfToken().then(setCsrfValue);
