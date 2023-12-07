@@ -18,6 +18,14 @@ const ingredientReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 unselectedIngredients: updatedIngredients
             };
+        case Action.REMOVE_UNSELECTED_INGREDIENTS:
+            const dishToRemove = payload.dish;
+            const newUnselectedIngredients = { ...state.unselectedIngredients };
+            delete newUnselectedIngredients[dishToRemove];
+            return {
+                ...state,
+                unselectedIngredients: newUnselectedIngredients
+            };
         default:
             return state;
     }

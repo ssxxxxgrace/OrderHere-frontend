@@ -3,8 +3,7 @@ html {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  width: 100vw;
-  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -12,6 +11,23 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  width: 100vw;
-  overflow-x: hidden;
+  width: 100%;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
