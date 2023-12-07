@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import * as Action from '../../../../../store/actionTypes';
 import {
   Box,
   Button,
@@ -8,6 +10,12 @@ import {
   RadioGroup,
 } from '@mui/material';
 import { styled } from '@mui/system';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const CustomColorRadio = styled(Radio)({
   '&.Mui-checked': {
@@ -21,6 +29,8 @@ const PickupTime = () => {
   const [timeFrame, setTimeFrame] = useState(
     `${now.getHours()}:00 - ${now.getHours() + 1}:00`,
   );
+  const dispatch = useDispatch();
+  const [timeConfirmed, setTimeConfirmed] = useState(false);
 
   const router = useRouter();
 
@@ -41,8 +51,18 @@ const PickupTime = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    router.push('/'); // navigate to payment page in the future
+    // e.preventDefault();
+    const extractedDate = selectedDate.toISOString().split('T')[0];
+    const extractedTime = timeFrame.match(/\d{2}:\d{2}/)[0];
+    dispatch({ type: Action.SET_PICK_UP_DATE, payload: extractedDate });
+    dispatch({ type: Action.SET_PICK_UP_TIME, payload: extractedTime });
+    // console.log('time and date:', extractedDate, extractedTime)
+    setTimeConfirmed(true);
+    // router.push('/pay'); 
+  };
+
+  const handleChangeClick = () => {
+    setTimeConfirmed(false);
   };
 
   const isToday = useMemo(() => {
@@ -137,20 +157,51 @@ const PickupTime = () => {
         </RadioGroup>
       </Box>
 
-      <Button
-        type="submit"
-        sx={{
-          backgroundColor: 'button.main',
-          width: '400px',
-          height: '50px',
-          borderRadius: '10px',
-          color: 'white',
-          fontSize: '20px',
-          fontWeight: 600,
-        }}
-      >
-        Confirm
-      </Button>
+      {!timeConfirmed && (
+        <Button
+          // type="submit"
+          onClick={handleSubmit}
+          sx={{
+            backgroundColor: 'button.main',
+            width: '400px',
+            height: '50px',
+            borderRadius: '10px',
+            color: 'white',
+            fontSize: '20px',
+            fontWeight: 600,
+          }}
+        >
+          Confirm
+        </Button>
+      )}
+
+      {timeConfirmed && (
+        <Box sx={{
+          mt: 2,
+          mb: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <Box component="span" sx={{ fontSize: '1.5rem', fontWeight: 500, }}>Time has been confirmed, click the button below to Change time.</Box>
+          <Button
+            onClick={handleChangeClick}
+            sx={{
+              backgroundColor: 'button.main',
+              width: '400px',
+              height: '50px',
+              borderRadius: '10px',
+              color: 'white',
+              fontSize: '20px',
+              fontWeight: 600,
+              mt: 2,
+            }}
+          >
+            Change
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };

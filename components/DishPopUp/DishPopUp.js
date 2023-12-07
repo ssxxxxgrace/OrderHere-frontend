@@ -53,6 +53,7 @@ const DishPopup = ({
   const [tempIngredientDetails, setTempIngredientDetails] = useState([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedIngredientId, setSelectedIngredientId] = useState(null);
+  const [tempUnselectedIngredients, setTempUnselectedIngredients] = useState(new Set());
   // const unselectedIngredients = useSelector((state) => state.ingredient.unselectedIngredients);
   // console.log('unselect', unselectedIngredients)
 
@@ -84,6 +85,7 @@ const DishPopup = ({
       dispatch({ type: Action.DECREASE_ITEM, payload: { dishId } });
     } else if (quantity === 1) {
       dispatch({ type: Action.REMOVE_FROM_CART, payload: { dishId } });
+      dispatch({ type: Action.REMOVE_UNSELECTED_INGREDIENTS, payload: { dish: dishName } });
     }
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
@@ -103,6 +105,17 @@ const DishPopup = ({
       dispatch({ type: Action.INCREASE_ITEM, payload: { dishId } });
     }
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
+
+    tempUnselectedIngredients.forEach(ingredient => {
+      dispatch({
+        type: Action.SET_UNSELECTED_INGREDIENT,
+        payload: {
+          dish: dishName,
+          ingredient: ingredient,
+        },
+      });
+    });
+    setTempUnselectedIngredients(new Set());
   };
 
   const toggleCollapse = () => {
@@ -210,6 +223,18 @@ const DishPopup = ({
         console.error('Error delete ingredient:', error.response);
       }
     }
+  };
+
+  const handleCheckboxChange = (ingredientName, isChecked) => {
+    setTempUnselectedIngredients((prev) => {
+      const newUnselected = new Set(prev);
+      if (isChecked) {
+        newUnselected.delete(ingredientName);
+      } else {
+        newUnselected.add(ingredientName);
+      }
+      return newUnselected;
+    });
   };
 
   const handleImageChange = (event) => {
@@ -426,17 +451,7 @@ const DishPopup = ({
                     <Checkbox
                       {...label}
                       defaultChecked
-                      onChange={(e) => {
-                        if (!e.target.checked) {
-                          dispatch({
-                            type: Action.SET_UNSELECTED_INGREDIENT,
-                            payload: {
-                              dish: dishName,
-                              ingredient: ingredient.name,
-                            },
-                          });
-                        }
-                      }}
+                      onChange={(e) => handleCheckboxChange(ingredient.name, e.target.checked)}
                       sx={{
                         color: 'button.main',
                         '&.Mui-checked': {

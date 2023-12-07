@@ -26,6 +26,11 @@ const ingredientReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 unselectedIngredients: newUnselectedIngredients
             };
+        case Action.CLEAR_UNSELECTED_INGREDIENTS:
+            return {
+                ...state,
+                unselectedIngredients: {}
+            };
         default:
             return state;
     }

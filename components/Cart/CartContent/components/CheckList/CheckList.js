@@ -67,12 +67,13 @@ const CheckList = () => {
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
   const handleCheckout = async () => {
+    router.push('/pay');
     let orderData = {
       restaurantId: 1,
       orderStatus: 'pending',
       discount: 0,
       totalPrice: parseFloat(totalPrice),
-      note: `${note.note}\n${formattedIngredients}`,
+      note: `${note.note} Customized detail: ${formattedIngredients}`,
       dishes: cartItems.map((item) => ({
         dishId: item.dishId,
         dishName: item.dishName,
@@ -125,15 +126,17 @@ const CheckList = () => {
     }
 
     try {
-      // console.log('final data:', orderData)
+      console.log('final data:', orderData)
       // console.log('final ordertype:', orderType)
       const response = await placeOrder(orderData);
       console.log('Order placed successfully:', response);
+      // router.push('/pay');
       dispatch({ type: Action.CLEAR_CART });
-      router.push('/pay');
+      dispatch({ type: Action.CLEAR_UNSELECTED_INGREDIENTS });
     } catch (error) {
       console.error('Error placing order:', error.response);
     }
+
   };
 
   return (
