@@ -23,6 +23,7 @@ export async function getStaticProps({ params }) {
       props: {
         restaurantData: response.data,
       },
+      revalidate: 10,
     };
   } catch (error) {
     console.error('Error fetching restaurant info:', error);

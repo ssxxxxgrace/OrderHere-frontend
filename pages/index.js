@@ -16,6 +16,7 @@ export async function getStaticProps() {
         dishes: dishResponse.data.data,
         categories: categoriesResponse.data,
       },
+      revalidate: 10,
     };
   } catch (error) {
     console.error('Error fetching dishes:', error);
