@@ -4,6 +4,7 @@ import Carousel from '../components/Carousel/Carousel';
 import Category from '../components/Category/Category';
 import { getDishes } from '../services/Dish';
 import { getCategoriesByRestaurant } from '../services/Category';
+import { Container } from '@mui/system';
 
 export async function getStaticProps() {
   try {
@@ -26,11 +27,13 @@ export async function getStaticProps() {
 
 const Index = ({ dishes, categories }) => {
   return (
-    <ThreeColumnsLayout>
+    <Container>
       <Carousel />
       <Category categories={categories} />
-      <FoodItemsList dishes={dishes} />
-    </ThreeColumnsLayout>
+      <ThreeColumnsLayout>
+        <FoodItemsList dishes={dishes} />
+      </ThreeColumnsLayout>
+    </Container>
   );
 };
 
