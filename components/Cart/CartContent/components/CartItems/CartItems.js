@@ -1,6 +1,7 @@
 import CartItem from './components/CartItem/CartItem';
 import { Box, Typography, Divider } from '@mui/material';
 import { useSelector } from 'react-redux';
+import React from 'react';
 
 const CartItems = () => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -36,7 +37,7 @@ const CartItems = () => {
         </Typography>
       </Box>
       {cartItems.map((cartItem) => (
-        <>
+        <React.Fragment key={cartItem.dishId}>
           <CartItem
             dishId={cartItem.dishId}
             dishName={cartItem.dishName}
@@ -45,7 +46,7 @@ const CartItems = () => {
             price={cartItem.price}
           />
           <Divider sx={{ borderColor: 'border.main' }} />
-        </>
+        </React.Fragment>
       ))}
     </>
   );

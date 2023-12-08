@@ -18,7 +18,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { logoutAction } from '../../store/actions/signAction';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -102,6 +102,17 @@ const AccountPopover = (props) => {
             </MenuItem>
           </NextLink>
         )} */}
+        <NextLink href="/history" passHref>
+          <MenuItem>
+            <ListItemIcon>
+              <HistoryIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText
+              primary={<Typography variant="body1">Order History</Typography>}
+            />
+          </MenuItem>
+        </NextLink>
+        <Divider />
         <NextLink href="/setting" passHref>
           <MenuItem component="a">
             <ListItemIcon>
@@ -120,17 +131,6 @@ const AccountPopover = (props) => {
             </ListItemIcon>
             <ListItemText
               primary={<Typography variant="body1">Logout</Typography>}
-            />
-          </MenuItem>
-        </NextLink>
-        <Divider />
-        <NextLink href="/history" passHref>
-          <MenuItem>
-            <ListItemIcon>
-              <HistoryIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={<Typography variant="body1">Order History</Typography>}
             />
           </MenuItem>
         </NextLink>

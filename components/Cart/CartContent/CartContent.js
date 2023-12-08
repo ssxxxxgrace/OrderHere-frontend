@@ -41,7 +41,12 @@ const Content = () => {
             <Note />
           </>
         )}
-        {orderType === 'pickup' && <PickupTime />}
+        {orderType === 'pickup' && (
+          <>
+            <PickupTime />
+            <Note />
+          </>
+        )}
       </Box>
     </Box>
   );

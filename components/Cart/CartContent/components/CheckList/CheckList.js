@@ -1,9 +1,16 @@
+import React, { useState } from 'react';
 import { Box, Typography, Divider, ButtonBase } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckListItems from './components/CheckListItems/ChecklistItems';
 import * as Action from '../../../../../store/actionTypes';
 import { placeOrder } from '../../../../../services/orderService';
 import { useRouter } from 'next/router';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const CheckList = () => {
   const router = useRouter();
@@ -16,6 +23,44 @@ const CheckList = () => {
 
   const address = useSelector((state) => state.delivery.addressData);
   const note = useSelector((state) => state.delivery.noteData);
+  const orderType = useSelector((state) => state.cart.orderType);
+
+  const dineInPhone = useSelector((state) => state.dinein.phoneNumber);
+  const personCount = useSelector((state) => state.dinein.personCount);
+  const dineInDate = useSelector((state) => state.dinein.selectedDate);
+  const dineInTime = useSelector((state) => state.dinein.selectedTime);
+  const combinedDateTime = dayjs(`${dineInDate} ${dineInTime}`);
+  const dineInZonedDateTime = combinedDateTime.utc().format();
+  const dineInName = useSelector((state) => state.dinein.name);
+  const PickUpTime = useSelector((state) => state.pickup.selectedTime);
+  const PickUpDate = useSelector((state) => state.pickup.selectedDate);
+  const combinedPickUpDateTime = dayjs(`${PickUpDate} ${PickUpTime}`);
+  const PickUpzonedDateTime = combinedPickUpDateTime.utc().format();
+
+  // console.log('dinein phone:', dineInPhone);
+  // console.log('dinein personCount:', personCount);
+  // console.log('dinein dineInDate:', dineInDate);
+  // console.log('dinein dineInTime:', dineInTime);
+  // console.log('ZonedDateTime in Melbourne:', dineInZonedDateTime);
+  // console.log('dinein name:', dineInName);
+  // console.log('dinein note:', note);
+  // console.log('pick up time:', PickUpzonedDateTime);
+  const unselectedIngredients = useSelector((state) => state.ingredient.unselectedIngredients);
+  console.log('unselect', unselectedIngredients)
+  let formattedIngredients = '';
+  for (const [dish, unselected] of Object.entries(unselectedIngredients)) {
+    const unselectedString = unselected.join(', No ');
+    formattedIngredients += `${dish}: No ${unselectedString}\n`;
+  }
+  formattedIngredients = formattedIngredients.trim();
+  console.log('format unselected', formattedIngredients)
+
+
+  const [showWarningShake, setShowWarningShake] = useState(false);
+
+  const warningShakeStyle = {
+    animation: showWarningShake ? 'shake 0.5s' : 'none',
+  };
 
   const handleClearCart = () => {
     dispatch({ type: Action.CLEAR_CART });
@@ -23,38 +68,75 @@ const CheckList = () => {
   };
   const handleCheckout = async () => {
     router.push('/pay');
-    // const orderData = {
-    //   userId: 1,
-    //   orderType: 'delivery',
-    //   orderStatus: 'pending',
-    //   discount: 0,
-    //   address: address.address,
-    //   totalPrice: parseFloat(totalPrice),
-    //   note: note.note,
-    //   dishes: cartItems.map((item) => ({
-    //     dishId: item.dishId,
-    //     dishName: item.dishName,
-    //     dishQuantity: item.quantity,
-    //     dishPrice: item.price,
-    //   })),
-    // };
-    // console.log('Address:', address);
-    // console.log('Note:', note);
-    // console.log('order data:', orderData);
+    let orderData = {
+      restaurantId: 1,
+      orderStatus: 'pending',
+      discount: 0,
+      totalPrice: parseFloat(totalPrice),
+      note: `${note.note} Customized detail: ${formattedIngredients}`,
+      dishes: cartItems.map((item) => ({
+        dishId: item.dishId,
+        dishName: item.dishName,
+        dishQuantity: item.quantity,
+        dishPrice: item.price,
+      })),
+    };
 
-    // if (!address.name || !address.phone || !address.address) {
-    //   console.log('Warning: Shipping information is missing!');
-    //   return;
-    // }
+    if (orderType === 'delivery') {
+      orderData = {
+        ...orderData,
+        orderType: orderType,
+        address: address.address,
+        phone: address.phone,
+      };
 
-    // try {
-    //   const response = await placeOrder(orderData);
-    //   console.log('Order placed successfully:', response);
-    //   dispatch({ type: Action.CLEAR_CART });
-    //   router.push('/');
-    // } catch (error) {
-    //   console.error('Error placing order:', error.response);
-    // }
+      // console.log('check for data:', orderData)
+      // console.log('check for ordertype:', orderType)
+
+      if (!address.name || !address.phone || !address.address) {
+        console.log('Warning: Shipping information is missing!');
+        setShowWarningShake(true);
+        setTimeout(() => setShowWarningShake(false), 1000);
+        return;
+      }
+    } else if (orderType === 'dine in') {
+      orderData = {
+        ...orderData,
+        orderType: 'dine_in',
+        pickupTime: dineInZonedDateTime,
+        phone: dineInPhone,
+        numberOfPeople: parseInt(personCount),
+      };
+
+      // console.log('check for data:', orderData)
+      // console.log('check for ordertype:', orderType)
+
+      if (!dineInName || !dineInPhone || !personCount) {
+        console.log('Warning: Dine-in information is missing!');
+        setShowWarningShake(true);
+        setTimeout(() => setShowWarningShake(false), 1000);
+        return;
+      }
+    } else if (orderType === 'pickup') {
+      orderData = {
+        ...orderData,
+        orderType: orderType,
+        pickupTime: PickUpzonedDateTime,
+      };
+    }
+
+    try {
+      console.log('final data:', orderData)
+      // console.log('final ordertype:', orderType)
+      const response = await placeOrder(orderData);
+      console.log('Order placed successfully:', response);
+      // router.push('/pay');
+      dispatch({ type: Action.CLEAR_CART });
+      dispatch({ type: Action.CLEAR_UNSELECTED_INGREDIENTS });
+    } catch (error) {
+      console.error('Error placing order:', error.response);
+    }
+
   };
 
   return (
@@ -145,7 +227,7 @@ const CheckList = () => {
         </Typography>
       </Box>
 
-      {(!address.name || !address.phone || !address.address) && (
+      {orderType === 'delivery' && (!address.name || !address.phone || !address.address) && (
         <Box
           sx={{
             mx: 2,
@@ -156,10 +238,31 @@ const CheckList = () => {
             backgroundColor: 'warning.main',
             color: 'white',
             borderRadius: '8px',
+            ...warningShakeStyle,
           }}
         >
           <Typography sx={{ fontSize: '16px', fontWeight: '400' }}>
             Warning: Shipping information is missing!
+          </Typography>
+        </Box>
+      )}
+
+      {orderType === 'dine in' && (!dineInName || !dineInPhone || !personCount) && (
+        <Box
+          sx={{
+            mx: 2,
+            padding: 2,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'warning.main',
+            color: 'white',
+            borderRadius: '8px',
+            ...warningShakeStyle,
+          }}
+        >
+          <Typography sx={{ fontSize: '16px', fontWeight: '400' }}>
+            Warning: Dine-in information is missing!
           </Typography>
         </Box>
       )}
