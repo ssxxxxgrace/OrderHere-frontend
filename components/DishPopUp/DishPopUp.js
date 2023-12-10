@@ -32,6 +32,8 @@ import {
 import styles from './DishPopup.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../store/actionTypes';
+import { updateDishes } from '../../services/Dish';
+
 
 const DishPopup = ({
   dishId,
@@ -56,9 +58,15 @@ const DishPopup = ({
   const [tempUnselectedIngredients, setTempUnselectedIngredients] = useState(
     new Set(),
   );
-  const [editableDishName, setEditableDishName] = useState(dishName);
-  const [editableDescription, setEditableDescription] = useState(description);
-  const [editablePrice, setEditablePrice] = useState(price);
+  const [newDish, setNewDish] = useState({
+    dishId: dishId,
+    dishName: dishName,
+    description: description,
+    price: price,
+    restaurantId: 1,
+    availability: true,
+    imageFile: null,
+  });
   // const unselectedIngredients = useSelector((state) => state.ingredient.unselectedIngredients);
   // console.log('unselect', unselectedIngredients)
 
@@ -85,16 +93,13 @@ const DishPopup = ({
       .catch((error) => console.error('Fetching dishes failed', error));
   }, [dishId]);
 
-  const handleDishNameChange = (event) => {
-    setEditableDishName(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setEditableDescription(event.target.value);
-  };
-
-  const handlePriceChange = (event) => {
-    setEditablePrice(event.target.value);
+  const handleDishChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === 'imageFile') {
+      setNewDish({ ...newDish, imageFile: files[0] });
+    } else {
+      setNewDish({ ...newDish, [name]: value });
+    }
   };
 
   const decrementQuantity = () => {
@@ -182,7 +187,7 @@ const DishPopup = ({
               unit: 'grams',
               quantityValue: 1,
             });
-            // console.log('resonse', response.data);
+            // console.log('response', response.data);
             updatedIngredients[i] = {
               ...ingredient,
               id: response.data,
@@ -257,10 +262,21 @@ const DishPopup = ({
     });
   };
 
-  const handleImageChange = (event) => {
-    //TODO
-    const file = event.target.files[0];
+  const handleEditDishSubmit = async (newDishData) => {
+    try {
+      console.log('newDishData', newDishData);
+      const response = await updateDishes(newDishData);
+
+      if (response) {
+        // dispatch(addDishSuccess(response.data.data));
+        // setDishAdditionCount((count) => count + 1);
+      }
+    } catch (error) {
+      console.error('Error updating dish:', error.response);
+    }
+    setIsEditMode(false);
   };
+
 
   return (
     <Dialog open={open} onClose={onClose} className={styles.dishPopup}>
@@ -297,7 +313,8 @@ const DishPopup = ({
                 style={{ display: 'none' }}
                 id="icon-button-file"
                 type="file"
-                onChange={handleImageChange}
+                name="imageFile"
+                onChange={handleDishChange}
               />
               <label htmlFor="icon-button-file">
                 <IconButton
@@ -333,11 +350,12 @@ const DishPopup = ({
               sx={{ mt: 2, mr: 3 }}
               variant="outlined"
               label="Dish Name"
-              value={editableDishName}
-              onChange={handleDishNameChange}
+              name = "dishName"
+              value={newDish.dishName}
+              onChange={handleDishChange}
             />
           ) : (
-            <Typography variant="h6">{editableDishName}</Typography>
+            <Typography variant="h6">{dishName}</Typography>
           )}
           <IconButton
             onClick={toggleEditMode}
@@ -371,13 +389,14 @@ const DishPopup = ({
               sx={{ mt: 2, mr: 3 }}
               variant="outlined"
               label="Price"
-              value={editablePrice}
-              onChange={handlePriceChange}
+              name = "price"
+              value={newDish.price}
+              onChange={handleDishChange}
               type="number"
               inputProps={{ min: 0 }}
             />
           ) : (
-            <Typography variant="h6">${editablePrice}</Typography>
+            <Typography variant="h6">${price}</Typography>
           )}
         </DialogContentText>
 
@@ -389,11 +408,12 @@ const DishPopup = ({
               multiline
               variant="outlined"
               label="Description"
-              value={editableDescription}
-              onChange={handleDescriptionChange}
+              name = "description"
+              value={newDish.description}
+              onChange={handleDishChange}
             />
           ) : (
-            <Typography>{editableDescription}</Typography>
+            <Typography>{description}</Typography>
           )}
         </DialogContentText>
         <Box
@@ -406,6 +426,7 @@ const DishPopup = ({
         >
           {isEditMode && (
             <IconButton
+              onClick={() => handleEditDishSubmit(newDish)}
               sx={{
                 backgroundColor: 'button.main',
                 color: '#f4f4f4',
