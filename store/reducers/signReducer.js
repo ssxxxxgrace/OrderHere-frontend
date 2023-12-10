@@ -32,14 +32,13 @@ const signReducer = (state = initialState, { type, payload }) => {
         ...state,
         content: 'register',
       };
-    
+
     case Action.FORGETPASSWORD_SIGN_DIALOG:
       return {
         ...state,
         // isOpen: true,
         content: 'forgetpassword',
       };
-    
 
     case Action.FORGET_PASSWORD_SUCCESS:
       // Handle state update for a successful password reset request
@@ -58,8 +57,6 @@ const signReducer = (state = initialState, { type, payload }) => {
         passwordResetStatus: 'error', // example state field
         error: Action.payload, // the error message
       };
-
-
 
     case Action.LOGIN_SUCCESS:
       return {

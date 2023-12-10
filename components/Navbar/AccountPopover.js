@@ -113,7 +113,7 @@ const AccountPopover = (props) => {
           </MenuItem>
         </NextLink>
         <Divider />
-        <NextLink href="/setting" passHref>
+        <NextLink href="/profile" passHref>
           <MenuItem component="a">
             <ListItemIcon>
               <SettingsIcon fontSize="small" />

@@ -84,8 +84,10 @@ const Login = ({ register }) => {
   };
 
   const [emailForReset, setEmailForReset] = useState('');
-  const [isForgetPasswordModalOpen, setIsForgetPasswordModalOpen] = useState(false);
-  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
+  const [isForgetPasswordModalOpen, setIsForgetPasswordModalOpen] =
+    useState(false);
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
+    useState(false);
 
   const handleOpenForgetPasswordModal = () => {
     setIsForgetPasswordModalOpen(true);
@@ -95,7 +97,7 @@ const Login = ({ register }) => {
   //   // dispatch(closeSignDialog());
   //   setIsResetPasswordModalOpen(true);
   // }
-  
+
   const handleCloseForgetPasswordModal = (emailSent, userEmail) => {
     setIsForgetPasswordModalOpen(false);
     if (emailSent) {
@@ -181,11 +183,15 @@ const Login = ({ register }) => {
               </Grid>
               <Grid item xs={4}>
                 <Typography color="textSecondary" variant="body2">
-                <Button onClick={handleOpenForgetPasswordModal}>Forget password?</Button>
+                  <Button onClick={handleOpenForgetPasswordModal}>
+                    Forget password?
+                  </Button>
                   <ForgetPassword
                     open={isForgetPasswordModalOpen}
                     onClose={() => setIsForgetPasswordModalOpen(false)}
-                    onEmailSent={(emailSent, userEmail) => handleCloseForgetPasswordModal(emailSent, userEmail)}
+                    onEmailSent={(emailSent, userEmail) =>
+                      handleCloseForgetPasswordModal(emailSent, userEmail)
+                    }
                   />
                   <ResetPassword
                     open={isResetPasswordModalOpen}
@@ -193,7 +199,6 @@ const Login = ({ register }) => {
                     email={emailForReset}
                   />
                 </Typography>
-                
               </Grid>
             </Grid>
 

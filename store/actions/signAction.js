@@ -22,8 +22,6 @@ export const forgetpasswordSignDialog = () => ({
   type: Action.FORGETPASSWORD_SIGN_DIALOG,
 });
 
-
-
 export const logoutAction = () => (dispatch) => {
   //clear the NextAuth session
   // signOut({ redirect: `http://localhost:3000` });
