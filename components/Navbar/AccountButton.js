@@ -16,7 +16,7 @@ import { useSession } from 'next-auth/react';
 const AccountButton = ({ isLogin }) => {
   const anchorRef = useRef(null);
   const [openPopover, setOpenPopover] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState("headImgUrl");
+  const [avatarUrl, setAvatarUrl] = useState('headImgUrl');
   const { data: session } = useSession();
 
   //state to manage signIn dialog
@@ -31,11 +31,11 @@ const AccountButton = ({ isLogin }) => {
     }
   };
 
-    useEffect(() => {
-        if (session && session.user) {
-            setAvatarUrl(session.user.image);
-        }
-    }, [session]);
+  useEffect(() => {
+    if (session && session.user) {
+      setAvatarUrl(session.user.image);
+    }
+  }, [session]);
 
   return (
     <>

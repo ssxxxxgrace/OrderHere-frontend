@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import FoodItem from '/components/DishList/FoodItem';
-import {
-  Box,
-  Divider,
-  CircularProgress,
-  Alert,
-  IconButton,
-  Button,
-} from '@mui/material';
+import { Box, CircularProgress, Alert, Button } from '@mui/material';
 import { getDishes } from '../../services/Dish';
 import AddDishModal from './AddDishModal';
 import { useDispatch } from 'react-redux';
@@ -25,6 +19,7 @@ const FoodItemsList = ({ dishes: initialDishes }) => {
   const [dishAdditionCount, setDishAdditionCount] = useState(0);
 
   const dispatch = useDispatch();
+  const router = useRouter();
   const handleAddNewDishClick = () => {
     setAddDishModalOpen(true);
   };
@@ -43,6 +38,7 @@ const FoodItemsList = ({ dishes: initialDishes }) => {
       if (response) {
         dispatch(addDishSuccess(response.data.data));
         setDishAdditionCount((count) => count + 1);
+        router.push('/');
       }
     } catch (error) {
       dispatch(addDishError(error.toString()));
