@@ -404,21 +404,23 @@ const DishPopup = ({
             marginY: 2,
           }}
         >
-          <IconButton
-            sx={{
-              backgroundColor: 'button.main',
-              color: '#f4f4f4',
-              marginRight: 3,
-              paddingInline: 2,
-              fontWeight: 600,
-              fontSize: '1.2rem',
-              '&:hover': {
-                backgroundColor: '#BF5B5F',
-              },
-            }}
-          >
-            Admin Edit Confirm
-          </IconButton>
+          {isEditMode && (
+            <IconButton
+              sx={{
+                backgroundColor: 'button.main',
+                color: '#f4f4f4',
+                marginRight: 3,
+                paddingInline: 2,
+                fontWeight: 600,
+                fontSize: '1.2rem',
+                '&:hover': {
+                  backgroundColor: '#BF5B5F',
+                },
+              }}
+            >
+              Admin Edit Confirm
+            </IconButton>
+          )}
         </Box>
 
         <DialogContentText sx={{ overflowY: 'auto' }}>
