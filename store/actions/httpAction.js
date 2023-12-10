@@ -39,12 +39,13 @@ export const loginAction = (email, password, success, fail) => (dispatch) => {
 
 export const forgetPasswordAction = (email, onSuccess, onError) => {
   return (dispatch) => {
-    axios.post('/forget-password', { email: email })
-      .then(response => {
+    axios
+      .post('/forget-password', { email: email })
+      .then((response) => {
         dispatch(forgetPasswordSuccess(response.data.message));
         onSuccess(response.data.message);
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(forgetPasswordError(error.response.data.error));
         onError(error.response.data.error);
       });

@@ -13,7 +13,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useDispatch } from 'react-redux';
-import { forgetPasswordAction } from '../../store/actions/httpAction'; 
+import { forgetPasswordAction } from '../../store/actions/httpAction';
 import { forgetpassword } from '../../services/Public';
 import hotToast from '../../utils/hotToast';
 
@@ -30,16 +30,16 @@ const ForgetPassword = ({ open, onClose, onEmailSent = () => {} }) => {
         .required('Email is required'),
     }),
     onSubmit: (values, { setSubmitting }) => {
-      setSubmitting(true); 
+      setSubmitting(true);
       forgetpassword(values.email)
         .then(() => {
-          setSubmitting(false); 
+          setSubmitting(false);
           hotToast('success', 'Reset link sent to your email.');
           onEmailSent(true, values.email);
-          onClose(); 
+          onClose();
         })
         .catch((error) => {
-          setSubmitting(false); 
+          setSubmitting(false);
           if (error && error.response && error.response.status === 403) {
             hotToast('error', 'Permission denied or invalid request.');
           } else {
@@ -61,20 +61,33 @@ const ForgetPassword = ({ open, onClose, onEmailSent = () => {} }) => {
       }}
     >
       <Fade in={open}>
-        <Container maxWidth="sm" sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          bgcolor: 'background.paper',
-          boxShadow: 24,
-          p: 4,
-          borderRadius: 1,
-        }}>
-          <Typography id="transition-modal-title" variant="h6" component="h2" align="center">
+        <Container
+          maxWidth="sm"
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 1,
+          }}
+        >
+          <Typography
+            id="transition-modal-title"
+            variant="h6"
+            component="h2"
+            align="center"
+          >
             FORGET PASSWORD
           </Typography>
-          <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 2 }}>
+          <Box
+            component="form"
+            onSubmit={formik.handleSubmit}
+            noValidate
+            sx={{ mt: 2 }}
+          >
             <TextField
               margin="normal"
               required
@@ -96,12 +109,12 @@ const ForgetPassword = ({ open, onClose, onEmailSent = () => {} }) => {
               color="primary"
               loading={isLoading}
               sx={{
-                mt: 3, 
-                mb: 2, 
-                backgroundColor: '#AD343E', 
+                mt: 3,
+                mb: 2,
+                backgroundColor: '#AD343E',
                 '&:hover': {
-                  backgroundColor: '#931F1D' 
-                }
+                  backgroundColor: '#931F1D',
+                },
               }}
             >
               Send Reset Link

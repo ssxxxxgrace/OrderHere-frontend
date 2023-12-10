@@ -24,8 +24,7 @@ const ResetPassword = ({ open, onClose, email }) => {
       newPassword: '',
     },
     validationSchema: Yup.object({
-      code: Yup.string()
-        .required('Verification code is required'),
+      code: Yup.string().required('Verification code is required'),
       newPassword: Yup.string()
         .min(6, 'must be at least 6 characters long')
         .max(16)
@@ -37,7 +36,7 @@ const ResetPassword = ({ open, onClose, email }) => {
         .then((response) => {
           setLoading(false);
           hotToast('success', 'Password reset successful.');
-          onClose(); 
+          onClose();
         })
         .catch((error) => {
           setLoading(false);
@@ -57,27 +56,40 @@ const ResetPassword = ({ open, onClose, email }) => {
       }}
     >
       <Fade in={open}>
-        <Container maxWidth="sm" sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          bgcolor: 'background.paper',
-          boxShadow: 24,
-          p: 4,
-          borderRadius: 1,
-        }}>
-          <Typography id="reset-password-modal-title" variant="h6" component="h2" align="center">
+        <Container
+          maxWidth="sm"
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 1,
+          }}
+        >
+          <Typography
+            id="reset-password-modal-title"
+            variant="h6"
+            component="h2"
+            align="center"
+          >
             RESET PASSWORD
           </Typography>
-          <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 2 }}>
+          <Box
+            component="form"
+            onSubmit={formik.handleSubmit}
+            noValidate
+            sx={{ mt: 2 }}
+          >
             <TextField
               margin="normal"
               required
               fullWidth
               id="code"
               label="Verification Code"
-              name="code" 
+              name="code"
               autoComplete="off"
               autoFocus
               onChange={formik.handleChange}
@@ -96,8 +108,12 @@ const ResetPassword = ({ open, onClose, email }) => {
               autoComplete="new-password"
               onChange={formik.handleChange}
               value={formik.values.newPassword}
-              error={formik.touched.newPassword && Boolean(formik.errors.newPassword)}
-              helperText={formik.touched.newPassword && formik.errors.newPassword}
+              error={
+                formik.touched.newPassword && Boolean(formik.errors.newPassword)
+              }
+              helperText={
+                formik.touched.newPassword && formik.errors.newPassword
+              }
             />
             <LoadingButton
               type="submit"
@@ -110,8 +126,8 @@ const ResetPassword = ({ open, onClose, email }) => {
                 mb: 2,
                 backgroundColor: '#AD343E',
                 '&:hover': {
-                  backgroundColor: '#931F1D'
-                }
+                  backgroundColor: '#931F1D',
+                },
               }}
             >
               Reset Password
