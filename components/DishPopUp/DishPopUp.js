@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -6,7 +7,6 @@ import DialogActions from '@mui/material/DialogActions';
 import {
   Box,
   Typography,
-  Divider,
   ListItemText,
   IconButton,
   Button,
@@ -33,7 +33,6 @@ import styles from './DishPopup.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../store/actionTypes';
 import { updateDishes } from '../../services/Dish';
-
 
 const DishPopup = ({
   dishId,
@@ -67,6 +66,7 @@ const DishPopup = ({
     availability: true,
     imageFile: null,
   });
+  const router = useRouter();
   // const unselectedIngredients = useSelector((state) => state.ingredient.unselectedIngredients);
   // console.log('unselect', unselectedIngredients)
 
@@ -268,15 +268,13 @@ const DishPopup = ({
       const response = await updateDishes(newDishData);
 
       if (response) {
-        // dispatch(addDishSuccess(response.data.data));
-        // setDishAdditionCount((count) => count + 1);
+        router.push('/');
       }
     } catch (error) {
       console.error('Error updating dish:', error.response);
     }
     setIsEditMode(false);
   };
-
 
   return (
     <Dialog open={open} onClose={onClose} className={styles.dishPopup}>
@@ -350,7 +348,7 @@ const DishPopup = ({
               sx={{ mt: 2, mr: 3 }}
               variant="outlined"
               label="Dish Name"
-              name = "dishName"
+              name="dishName"
               value={newDish.dishName}
               onChange={handleDishChange}
             />
@@ -389,7 +387,7 @@ const DishPopup = ({
               sx={{ mt: 2, mr: 3 }}
               variant="outlined"
               label="Price"
-              name = "price"
+              name="price"
               value={newDish.price}
               onChange={handleDishChange}
               type="number"
@@ -408,7 +406,7 @@ const DishPopup = ({
               multiline
               variant="outlined"
               label="Description"
-              name = "description"
+              name="description"
               value={newDish.description}
               onChange={handleDishChange}
             />

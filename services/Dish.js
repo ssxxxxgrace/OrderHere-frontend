@@ -21,8 +21,10 @@ export const postDishes = (dishData) => {
 export const updateDishes = (dishData) => {
   const formData = new FormData();
   for (const key in dishData) {
-    if (key === 'imageFile' && dishData[key]) {
-      formData.append(key, dishData[key], dishData[key].name);
+    if (key === 'imageFile') {
+      if (dishData[key] && dishData[key] instanceof File) {
+        formData.append(key, dishData[key], dishData[key].name);
+      }
     } else {
       formData.append(key, dishData[key]);
     }
