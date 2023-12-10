@@ -32,6 +32,34 @@ const signReducer = (state = initialState, { type, payload }) => {
         ...state,
         content: 'register',
       };
+    
+    case Action.FORGETPASSWORD_SIGN_DIALOG:
+      return {
+        ...state,
+        // isOpen: true,
+        content: 'forgetpassword',
+      };
+    
+
+    case Action.FORGET_PASSWORD_SUCCESS:
+      // Handle state update for a successful password reset request
+      return {
+        ...state,
+        // other state updates
+        passwordResetStatus: 'success', // example state field
+        message: Action.payload, // the success message from the backend
+      };
+
+    case Action.FORGET_PASSWORD_ERROR:
+      // Handle state update for a failed password reset request
+      return {
+        ...state,
+        // other state updates
+        passwordResetStatus: 'error', // example state field
+        error: Action.payload, // the error message
+      };
+
+
 
     case Action.LOGIN_SUCCESS:
       return {

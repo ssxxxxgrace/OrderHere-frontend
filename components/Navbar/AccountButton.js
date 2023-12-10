@@ -10,6 +10,7 @@ import {
   closeSignDialog,
   registerSignDialog,
   loginSignDialog,
+  forgetpasswordSignDialog,
 } from '../../store/actions/signAction';
 import { useSession } from 'next-auth/react';
 
@@ -43,7 +44,11 @@ const AccountButton = ({ isLogin }) => {
       {isOpen && (
         <SignDialog isOpen={isOpen} onClose={() => dispatch(closeSignDialog())}>
           {content === 'login' ? (
-            <Login register={() => dispatch(registerSignDialog())} />
+            <Login 
+              register={() => dispatch(registerSignDialog())} 
+              // forgetPassword={() => dispatch(forgetpasswordSignDialog())} 
+            />
+            
           ) : (
             <Signup login={() => dispatch(loginSignDialog())} />
           )}

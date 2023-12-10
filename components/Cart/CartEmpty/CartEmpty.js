@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const EmptyCart = () => {
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="lg">
       <Box
         sx={{
           display: 'flex',

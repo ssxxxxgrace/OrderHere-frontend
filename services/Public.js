@@ -15,6 +15,20 @@ export const signup = (userName, firstName, lastName, password, email) =>
     },
   });
 
+export const forgetpassword = (email) => 
+  http(`/v1/public/users/forget-password`, { method: 'POST', data: { email } });
+
+export const resetpassword = (email, code, newPassword) =>
+  http(`/v1/public/users/reset`, {
+    method: 'POST',
+    data: {
+      email,
+      code,
+      newPassword,
+    },
+  });
+
+
 export const loginByOathProvider = (provider,openId,email,username,avatarUrl) =>
   http(`/v1/public/users/login/${provider}/${openId}`, {
     method: 'POST',

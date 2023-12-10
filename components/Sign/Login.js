@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Router, { useRouter } from 'next/router';
+import ForgetPassword from './ForgetPassword';
+import ResetPassword from './ResetPassword';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
@@ -81,10 +83,32 @@ const Login = ({ register }) => {
     setIsRememberMeChecked(event.target.checked);
   };
 
-  const resetPassword = () => {
-    dispatch(closeSignDialog());
-    Router.push('/password-email');
+  const [emailForReset, setEmailForReset] = useState('');
+  const [isForgetPasswordModalOpen, setIsForgetPasswordModalOpen] = useState(false);
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
+
+  const handleOpenForgetPasswordModal = () => {
+    setIsForgetPasswordModalOpen(true);
   };
+
+  // const resetPassword = () => {
+  //   // dispatch(closeSignDialog());
+  //   setIsResetPasswordModalOpen(true);
+  // }
+  
+  const handleCloseForgetPasswordModal = (emailSent, userEmail) => {
+    setIsForgetPasswordModalOpen(false);
+    if (emailSent) {
+      setEmailForReset(userEmail);
+      setIsResetPasswordModalOpen(true);
+    }
+  };
+
+  // const notresetPassword = () => {
+  //   // dispatch(closeSignDialog());
+  //   setIsResetPasswordModalOpen(false);
+  //   // Router.push('/password-email', undefined, {shallow: true} );
+  // };
 
   return (
     <Box
@@ -157,8 +181,19 @@ const Login = ({ register }) => {
               </Grid>
               <Grid item xs={4}>
                 <Typography color="textSecondary" variant="body2">
-                  <Button onClick={resetPassword}>Forget password?</Button>
+                <Button onClick={handleOpenForgetPasswordModal}>Forget password?</Button>
+                  <ForgetPassword
+                    open={isForgetPasswordModalOpen}
+                    onClose={() => setIsForgetPasswordModalOpen(false)}
+                    onEmailSent={(emailSent, userEmail) => handleCloseForgetPasswordModal(emailSent, userEmail)}
+                  />
+                  <ResetPassword
+                    open={isResetPasswordModalOpen}
+                    onClose={() => setIsResetPasswordModalOpen(false)}
+                    email={emailForReset}
+                  />
                 </Typography>
+                
               </Grid>
             </Grid>
 
