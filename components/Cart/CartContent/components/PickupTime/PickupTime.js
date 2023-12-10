@@ -58,7 +58,7 @@ const PickupTime = () => {
     dispatch({ type: Action.SET_PICK_UP_TIME, payload: extractedTime });
     // console.log('time and date:', extractedDate, extractedTime)
     setTimeConfirmed(true);
-    // router.push('/pay'); 
+    // router.push('/pay');
   };
 
   const handleChangeClick = () => {
@@ -176,15 +176,19 @@ const PickupTime = () => {
       )}
 
       {timeConfirmed && (
-        <Box sx={{
-          mt: 2,
-          mb: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <Box component="span" sx={{ fontSize: '1.5rem', fontWeight: 500, }}>Time has been confirmed, click the button below to Change time.</Box>
+        <Box
+          sx={{
+            mt: 2,
+            mb: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Box component="span" sx={{ fontSize: '1.5rem', fontWeight: 500 }}>
+            Time has been confirmed, click the button below to Change time.
+          </Box>
           <Button
             onClick={handleChangeClick}
             sx={{

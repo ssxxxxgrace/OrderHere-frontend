@@ -8,7 +8,7 @@ const buttonGroupStyles = {
   backgroundColor: '#fff',
 };
 
-const Category = ({categories: initialData}) => {
+const Category = ({ categories: initialData }) => {
   // const [categories, setCategories] = useState([]);
   const [categories, setCategories] = useState(initialData);
 
@@ -35,10 +35,10 @@ const Category = ({categories: initialData}) => {
         spacing={2}
         sx={{
           '& > *': {
-              flex: '0 0 auto',
-              minWidth: 'fit-content',
+            flex: '0 0 auto',
+            minWidth: 'fit-content',
           },
-            flexWrap: 'nowrap',
+          flexWrap: 'nowrap',
         }}
       >
         {categories.map((category) => (
@@ -47,11 +47,11 @@ const Category = ({categories: initialData}) => {
             variant="outlined"
             color="secondary"
             sx={{
-                // marginLeft: 3,
-                backgroundColor: 'white',
-                fontSize: '13px',
-                width: '120px',
-                color: 'black',
+              // marginLeft: 3,
+              backgroundColor: 'white',
+              fontSize: '13px',
+              width: '120px',
+              color: 'black',
               '&:hover': {
                 backgroundColor: 'button.main',
                 color: 'white',

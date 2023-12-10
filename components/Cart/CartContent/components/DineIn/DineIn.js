@@ -31,7 +31,10 @@ const DineIn = () => {
 
   const handlePersonCountChange = (event) => {
     setPersonCount(event.target.value);
-    dispatch({ type: Action.SET_PERSON_COUNT_DATA, payload: event.target.value });
+    dispatch({
+      type: Action.SET_PERSON_COUNT_DATA,
+      payload: event.target.value,
+    });
   };
 
   const handleNameChange = (event) => {

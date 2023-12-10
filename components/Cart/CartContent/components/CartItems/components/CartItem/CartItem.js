@@ -26,7 +26,10 @@ const CartItem = ({ dishId, dishName, description, price, imageUrl }) => {
   const handleRemoveFromCart = () => {
     dispatch({ type: Action.REMOVE_FROM_CART, payload: { dishId } });
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
-    dispatch({ type: Action.REMOVE_UNSELECTED_INGREDIENTS, payload: { dish: dishName } });
+    dispatch({
+      type: Action.REMOVE_UNSELECTED_INGREDIENTS,
+      payload: { dish: dishName },
+    });
   };
 
   return (

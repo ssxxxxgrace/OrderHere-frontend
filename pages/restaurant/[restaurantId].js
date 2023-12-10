@@ -56,7 +56,6 @@ const RestaurantInfoPage = ({ restaurantData: initialData }) => {
   //   }
   // }, [restaurantId]);
 
-
   if (!restaurantId || loading) {
     return <div>Loading...</div>;
   }
