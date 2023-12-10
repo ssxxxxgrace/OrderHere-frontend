@@ -45,16 +45,17 @@ const CheckList = () => {
   // console.log('dinein name:', dineInName);
   // console.log('dinein note:', note);
   // console.log('pick up time:', PickUpzonedDateTime);
-  const unselectedIngredients = useSelector((state) => state.ingredient.unselectedIngredients);
-  console.log('unselect', unselectedIngredients)
+  const unselectedIngredients = useSelector(
+    (state) => state.ingredient.unselectedIngredients,
+  );
+  console.log('unselect', unselectedIngredients);
   let formattedIngredients = '';
   for (const [dish, unselected] of Object.entries(unselectedIngredients)) {
     const unselectedString = unselected.join(', No ');
     formattedIngredients += `${dish}: No ${unselectedString}\n`;
   }
   formattedIngredients = formattedIngredients.trim();
-  console.log('format unselected', formattedIngredients)
-
+  console.log('format unselected', formattedIngredients);
 
   const [showWarningShake, setShowWarningShake] = useState(false);
 
@@ -126,7 +127,7 @@ const CheckList = () => {
     }
 
     try {
-      console.log('final data:', orderData)
+      console.log('final data:', orderData);
       // console.log('final ordertype:', orderType)
       const response = await placeOrder(orderData);
       console.log('Order placed successfully:', response);
@@ -136,7 +137,6 @@ const CheckList = () => {
     } catch (error) {
       console.error('Error placing order:', error.response);
     }
-
   };
 
   return (
@@ -227,45 +227,47 @@ const CheckList = () => {
         </Typography>
       </Box>
 
-      {orderType === 'delivery' && (!address.name || !address.phone || !address.address) && (
-        <Box
-          sx={{
-            mx: 2,
-            padding: 2,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'warning.main',
-            color: 'white',
-            borderRadius: '8px',
-            ...warningShakeStyle,
-          }}
-        >
-          <Typography sx={{ fontSize: '16px', fontWeight: '400' }}>
-            Warning: Shipping information is missing!
-          </Typography>
-        </Box>
-      )}
+      {orderType === 'delivery' &&
+        (!address.name || !address.phone || !address.address) && (
+          <Box
+            sx={{
+              mx: 2,
+              padding: 2,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'warning.main',
+              color: 'white',
+              borderRadius: '8px',
+              ...warningShakeStyle,
+            }}
+          >
+            <Typography sx={{ fontSize: '16px', fontWeight: '400' }}>
+              Warning: Shipping information is missing!
+            </Typography>
+          </Box>
+        )}
 
-      {orderType === 'dine in' && (!dineInName || !dineInPhone || !personCount) && (
-        <Box
-          sx={{
-            mx: 2,
-            padding: 2,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'warning.main',
-            color: 'white',
-            borderRadius: '8px',
-            ...warningShakeStyle,
-          }}
-        >
-          <Typography sx={{ fontSize: '16px', fontWeight: '400' }}>
-            Warning: Dine-in information is missing!
-          </Typography>
-        </Box>
-      )}
+      {orderType === 'dine in' &&
+        (!dineInName || !dineInPhone || !personCount) && (
+          <Box
+            sx={{
+              mx: 2,
+              padding: 2,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'warning.main',
+              color: 'white',
+              borderRadius: '8px',
+              ...warningShakeStyle,
+            }}
+          >
+            <Typography sx={{ fontSize: '16px', fontWeight: '400' }}>
+              Warning: Dine-in information is missing!
+            </Typography>
+          </Box>
+        )}
 
       <Box
         sx={{ padding: 2, display: 'flex', justifyContent: 'center', mb: 4 }}

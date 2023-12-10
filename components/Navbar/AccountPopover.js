@@ -18,7 +18,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { logoutAction } from '../../store/actions/signAction';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -26,7 +26,7 @@ const AccountPopover = (props) => {
   const router = useRouter();
   const { data: session } = useSession();
   const [username, setUsername] = useState(null);
-  const [avatarUrl, setAvatarUrl] = useState("headImgUrl");
+  const [avatarUrl, setAvatarUrl] = useState('headImgUrl');
 
   const handleLogout = async () => {
     await signOut({ redirect: false });

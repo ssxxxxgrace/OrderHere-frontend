@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -6,7 +7,6 @@ import DialogActions from '@mui/material/DialogActions';
 import {
   Box,
   Typography,
-  Divider,
   ListItemText,
   IconButton,
   Button,
@@ -32,6 +32,7 @@ import {
 import styles from './DishPopup.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../store/actionTypes';
+import { updateDishes } from '../../services/Dish';
 
 const DishPopup = ({
   dishId,
@@ -53,7 +54,19 @@ const DishPopup = ({
   const [tempIngredientDetails, setTempIngredientDetails] = useState([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedIngredientId, setSelectedIngredientId] = useState(null);
-  const [tempUnselectedIngredients, setTempUnselectedIngredients] = useState(new Set());
+  const [tempUnselectedIngredients, setTempUnselectedIngredients] = useState(
+    new Set(),
+  );
+  const [newDish, setNewDish] = useState({
+    dishId: dishId,
+    dishName: dishName,
+    description: description,
+    price: price,
+    restaurantId: 1,
+    availability: true,
+    imageFile: null,
+  });
+  const router = useRouter();
   // const unselectedIngredients = useSelector((state) => state.ingredient.unselectedIngredients);
   // console.log('unselect', unselectedIngredients)
 
@@ -80,12 +93,24 @@ const DishPopup = ({
       .catch((error) => console.error('Fetching dishes failed', error));
   }, [dishId]);
 
+  const handleDishChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === 'imageFile') {
+      setNewDish({ ...newDish, imageFile: files[0] });
+    } else {
+      setNewDish({ ...newDish, [name]: value });
+    }
+  };
+
   const decrementQuantity = () => {
     if (quantity > 1) {
       dispatch({ type: Action.DECREASE_ITEM, payload: { dishId } });
     } else if (quantity === 1) {
       dispatch({ type: Action.REMOVE_FROM_CART, payload: { dishId } });
-      dispatch({ type: Action.REMOVE_UNSELECTED_INGREDIENTS, payload: { dish: dishName } });
+      dispatch({
+        type: Action.REMOVE_UNSELECTED_INGREDIENTS,
+        payload: { dish: dishName },
+      });
     }
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
@@ -106,7 +131,7 @@ const DishPopup = ({
     }
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
 
-    tempUnselectedIngredients.forEach(ingredient => {
+    tempUnselectedIngredients.forEach((ingredient) => {
       dispatch({
         type: Action.SET_UNSELECTED_INGREDIENT,
         payload: {
@@ -162,7 +187,7 @@ const DishPopup = ({
               unit: 'grams',
               quantityValue: 1,
             });
-            // console.log('resonse', response.data);
+            // console.log('response', response.data);
             updatedIngredients[i] = {
               ...ingredient,
               id: response.data,
@@ -237,9 +262,18 @@ const DishPopup = ({
     });
   };
 
-  const handleImageChange = (event) => {
-    //TODO
-    const file = event.target.files[0];
+  const handleEditDishSubmit = async (newDishData) => {
+    try {
+      console.log('newDishData', newDishData);
+      const response = await updateDishes(newDishData);
+
+      if (response) {
+        router.push('/');
+      }
+    } catch (error) {
+      console.error('Error updating dish:', error.response);
+    }
+    setIsEditMode(false);
   };
 
   return (
@@ -277,7 +311,8 @@ const DishPopup = ({
                 style={{ display: 'none' }}
                 id="icon-button-file"
                 type="file"
-                onChange={handleImageChange}
+                name="imageFile"
+                onChange={handleDishChange}
               />
               <label htmlFor="icon-button-file">
                 <IconButton
@@ -299,7 +334,6 @@ const DishPopup = ({
             style={{ width: '100%', height: 'auto' }}
           />
         )}
-
         <DialogContentText
           className={styles.dishTitle}
           sx={{
@@ -308,7 +342,19 @@ const DishPopup = ({
             alignItems: 'center',
           }}
         >
-          {dishName}
+          {isEditMode ? (
+            <TextField
+              fullWidth
+              sx={{ mt: 2, mr: 3 }}
+              variant="outlined"
+              label="Dish Name"
+              name="dishName"
+              value={newDish.dishName}
+              onChange={handleDishChange}
+            />
+          ) : (
+            <Typography variant="h6">{dishName}</Typography>
+          )}
           <IconButton
             onClick={toggleEditMode}
             sx={{
@@ -317,6 +363,7 @@ const DishPopup = ({
               marginRight: 3,
               paddingInline: 2,
               fontWeight: 600,
+              fontSize: '1.2rem',
               '&:hover': {
                 backgroundColor: '#BF5B5F',
               },
@@ -326,9 +373,74 @@ const DishPopup = ({
           </IconButton>
         </DialogContentText>
 
-        <DialogContentText className={styles.dishIngredients}>
-          {description}
+        <DialogContentText
+          className={styles.dishPrice}
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          {isEditMode ? (
+            <TextField
+              fullWidth
+              sx={{ mt: 2, mr: 3 }}
+              variant="outlined"
+              label="Price"
+              name="price"
+              value={newDish.price}
+              onChange={handleDishChange}
+              type="number"
+              inputProps={{ min: 0 }}
+            />
+          ) : (
+            <Typography variant="h6">${price}</Typography>
+          )}
         </DialogContentText>
+
+        <DialogContentText className={styles.dishIngredients}>
+          {isEditMode ? (
+            <TextField
+              fullWidth
+              sx={{ mt: 2 }}
+              multiline
+              variant="outlined"
+              label="Description"
+              name="description"
+              value={newDish.description}
+              onChange={handleDishChange}
+            />
+          ) : (
+            <Typography>{description}</Typography>
+          )}
+        </DialogContentText>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginY: 2,
+          }}
+        >
+          {isEditMode && (
+            <IconButton
+              onClick={() => handleEditDishSubmit(newDish)}
+              sx={{
+                backgroundColor: 'button.main',
+                color: '#f4f4f4',
+                marginRight: 3,
+                paddingInline: 2,
+                fontWeight: 600,
+                fontSize: '1.2rem',
+                '&:hover': {
+                  backgroundColor: '#BF5B5F',
+                },
+              }}
+            >
+              Admin Edit Confirm
+            </IconButton>
+          )}
+        </Box>
 
         <DialogContentText sx={{ overflowY: 'auto' }}>
           <Box
@@ -451,7 +563,9 @@ const DishPopup = ({
                     <Checkbox
                       {...label}
                       defaultChecked
-                      onChange={(e) => handleCheckboxChange(ingredient.name, e.target.checked)}
+                      onChange={(e) =>
+                        handleCheckboxChange(ingredient.name, e.target.checked)
+                      }
                       sx={{
                         color: 'button.main',
                         '&.Mui-checked': {
@@ -526,7 +640,7 @@ const DishPopup = ({
             border: '1px solid #AD343E',
             borderRadius: '10px',
             width: '200px',
-            height: '70px',
+            height: '50px',
             justifyContent: 'space-between',
             padding: '0 8px',
           }}
@@ -554,7 +668,7 @@ const DishPopup = ({
               backgroundColor: 'button.main',
               fontSize: '25px',
               width: '230px',
-              height: '70px',
+              height: '50px',
               color: '#fff',
               '&:hover': {
                 backgroundColor: 'button.main',
@@ -568,7 +682,7 @@ const DishPopup = ({
             }}
             onClick={handleAddToCart}
           >
-            <div>ADD</div>
+            <div>Add</div>
             <div>{price * quantity}</div>
           </Button>
         </DialogActions>

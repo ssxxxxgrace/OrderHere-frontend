@@ -18,3 +18,20 @@ export const postDishes = (dishData) => {
   });
 };
 
+export const updateDishes = (dishData) => {
+  const formData = new FormData();
+  for (const key in dishData) {
+    if (key === 'imageFile') {
+      if (dishData[key] && dishData[key] instanceof File) {
+        formData.append(key, dishData[key], dishData[key].name);
+      }
+    } else {
+      formData.append(key, dishData[key]);
+    }
+  }
+
+  return http(`/v1/public/dish`, {
+    method: 'PUT',
+    data: formData
+  });
+};
