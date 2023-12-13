@@ -36,8 +36,8 @@ const AccountPopover = (props) => {
   };
 
   useEffect(() => {
-    setUsername(session.user.name);
-    setAvatarUrl(session.user.image);
+    setUsername(session?.user?.name);
+    setAvatarUrl(session?.user?.image);
   }, [session]);
 
   return (
