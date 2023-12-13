@@ -20,6 +20,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Footer from '../layout/Footer';
+import Script from 'next/script';
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,6 +35,11 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
   }, []);
 
   return (
+    <>
+      <Script
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
+        strategy="beforeInteractive"
+      />
     <ReduxProvider store={store}>
       <SessionProvider session={session}>
         <ThemeProvider theme={createTheme()}>
@@ -59,6 +65,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
         </ThemeProvider>
       </SessionProvider>
     </ReduxProvider>
+    </>
   );
 };
 

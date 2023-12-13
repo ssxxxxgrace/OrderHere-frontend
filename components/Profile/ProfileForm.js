@@ -21,6 +21,10 @@ import {
   getUserProfile,
   updateUserAvatar,
 } from '../../services/Profile';
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng
+} from 'react-places-autocomplete';
 
 export default function ProfileForm() {
   const [editMode, setEditMode] = useState(false);
@@ -40,6 +44,7 @@ export default function ProfileForm() {
     avatarUrl: '',
     language: 'English',
     privacy: 'Public',
+    address: '',
   };
 
   const [originalProfile, setOriginalProfile] = useState(defaultProfile);
@@ -58,6 +63,7 @@ export default function ProfileForm() {
         avatarUrl: response.data.avatarUrl,
         language: 'English',
         privacy: 'Public',
+        address: response.data.address,
       });
       setOriginalProfile({
         userName: response.data.username,
@@ -68,6 +74,7 @@ export default function ProfileForm() {
         avatarUrl: response.data.avatarUrl,
         language: 'English',
         privacy: 'Public',
+        address: response.data.address,
       });
     } catch (error) {
       console.error('Error fetching user profile:', error);
@@ -82,10 +89,17 @@ export default function ProfileForm() {
   }, []);
 
   const handleChange = (e) => {
-    setProfile({
-      ...profile,
-      [e.target.name]: e.target.value,
-    });
+    if (e && e.target) {
+      setProfile({
+        ...profile,
+        [e.target.name]: e.target.value,
+      });
+    } else {
+      setProfile({
+        ...profile,
+        address: e,
+      });
+    }
   };
 
   const handleAvatarChange = async (e) => {
@@ -148,6 +162,7 @@ export default function ProfileForm() {
         username: profile.userName,
         firstname: profile.firstName,
         lastname: profile.lastName,
+        address: profile.address,
       };
       await updateUserProfile(userProfileUpdateDTO);
       setOriginalProfile(profile);
@@ -257,6 +272,33 @@ export default function ProfileForm() {
                   margin="normal"
                   disabled={true}
                 />
+                <PlacesAutocomplete
+                  value={profile.address}
+                  onChange={handleChange}
+                >
+                  {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+                    <div>
+                      <TextField
+                        {...getInputProps({
+                          label: "Address",
+                          fullWidth: true,
+                          margin: "normal",
+                          disabled: !editMode,
+                        })}
+                      />
+                      <div>
+                        {suggestions.map(suggestion => (
+                          <div
+                            {...getSuggestionItemProps(suggestion)}
+                            key={suggestion.placeId}
+                          >
+                            {suggestion.description}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </PlacesAutocomplete>
               </Paper>
             </Grid>
 
