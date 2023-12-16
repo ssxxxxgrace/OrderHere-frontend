@@ -1,5 +1,5 @@
 import axios from 'axios';
-import store from '../store/store';
+import {store} from '../store/store';
 import { logoutAction } from '../store/actions/signAction';
 
 const backendHttpInstance = () => {

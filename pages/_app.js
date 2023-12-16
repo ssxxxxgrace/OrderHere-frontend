@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 import Container from '@mui/material/Container';
@@ -9,7 +10,7 @@ import Router from 'next/router';
 import NextNProgress from 'nextjs-progressbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import NextClientOnly from '../components/NextClientOnly';
-import store from '../store/store';
+import { store, persistor } from '../store/store';
 import Layout from '../layout';
 import Navbar from '../components/Navbar';
 import Loading from '../components/Loading';
@@ -41,29 +42,31 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
         strategy="beforeInteractive"
       />
     <ReduxProvider store={store}>
-      <SessionProvider session={session}>
-        <ThemeProvider theme={createTheme()}>
-          <Container maxWidth="lg" style={{ padding: 0, margin: 'auto' }}>
-            <CssBaseline />
-            <Head>
-              <title>OrderHere</title>
-              <meta
-                name="viewport"
-                content="initial-scale=1, width=device-width"
-              />
-            </Head>
-            <NextNProgress />
-            <Layout>
-              <NextClientOnly>
-                <Toaster position="top-center" reverseOrder={false} />
-                <Navbar />
-              </NextClientOnly>
-              {isLoading ? <Loading /> : <Component {...pageProps} />}
-            </Layout>
-          </Container>
-          <Footer />
-        </ThemeProvider>
-      </SessionProvider>
+      <PersistGate loading={<Loading />} persistor={persistor}>
+        <SessionProvider session={session}>
+          <ThemeProvider theme={createTheme()}>
+            <Container maxWidth="lg" style={{ padding: 0, margin: 'auto' }}>
+              <CssBaseline />
+              <Head>
+                <title>OrderHere</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1, width=device-width"
+                />
+              </Head>
+              <NextNProgress />
+              <Layout>
+                <NextClientOnly>
+                  <Toaster position="top-center" reverseOrder={false} />
+                  <Navbar />
+                </NextClientOnly>
+                {isLoading ? <Loading /> : <Component {...pageProps} />}
+              </Layout>
+            </Container>
+            <Footer />
+          </ThemeProvider>
+        </SessionProvider>
+      </PersistGate>
     </ReduxProvider>
     </>
   );

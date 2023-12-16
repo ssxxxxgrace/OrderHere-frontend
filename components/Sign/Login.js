@@ -25,7 +25,7 @@ import FacebookSignInBtn from './UI/FacebookSignInBtn';
 import { getSession, signIn, useSession } from 'next-auth/react';
 import { getCsrfToken } from 'next-auth/react';
 import { loginSuccess } from '../../store/actions/httpAction';
-import store, { saveState } from '../../store/store';
+import {saveState, store} from '../../store/store';
 
 const Login = ({ register }) => {
   /** state */
