@@ -20,7 +20,7 @@ const backendHttpInstance = () => {
       if (
         error &&
         error.response &&
-        (error.response.status === 401 || error.response.status === 405)
+        (error.response.status === 401 || error.response.status === 405 || error.response.status === 403)
       ) {
         store.dispatch(logoutAction());
         return '';

@@ -63,11 +63,18 @@ const Login = ({ register }) => {
         callbackUrl: '/',
       })
         .then((response) => {
-          hotToast('success', 'login success');
-          getSession().then((session) => {
-            const jwtToken = session.token.user.jwt;
-            dispatch(loginSuccess(jwtToken));
-          });
+          if (response.ok) {
+            hotToast('success', 'login success');
+            getSession().then((session) => {
+              if (session) {
+                const jwtToken = session.token.user.jwt;
+                dispatch(loginSuccess(jwtToken));
+              }
+            });
+          } else {
+            hotToast('error', 'Invalid Email or Password');
+            console.error('login fail');
+          }
         })
         .catch((error) => {
           hotToast('error', 'Invalid Email or Password');
