@@ -1,6 +1,6 @@
 import { signOut } from 'next-auth/react';
 import * as Action from '../actionTypes';
-import {saveState, store} from '../store';
+import { saveState, store } from '../store';
 
 export const openSignDialog = () => ({
   type: Action.OPEN_SIGN_DIALOG,

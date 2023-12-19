@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware, combineReducers} from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import thunk from 'redux-thunk';
 // import rootReducer from './reducers';
@@ -18,9 +18,8 @@ import pickupReducer from './reducers/pickupReducer';
 const signPersistConfig = {
   key: 'sign',
   storage,
-  whitelist: ['isLogin', 'token']
+  whitelist: ['isLogin', 'token'],
 };
-
 
 const persistedSignReducer = persistReducer(signPersistConfig, signReducer);
 

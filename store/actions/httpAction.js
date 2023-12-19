@@ -1,8 +1,8 @@
 import * as Action from '../actionTypes';
 import axios from 'axios';
-import {saveState, store} from '../store';
+import { saveState, store } from '../store';
 import { login, loginByOathProvider } from '../../services/Public';
-import {getRestaurantInfo} from '../../services/Restaurant';
+import { getRestaurantInfo } from '../../services/Restaurant';
 
 export const loginSuccess = (token) => ({
   type: Action.LOGIN_SUCCESS,

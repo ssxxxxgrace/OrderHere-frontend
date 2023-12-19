@@ -12,6 +12,7 @@ import {
 
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HistoryIcon from '@mui/icons-material/History';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -19,6 +20,7 @@ import { logoutAction } from '../../store/actions/signAction';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { jwtInfo } from '../../utils/jwtInfo';
 
 const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -27,6 +29,9 @@ const AccountPopover = (props) => {
   const { data: session } = useSession();
   const [username, setUsername] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState('headImgUrl');
+
+  const { token } = useSelector((state) => state.sign);
+  const { userRole } = jwtInfo(token);
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
@@ -83,7 +88,7 @@ const AccountPopover = (props) => {
           >
             <Typography variant="body1">{username}</Typography>
             <Typography color="textSecondary" variant="body2">
-              roleName
+              {userRole.slice(5)}
             </Typography>
           </Box>
         </Box>
