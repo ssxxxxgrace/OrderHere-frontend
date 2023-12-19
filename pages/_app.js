@@ -41,33 +41,33 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
         src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
         strategy="beforeInteractive"
       />
-    <ReduxProvider store={store}>
-      <PersistGate loading={<Loading />} persistor={persistor}>
-        <SessionProvider session={session}>
-          <ThemeProvider theme={createTheme()}>
-            <Container maxWidth="lg" style={{ padding: 0, margin: 'auto' }}>
-              <CssBaseline />
-              <Head>
-                <title>OrderHere</title>
-                <meta
+      <ReduxProvider store={store}>
+        <PersistGate loading={<Loading />} persistor={persistor}>
+          <SessionProvider session={session}>
+            <ThemeProvider theme={createTheme()}>
+              <Container maxWidth="lg" style={{ padding: 0, margin: 'auto' }}>
+                <CssBaseline />
+                <Head>
+                  <title>OrderHere</title>
+                  <meta
                     name="viewport"
                     content="initial-scale=1, width=device-width"
-                />
-              </Head>
-              <NextNProgress />
-              <Layout>
-                <NextClientOnly>
-                  <Toaster position="top-center" reverseOrder={false} />
-                  <Navbar />
-                </NextClientOnly>
-                {isLoading ? <Loading /> : <Component {...pageProps} />}
-              </Layout>
-            </Container>
-            <Footer />
-          </ThemeProvider>
-        </SessionProvider>
-      </PersistGate>
-    </ReduxProvider>
+                  />
+                </Head>
+                <NextNProgress />
+                <Layout>
+                  <NextClientOnly>
+                    <Toaster position="top-center" reverseOrder={false} />
+                    <Navbar />
+                  </NextClientOnly>
+                  {isLoading ? <Loading /> : <Component {...pageProps} />}
+                </Layout>
+              </Container>
+              <Footer />
+            </ThemeProvider>
+          </SessionProvider>
+        </PersistGate>
+      </ReduxProvider>
     </>
   );
 };

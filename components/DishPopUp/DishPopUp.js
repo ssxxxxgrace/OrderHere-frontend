@@ -33,6 +33,7 @@ import styles from './DishPopup.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Action from '../../store/actionTypes';
 import { updateDishes } from '../../services/Dish';
+import { jwtInfo } from '../../utils/jwtInfo';
 
 const DishPopup = ({
   dishId,
@@ -67,6 +68,8 @@ const DishPopup = ({
     imageFile: null,
   });
   const router = useRouter();
+  const { token } = useSelector((state) => state.sign);
+  const { userRole } = jwtInfo(token);
   // const unselectedIngredients = useSelector((state) => state.ingredient.unselectedIngredients);
   // console.log('unselect', unselectedIngredients)
 
@@ -285,7 +288,7 @@ const DishPopup = ({
           overflowY: 'auto',
         }}
       >
-        {isEditMode ? (
+        {isEditMode && userRole == 'ROLE_sys_admin' ? (
           <Box position="relative" display="inline-block">
             <img
               src={imageUrl}
@@ -342,7 +345,7 @@ const DishPopup = ({
             alignItems: 'center',
           }}
         >
-          {isEditMode ? (
+          {isEditMode && userRole == 'ROLE_sys_admin' ? (
             <TextField
               fullWidth
               sx={{ mt: 2, mr: 3 }}
@@ -381,7 +384,7 @@ const DishPopup = ({
             alignItems: 'center',
           }}
         >
-          {isEditMode ? (
+          {isEditMode && userRole == 'ROLE_sys_admin' ? (
             <TextField
               fullWidth
               sx={{ mt: 2, mr: 3 }}
@@ -399,7 +402,7 @@ const DishPopup = ({
         </DialogContentText>
 
         <DialogContentText className={styles.dishIngredients}>
-          {isEditMode ? (
+          {isEditMode && userRole == 'ROLE_sys_admin' ? (
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -422,7 +425,7 @@ const DishPopup = ({
             marginY: 2,
           }}
         >
-          {isEditMode && (
+          {isEditMode && userRole == 'ROLE_sys_admin' && (
             <IconButton
               onClick={() => handleEditDishSubmit(newDish)}
               sx={{

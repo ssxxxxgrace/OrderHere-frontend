@@ -23,7 +23,7 @@ import {
 } from '../../services/Profile';
 import PlacesAutocomplete, {
   geocodeByAddress,
-  getLatLng
+  getLatLng,
 } from 'react-places-autocomplete';
 
 export default function ProfileForm() {
@@ -280,14 +280,14 @@ export default function ProfileForm() {
                     <div>
                       <TextField
                         {...getInputProps({
-                          label: "Address",
+                          label: 'Address',
                           fullWidth: true,
-                          margin: "normal",
+                          margin: 'normal',
                           disabled: !editMode,
                         })}
                       />
                       <div>
-                        {suggestions.map(suggestion => (
+                        {suggestions.map((suggestion) => (
                           <div
                             {...getSuggestionItemProps(suggestion)}
                             key={suggestion.placeId}

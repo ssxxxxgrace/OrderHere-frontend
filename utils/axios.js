@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {store} from '../store/store';
+import { store } from '../store/store';
 import { logoutAction } from '../store/actions/signAction';
 
 const backendHttpInstance = () => {
@@ -20,7 +20,9 @@ const backendHttpInstance = () => {
       if (
         error &&
         error.response &&
-        (error.response.status === 401 || error.response.status === 405 || error.response.status === 403)
+        (error.response.status === 401 ||
+          error.response.status === 405 ||
+          error.response.status === 403)
       ) {
         store.dispatch(logoutAction());
         return '';

@@ -5,8 +5,10 @@ import RestaurantInfoContent from '../../components/restaurantInfo/components/re
 import Contact from '../../components/restaurantInfo/components/contact';
 import OpeningHours from '../../components/restaurantInfo/components/openingHours';
 import { EditRestaurantModal } from '../../components/restaurantInfo/EditRestaurantModal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getRestaurantInfo } from '../../services/Restaurant';
+import { useSelector } from 'react-redux';
+import { jwtInfo } from '../../utils/jwtInfo';
 
 export async function getStaticPaths() {
   return {
@@ -40,21 +42,8 @@ const RestaurantInfoPage = ({ restaurantData: initialData }) => {
   const [error, setError] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  // useEffect(() => {
-  //   if (restaurantId) {
-  //     setLoading(true);
-  //     getRestaurantInfo(restaurantId)
-  //       .then((response) => {
-  //         setRestaurantData(response.data);
-  //       })
-  //       .catch((err) => {
-  //         setError(err);
-  //       })
-  //       .finally(() => {
-  //         setLoading(false);
-  //       });
-  //   }
-  // }, [restaurantId]);
+  const { token } = useSelector((state) => state.sign);
+  const { userRole } = jwtInfo(token);
 
   if (!restaurantId || loading) {
     return <div>Loading...</div>;
@@ -88,37 +77,40 @@ const RestaurantInfoPage = ({ restaurantData: initialData }) => {
       }}
     >
       <RestaurantInfoHeader />
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-around',
-        }}
-      >
-        <Button
-          variant="contained"
-          onClick={handleEditButtonClick}
+      {userRole == 'ROLE_sys_admin' && (
+        <Box
           sx={{
-            marginY: 4,
-            backgroundColor: 'button.main',
-            color: '#fff',
-            '&:hover': {
-              backgroundColor: 'button.main',
-              opacity: 0.6,
-              transition: '0.3s',
-            },
+            display: 'flex',
+            justifyContent: 'space-around',
           }}
         >
-          EDIT RESTAURANT INFO
-        </Button>
-        {isEditModalOpen && (
-          <EditRestaurantModal
-            restaurantId={restaurantId}
-            initialData={restaurantData}
-            onClose={() => setIsEditModalOpen(false)}
-            onUpdate={refreshRestaurantData}
-          />
-        )}
-      </Box>
+          <Button
+            variant="contained"
+            onClick={handleEditButtonClick}
+            sx={{
+              marginY: 4,
+              backgroundColor: 'button.main',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: 'button.main',
+                opacity: 0.6,
+                transition: '0.3s',
+              },
+            }}
+          >
+            EDIT RESTAURANT INFO
+          </Button>
+          {isEditModalOpen && (
+            <EditRestaurantModal
+              restaurantId={restaurantId}
+              initialData={restaurantData}
+              onClose={() => setIsEditModalOpen(false)}
+              onUpdate={refreshRestaurantData}
+            />
+          )}
+        </Box>
+      )}
+
       <RestaurantInfoContent data={restaurantData} />
       <Box
         sx={{
