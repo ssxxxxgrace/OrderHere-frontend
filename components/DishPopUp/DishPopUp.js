@@ -358,22 +358,24 @@ const DishPopup = ({
           ) : (
             <Typography variant="h6">{dishName}</Typography>
           )}
-          <IconButton
-            onClick={toggleEditMode}
-            sx={{
-              backgroundColor: 'button.main',
-              color: '#f4f4f4',
-              marginRight: 3,
-              paddingInline: 2,
-              fontWeight: 600,
-              fontSize: '1.2rem',
-              '&:hover': {
-                backgroundColor: '#BF5B5F',
-              },
-            }}
-          >
-            Edit
-          </IconButton>
+          {userRole == 'ROLE_sys_admin' && (
+            <IconButton
+              onClick={toggleEditMode}
+              sx={{
+                backgroundColor: 'button.main',
+                color: '#f4f4f4',
+                marginRight: 3,
+                paddingInline: 2,
+                fontWeight: 600,
+                fontSize: '1.2rem',
+                '&:hover': {
+                  backgroundColor: '#BF5B5F',
+                },
+              }}
+            >
+              Edit
+            </IconButton>
+          )}
         </DialogContentText>
 
         <DialogContentText
@@ -440,7 +442,7 @@ const DishPopup = ({
                 },
               }}
             >
-              Admin Edit Confirm
+              Edit Dish
             </IconButton>
           )}
         </Box>
@@ -492,7 +494,7 @@ const DishPopup = ({
                       alignItems: 'center',
                     }}
                   >
-                    {isEditMode ? (
+                    {isEditMode && userRole == 'ROLE_sys_admin' ? (
                       <Box
                         sx={{
                           width: '100%',
@@ -580,7 +582,7 @@ const DishPopup = ({
                 </ListItem>
               ))}
             </List>
-            {isEditMode ? (
+            {isEditMode && userRole == 'ROLE_sys_admin' ? (
               <Box>
                 <Box
                   onClick={addNewIngredient}
