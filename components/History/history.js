@@ -9,10 +9,10 @@ const History = () => {
   const [restaurants, setRestaurants] = useState({});
   const active = useSelector((state) => state.history.active);
   useEffect(() => {
-    const userId = '1';
+    // const userId = '1';
     const restaurantInfo = {};
 
-    getUserOrder(userId)
+    getUserOrder()
       .then((response) => {
         setOrders(response.data);
         response.data.forEach((order) => {

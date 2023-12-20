@@ -6,7 +6,7 @@ const BgImage = () => {
     <Box
       sx={{
         position: 'relative',
-        width: '100vw',
+        width: 'calc(100vw - 25px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
