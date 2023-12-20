@@ -29,10 +29,10 @@ const OrderInfo = () => {
         pending: true,
         preparing: true,
         finished: true,
-        in_transite: true,
+        in_transit: true,
         delayed: true,
         delivered: true,
-        canceled: true,
+        cancelled: true,
     });
     const [sortValue, setSortValue] = useState('');
     const [searchText, setSearchText] = useState('');
@@ -210,15 +210,15 @@ const OrderInfo = () => {
                         }}
                     />} label="Preparing" />
                     <FormControlLabel control={<Checkbox
-                        checked={checkedStatus.in_transite}
+                        checked={checkedStatus.in_transit}
                         onChange={handleChangeStatus}
-                        name="in_transite"
+                        name="in_transit"
                         sx={{
                             '&.Mui-checked': {
                                 color: '#AD343E',
                             },
                         }}
-                    />} label="In transit" />
+                    />} label="In Transit" />
                     <FormControlLabel control={<Checkbox
                         checked={checkedStatus.delayed}
                         onChange={handleChangeStatus}
@@ -240,15 +240,15 @@ const OrderInfo = () => {
                         }}
                     />} label="Delivered" />
                     <FormControlLabel control={<Checkbox
-                        checked={checkedStatus.canceled}
+                        checked={checkedStatus.cancelled}
                         onChange={handleChangeStatus}
-                        name="canceled"
+                        name="cancelled"
                         sx={{
                             '&.Mui-checked': {
                                 color: '#AD343E',
                             },
                         }}
-                    />} label="Canceled" />
+                    />} label="Cancelled" />
                 </FormGroup>
             </Box>
         </Container>

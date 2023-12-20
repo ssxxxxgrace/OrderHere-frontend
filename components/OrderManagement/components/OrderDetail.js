@@ -62,6 +62,7 @@ const OrderDetail = () => {
 
         if (options && status) {
             updatedOrders = updatedOrders.filter(order => {
+                // console.log('order status currently:', order.orderStatus);
                 const orderTypeIsValid = options[order.orderType] ?? true;
                 const orderStatusIsValid = status[order.orderStatus] ?? true;
                 return orderTypeIsValid && orderStatusIsValid;

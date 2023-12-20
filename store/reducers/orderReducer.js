@@ -14,7 +14,7 @@ const initialState = {
         in_transit: true,
         delayed: true,
         delivered: true,
-        canceled: true,
+        cancelled: true,
     },
     sortedOrder: '',
     searchText: '',
