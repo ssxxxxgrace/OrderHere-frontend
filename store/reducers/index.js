@@ -8,6 +8,7 @@ import historyReducer from './historyReducer';
 import ingredientReducer from './ingredientReducer';
 import dineInReducer from './dineInReducer';
 import pickupReducer from './pickupReducer';
+import orderReducer from './orderReducer';
 
 export default combineReducers({
   sign: signReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   filter: filterReducer,
   history: historyReducer,
   ingredient: ingredientReducer,
+  order: orderReducer,
 });

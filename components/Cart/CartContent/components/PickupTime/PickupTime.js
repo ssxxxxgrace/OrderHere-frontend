@@ -53,12 +53,12 @@ const PickupTime = () => {
   const handleSubmit = (e) => {
     // e.preventDefault();
     const extractedDate = selectedDate.toISOString().split('T')[0];
-    const extractedTime = timeFrame.match(/\d{2}:\d{2}/)[0];
+    console.log('time frame:', timeFrame)
+    const extractedTime = timeFrame.match(/\d{1,2}:\d{2}/)[0];
     dispatch({ type: Action.SET_PICK_UP_DATE, payload: extractedDate });
     dispatch({ type: Action.SET_PICK_UP_TIME, payload: extractedTime });
-    // console.log('time and date:', extractedDate, extractedTime)
+    console.log('time and date:', extractedDate, extractedTime)
     setTimeConfirmed(true);
-    // router.push('/pay');
   };
 
   const handleChangeClick = () => {

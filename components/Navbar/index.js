@@ -57,6 +57,7 @@ const Navbar = () => {
   const isHomeActive = currentPath === '/';
   const { asPath } = useRouter();
   const isStoreInfoActive = asPath.startsWith('/restaurant/');
+  const isManagementActive = currentPath === '/order-management';
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);

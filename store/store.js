@@ -14,6 +14,7 @@ import historyReducer from './reducers/historyReducer';
 import ingredientReducer from './reducers/ingredientReducer';
 import dineInReducer from './reducers/dineInReducer';
 import pickupReducer from './reducers/pickupReducer';
+import orderReducer from './reducers/orderReducer';
 
 const signPersistConfig = {
   key: 'sign',
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   filter: filterReducer,
   history: historyReducer,
   ingredient: ingredientReducer,
+  order: orderReducer,
 });
 
 const loadState = () => {
