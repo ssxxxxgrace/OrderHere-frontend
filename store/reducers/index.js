@@ -9,6 +9,7 @@ import ingredientReducer from './ingredientReducer';
 import dineInReducer from './dineInReducer';
 import pickupReducer from './pickupReducer';
 import orderReducer from './orderReducer';
+import dishesReducer from './dishReducer';
 
 export default combineReducers({
   sign: signReducer,
@@ -21,4 +22,5 @@ export default combineReducers({
   history: historyReducer,
   ingredient: ingredientReducer,
   order: orderReducer,
+  dish: dishesReducer,
 });

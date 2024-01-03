@@ -1,10 +1,7 @@
 import Content from '../components/OrderManagement';
 
-
 const OrderManagement = () => {
-  return (
-    <Content />
-  );
+  return <Content />;
 };
 
 export default OrderManagement;

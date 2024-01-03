@@ -113,7 +113,13 @@ const AccountPopover = (props) => {
               <HistoryIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText
-              primary={<Typography variant="body1">{userRole === 'ROLE_sys_admin' ? 'Order Management' : 'Order History'}</Typography>}
+              primary={
+                <Typography variant="body1">
+                  {userRole === 'ROLE_sys_admin'
+                    ? 'Order Management'
+                    : 'Order History'}
+                </Typography>
+              }
             />
           </MenuItem>
         </NextLink>
