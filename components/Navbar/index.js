@@ -63,9 +63,6 @@ const Navbar = () => {
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
   const { isLogin } = useSelector((state) => state.sign);
   const { totalItems } = useSelector((state) => state.cart);
-  const { searchTerm } = useSelector((state) => state.dish);
-
-  console.log('searchTerm', searchTerm);
 
   const [sessionToken, setSessionToken] = useState();
 

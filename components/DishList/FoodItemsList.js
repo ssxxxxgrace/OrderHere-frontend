@@ -15,6 +15,7 @@ const FoodItemsList = ({ dishes: initialDishes }) => {
   const [error, setError] = useState(null);
   const [isAddDishModalOpen, setAddDishModalOpen] = useState(false);
   const [dishAdditionCount, setDishAdditionCount] = useState(0);
+  const { searchTerm } = useSelector((state) => state.dish);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -48,12 +49,20 @@ const FoodItemsList = ({ dishes: initialDishes }) => {
   };
 
   useEffect(() => {
-    const filteredDishes = initialDishes.filter(
+    let filteredDishes = initialDishes.filter(
       (dish) => dish.price >= priceRange.min && dish.price <= priceRange.max,
     );
+    if (searchTerm) {
+      filteredDishes = filteredDishes.filter(
+        (dish) =>
+          dish.dishName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          dish.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          dish.price.toString().includes(searchTerm),
+      );
+    }
     setDishes(filteredDishes);
     setError(null);
-  }, [priceRange, dishAdditionCount, initialDishes]);
+  }, [priceRange, dishAdditionCount, initialDishes, searchTerm]);
 
   if (isLoading) {
     return (
