@@ -75,7 +75,12 @@ const FoodItem = ({
       >
         <Box
           component="img"
-          sx={{ width: '180px', height: '180px', flexShrink: 0 }}
+          sx={{
+            width: '180px',
+            height: '180px',
+            flexShrink: 0,
+            ':hover': { cursor: 'pointer' },
+          }}
           src={imageUrl}
           alt={dishName}
           onClick={togglePopup}

@@ -4,6 +4,7 @@ const initialState = {
   dishes: [],
   isLoading: false,
   error: null,
+  searchTerm: '',
 };
 
 const dishesReducer = (state = initialState, { type, payload }) => {
@@ -27,6 +28,11 @@ const dishesReducer = (state = initialState, { type, payload }) => {
         ...state,
         isLoading: false,
         error: payload,
+      };
+    case Action.SET_SEARCH_TERM:
+      return {
+        ...state,
+        searchTerm: payload,
       };
 
     default:

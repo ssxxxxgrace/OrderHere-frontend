@@ -1,9 +1,7 @@
 import Content from '../components/History';
 
 const OrderHistoryhistory = () => {
-  return (
-    <Content />
-  );
+  return <Content />;
 };
 
 export default OrderHistoryhistory;

@@ -74,7 +74,9 @@ const CheckList = () => {
       orderStatus: 'pending',
       discount: 0,
       totalPrice: parseFloat(totalPrice),
-      note: `${note.note} ${formattedIngredients ? `Customized detail: ${formattedIngredients}` : ''}`,
+      note: `${note.note} ${
+        formattedIngredients ? `Customized detail: ${formattedIngredients}` : ''
+      }`,
       dishes: cartItems.map((item) => ({
         dishId: item.dishId,
         dishName: item.dishName,

@@ -23,6 +23,7 @@ import { useSession } from 'next-auth/react';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { loginWithOauthProviderAction } from '../../store/actions/httpAction';
+import * as Action from '../../store/actionTypes';
 
 export const styleNew = {
   title: {
@@ -75,6 +76,13 @@ const Navbar = () => {
       setSessionToken(session.token);
     }
   }, [session]);
+
+  const handleSearchChange = (event) => {
+    dispatch({
+      type: Action.SET_SEARCH_TERM,
+      payload: event.target.value,
+    });
+  };
 
   //when session.token change and user is not login ==> login user
   useEffect(() => {
@@ -179,26 +187,31 @@ const Navbar = () => {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          <TextField
-            variant="outlined"
-            placeholder="Search"
-            size="small"
-            sx={{
-              marginRight: '20px',
-              backgroundColor: '#F2F2F2',
-              borderRadius: '20px',
-              '& .MuiOutlinedInput-root': {
+          {router.pathname === '/' ? (
+            <TextField
+              variant="outlined"
+              placeholder="Search"
+              size="small"
+              sx={{
+                marginRight: '20px',
+                backgroundColor: '#F2F2F2',
                 borderRadius: '20px',
-              },
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '20px',
+                },
+              }}
+              onChange={handleSearchChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          ) : (
+            <Box sx={{ flexGrow: 0.725 }} />
+          )}
 
           <AccountButton isLogin={isLogin} />
         </>
