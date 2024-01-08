@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 import { useRouter } from 'next/router';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -281,6 +282,13 @@ const DishPopup = ({
 
   return (
     <Dialog open={open} onClose={onClose} className={styles.dishPopup}>
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        style={{ position: 'absolute', right: '1.5rem', top: '1rem', backgroundColor: '#D3D3D3' }}
+      >
+        <CloseIcon />
+      </IconButton>
       <DialogContent
         style={{
           padding: 0,
