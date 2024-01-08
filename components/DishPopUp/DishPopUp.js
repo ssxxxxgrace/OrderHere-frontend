@@ -285,7 +285,12 @@ const DishPopup = ({
       <IconButton
         aria-label="close"
         onClick={onClose}
-        style={{ position: 'absolute', right: '1.5rem', top: '1rem', backgroundColor: '#D3D3D3' }}
+        style={{
+          position: 'absolute',
+          right: '1.5rem',
+          top: '1rem',
+          backgroundColor: '#D3D3D3',
+        }}
       >
         <CloseIcon />
       </IconButton>

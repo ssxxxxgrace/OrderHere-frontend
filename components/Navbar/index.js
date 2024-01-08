@@ -88,15 +88,15 @@ const Navbar = () => {
   useEffect(() => {
     if (session && session.token.account && !isLogin) {
       const { provider, providerAccountId } = session.token.account;
-      const { username, email, avatarUrl } = session.token.user;
+      const { name, email, image } = session.token.user;
       if (provider === 'credentials') return;
       dispatch(
         loginWithOauthProviderAction(
           provider,
           providerAccountId,
           email,
-          username,
-          avatarUrl,
+          name,
+          image,
           () => {
             console.log('login success');
           },
