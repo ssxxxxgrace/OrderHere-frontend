@@ -21,6 +21,7 @@ import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { jwtInfo } from '../../utils/jwtInfo';
+import { getUserProfile } from '../../services/Profile';
 
 const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -40,9 +41,14 @@ const AccountPopover = (props) => {
     router.push('/');
   };
 
+  const fetchProfile = async () => {
+    const response = await getUserProfile();
+    setUsername(response.data.username);
+    setAvatarUrl(response.data.avatarUrl);
+  };
+
   useEffect(() => {
-    setUsername(session?.user?.name);
-    setAvatarUrl(session?.user?.image);
+    fetchProfile();
   }, [session]);
 
   return (
