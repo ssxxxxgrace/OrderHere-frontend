@@ -39,10 +39,10 @@ const AccountButton = ({ isLogin }) => {
   };
 
   useEffect(() => {
-    if (session && session.user) {
+    if (isLogin) {
       fetchProfile();
     }
-  }, [session]);
+  }, [isLogin]);
 
   return (
     <>

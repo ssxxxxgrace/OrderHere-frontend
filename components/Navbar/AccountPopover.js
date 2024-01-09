@@ -33,6 +33,7 @@ const AccountPopover = (props) => {
 
   const { token } = useSelector((state) => state.sign);
   const { userRole } = jwtInfo(token);
+  const { isLogin } = useSelector((state) => state.sign);
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
@@ -48,7 +49,9 @@ const AccountPopover = (props) => {
   };
 
   useEffect(() => {
-    fetchProfile();
+    if (isLogin) {
+      fetchProfile();
+    }
   }, [session]);
 
   return (
