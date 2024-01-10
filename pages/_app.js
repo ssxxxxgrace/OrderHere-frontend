@@ -46,22 +46,22 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
           <SessionProvider session={session}>
             <ThemeProvider theme={createTheme()}>
               {/* <Container maxWidth="lg" style={{ padding: 0, margin: 'auto' }}> */}
-                <CssBaseline />
-                <Head>
-                  <title>OrderHere</title>
-                  <meta
-                    name="viewport"
-                    content="initial-scale=1, width=device-width"
-                  />
-                </Head>
-                <NextNProgress />
-                <Layout>
-                  <NextClientOnly>
-                    <Toaster position="top-center" reverseOrder={false} />
-                    <Navbar />
-                  </NextClientOnly>
-                  {isLoading ? <Loading /> : <Component {...pageProps} />}
-                </Layout>
+              <CssBaseline />
+              <Head>
+                <title>OrderHere</title>
+                <meta
+                  name="viewport"
+                  content="initial-scale=1, width=device-width"
+                />
+              </Head>
+              <NextNProgress />
+              <Layout>
+                <NextClientOnly>
+                  <Toaster position="top-center" reverseOrder={false} />
+                  <Navbar />
+                </NextClientOnly>
+                {isLoading ? <Loading /> : <Component {...pageProps} />}
+              </Layout>
               {/* </Container> */}
               <Footer />
             </ThemeProvider>

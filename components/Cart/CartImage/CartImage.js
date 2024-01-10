@@ -12,7 +12,7 @@ const CartImage = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-    }}
+      }}
     >
       {/* <img 
         backgroundImage: 'url(/image/cart-bg.png)',
