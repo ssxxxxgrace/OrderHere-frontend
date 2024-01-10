@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
@@ -26,12 +26,22 @@ const FoodItem = ({
   const item = cartItems.find((item) => item.dishId === dishId);
   const quantity = item ? item.quantity : 0;
   const [popupOpen, setPopupOpen] = React.useState(false);
+  const [isAddedToCart, setIsAddedToCart] = React.useState(false);
+
+  useEffect(() => {
+    if (quantity === 0) {
+      setIsAddedToCart(false);
+    } else if (quantity > 0) {
+      setIsAddedToCart(true);
+    }
+  }, [quantity]);
 
   const togglePopup = () => {
     setPopupOpen(!popupOpen);
   };
 
   const handleAddToCart = () => {
+    setIsAddedToCart(true);
     if (quantity === 0) {
       const itemPayload = {
         dishId,
@@ -131,53 +141,56 @@ const FoodItem = ({
             }}
           >
             <RatingStars rating={rating} />
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                ml: 4,
-                border: '1px solid #AD343E',
-                borderRadius: '10px',
-                width: '110px',
-                justifyContent: 'space-between',
-                padding: '0 8px',
-              }}
-            >
-              <IconButton
-                onClick={decrementQuantity}
-                sx={{ color: 'button.main' }}
-                disabled={quantity === 0}
+            {isAddedToCart ? (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  ml: 3,
+                  border: '1px solid #AD343E',
+                  borderRadius: '10px',
+                  width: '200px',
+                  justifyContent: 'space-between',
+                  padding: '0 8px',
+                }}
               >
-                <RemoveIcon />
-              </IconButton>
-              <ListItemText
-                primary={quantity}
-                primaryTypographyProps={{ fontWeight: 600 }}
-              />
-              <IconButton
-                onClick={handleAddToCart}
-                sx={{ color: 'button.main' }}
-              >
-                <AddIcon />
-              </IconButton>
-            </Box>
-            <Button
-              sx={{
-                marginLeft: 3,
-                backgroundColor: 'button.main',
-                fontSize: '13px',
-                width: '200px',
-                color: '#fff',
-                '&:hover': {
+                <IconButton
+                  onClick={decrementQuantity}
+                  sx={{ color: 'button.main' }}
+                  disabled={quantity === 0}
+                >
+                  <RemoveIcon />
+                </IconButton>
+                <ListItemText
+                  primary={quantity}
+                  primaryTypographyProps={{ fontWeight: 600, textAlign: 'center', }}
+                />
+                <IconButton
+                  onClick={handleAddToCart}
+                  sx={{ color: 'button.main' }}
+                >
+                  <AddIcon />
+                </IconButton>
+              </Box>
+            ) : (
+              <Button
+                sx={{
+                  ml: 3,
                   backgroundColor: 'button.main',
-                  opacity: 0.6,
-                  transition: '0.3s',
-                },
-              }}
-              onClick={handleAddToCart}
-            >
-              ADD TO CART
-            </Button>
+                  fontSize: '13px',
+                  width: '200px',
+                  color: '#fff',
+                  '&:hover': {
+                    backgroundColor: 'button.main',
+                    opacity: 0.6,
+                    transition: '0.3s',
+                  },
+                }}
+                onClick={handleAddToCart}
+              >
+                ADD TO CART
+              </Button>
+            )}
           </Box>
         </Box>
       </Box>

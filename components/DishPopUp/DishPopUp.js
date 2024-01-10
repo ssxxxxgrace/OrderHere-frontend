@@ -71,6 +71,7 @@ const DishPopup = ({
   const router = useRouter();
   const { token } = useSelector((state) => state.sign);
   const { userRole } = jwtInfo(token);
+  const [isAddedToCart, setIsAddedToCart] = React.useState(false);
   // const unselectedIngredients = useSelector((state) => state.ingredient.unselectedIngredients);
   // console.log('unselect', unselectedIngredients)
 
@@ -120,6 +121,7 @@ const DishPopup = ({
   };
 
   const handleAddToCart = () => {
+    setIsAddedToCart(true);
     if (quantity === 0) {
       const itemPayload = {
         dishId,
@@ -646,64 +648,83 @@ const DishPopup = ({
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
           paddingBottom: '20px',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            ml: 4,
-            border: '1px solid #AD343E',
-            borderRadius: '10px',
-            width: '200px',
-            height: '50px',
-            justifyContent: 'space-between',
-            padding: '0 8px',
-          }}
-        >
-          <IconButton
-            onClick={decrementQuantity}
-            sx={{ color: 'button.main' }}
-            disabled={quantity === 0}
-          >
-            <RemoveIcon />
-          </IconButton>
-          <ListItemText
-            primary={quantity}
-            primaryTypographyProps={{ fontWeight: 600 }}
-            style={{ paddingLeft: '25%' }}
-          />
-          <IconButton onClick={handleAddToCart} sx={{ color: 'button.main' }}>
-            <AddIcon />
-          </IconButton>
-        </Box>
-        <DialogActions style={{ padding: 0 }}>
-          <Button
+        {quantity > 0 && (
+          <Box
             sx={{
-              mr: 5,
+              mr: 14,
               backgroundColor: 'button.main',
               fontSize: '25px',
               width: '230px',
               height: '50px',
               color: '#fff',
-              '&:hover': {
-                backgroundColor: 'button.main',
-                opacity: 0.6,
-                transition: '0.3s',
-              },
+              borderRadius: '10px',
               display: 'flex',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               alignItems: 'center',
-              padding: '12px 30px',
             }}
-            onClick={handleAddToCart}
           >
-            <div>Add</div>
             <div>{price * quantity}</div>
-          </Button>
-        </DialogActions>
+          </Box>
+        )}
+        {quantity > 0 ? (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              mr: 4,
+              border: '1px solid #AD343E',
+              borderRadius: '10px',
+              width: '200px',
+              height: '50px',
+              justifyContent: 'space-between',
+              padding: '0 8px',
+            }}
+          >
+            <IconButton
+              onClick={decrementQuantity}
+              sx={{ color: 'button.main' }}
+              disabled={quantity === 0}
+            >
+              <RemoveIcon />
+            </IconButton>
+            <ListItemText
+              primary={quantity}
+              primaryTypographyProps={{ fontWeight: 600 }}
+              style={{ paddingLeft: '25%' }}
+            />
+            <IconButton onClick={handleAddToCart} sx={{ color: 'button.main' }}>
+              <AddIcon />
+            </IconButton>
+          </Box>) : (
+          <DialogActions style={{ padding: 0 }}>
+            <Button
+              sx={{
+                mr: 4,
+                backgroundColor: 'button.main',
+                fontSize: '25px',
+                width: '200px',
+                height: '50px',
+                color: '#fff',
+                borderRadius: '10px',
+                '&:hover': {
+                  backgroundColor: 'button.main',
+                  opacity: 0.6,
+                  transition: '0.3s',
+                },
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onClick={handleAddToCart}
+            >
+              <div>Add</div>
+            </Button>
+          </DialogActions>
+        )}
       </Box>
     </Dialog>
   );
