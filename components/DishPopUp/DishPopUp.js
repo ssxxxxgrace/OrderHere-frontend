@@ -305,11 +305,7 @@ const DishPopup = ({
       >
         {isEditMode && userRole == 'ROLE_sys_admin' ? (
           <Box position="relative" display="inline-block">
-            <img
-              src={imageUrl}
-              alt={dishName}
-              style={{ width: '100%', height: 'auto' }}
-            />
+            <img width="500px" height="auto" src={imageUrl} alt={dishName} />
             <Box
               sx={{
                 position: 'absolute',
@@ -346,11 +342,7 @@ const DishPopup = ({
             </Box>
           </Box>
         ) : (
-          <img
-            src={imageUrl}
-            alt={dishName}
-            style={{ width: '100%', height: 'auto' }}
-          />
+          <img width="500px" height="auto" src={imageUrl} alt={dishName} />
         )}
         <DialogContentText
           className={styles.dishTitle}
@@ -699,7 +691,8 @@ const DishPopup = ({
             <IconButton onClick={handleAddToCart} sx={{ color: 'button.main' }}>
               <AddIcon />
             </IconButton>
-          </Box>) : (
+          </Box>
+        ) : (
           <DialogActions style={{ padding: 0 }}>
             <Button
               sx={{

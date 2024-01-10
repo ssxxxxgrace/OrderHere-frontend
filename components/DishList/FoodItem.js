@@ -163,7 +163,10 @@ const FoodItem = ({
                 </IconButton>
                 <ListItemText
                   primary={quantity}
-                  primaryTypographyProps={{ fontWeight: 600, textAlign: 'center', }}
+                  primaryTypographyProps={{
+                    fontWeight: 600,
+                    textAlign: 'center',
+                  }}
                 />
                 <IconButton
                   onClick={handleAddToCart}

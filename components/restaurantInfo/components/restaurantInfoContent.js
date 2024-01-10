@@ -5,9 +5,15 @@ const RestaurantInfoContent = ({ data }) => {
   return (
     <Box sx={{ display: 'flex', mt: 4, px: 8 }}>
       <Container maxWidth="md" style={{ padding: 0, margin: 'auto' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
-
-          <Box sx={{ flex: '1 1 auto'}}> 
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}
+        >
+          <Box sx={{ flex: '1 1 auto' }}>
             <Typography
               variant="h4"
               component="h2"
@@ -21,7 +27,6 @@ const RestaurantInfoContent = ({ data }) => {
             </Typography>
           </Box>
 
-        
           <Box
             component="img"
             sx={{
@@ -34,7 +39,6 @@ const RestaurantInfoContent = ({ data }) => {
         </Box>
       </Container>
     </Box>
-
   );
 };
 
