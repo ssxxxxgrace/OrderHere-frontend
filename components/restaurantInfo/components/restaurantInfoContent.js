@@ -18,7 +18,7 @@ const RestaurantInfoContent = ({ data }) => {
         component="img"
         sx={{
           height: { xs: 300, md: 400 },
-          width: { xs: '100%', md: '50%' },
+          width: { xs: '100%', md: '60%' },
           marginLeft: { sm: 2, md: 4 },
         }}
         src="/image/restaurant.png"
