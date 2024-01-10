@@ -35,6 +35,7 @@ export const ADD_DISH_START = 'ADD_DISH_START';
 export const ADD_DISH_SUCCESS = 'ADD_DISH_SUCCESS';
 export const ADD_DISH_ERROR = 'ADD_DISH_ERROR';
 export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
+export const SET_CATEGORY = 'SET_CATEGORY';
 
 export const SET_ACTIVE_NAV = 'SET_ACTIVE_NAV';
 

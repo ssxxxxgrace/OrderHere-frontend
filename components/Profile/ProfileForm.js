@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Avatar,
   Box,
@@ -49,6 +50,8 @@ export default function ProfileForm() {
 
   const [originalProfile, setOriginalProfile] = useState(defaultProfile);
   const [profile, setProfile] = useState(defaultProfile);
+
+  const router = useRouter();
 
   const fetchUserProfile = async () => {
     setLoading(true);
@@ -134,6 +137,7 @@ export default function ProfileForm() {
       } finally {
         setSnackbarOpen(true);
         setLoading(false);
+        router.reload();
       }
     }
   };
@@ -176,6 +180,7 @@ export default function ProfileForm() {
     } finally {
       setSnackbarOpen(true);
       setLoading(false);
+      router.reload();
     }
     setEditMode(false);
   };

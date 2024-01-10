@@ -13,6 +13,7 @@ import {
   forgetpasswordSignDialog,
 } from '../../store/actions/signAction';
 import { useSession } from 'next-auth/react';
+import { getUserProfile } from '../../services/Profile';
 
 const AccountButton = ({ isLogin }) => {
   const anchorRef = useRef(null);
@@ -32,11 +33,16 @@ const AccountButton = ({ isLogin }) => {
     }
   };
 
+  const fetchProfile = async () => {
+    const response = await getUserProfile();
+    setAvatarUrl(response.data.avatarUrl);
+  };
+
   useEffect(() => {
-    if (session && session.user) {
-      setAvatarUrl(session.user.image);
+    if (isLogin) {
+      fetchProfile();
     }
-  }, [session]);
+  }, [isLogin]);
 
   return (
     <>
