@@ -45,7 +45,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
         <PersistGate loading={<Loading />} persistor={persistor}>
           <SessionProvider session={session}>
             <ThemeProvider theme={createTheme()}>
-              <Container maxWidth="lg" style={{ padding: 0, margin: 'auto' }}>
+              {/* <Container maxWidth="lg" style={{ padding: 0, margin: 'auto' }}> */}
                 <CssBaseline />
                 <Head>
                   <title>OrderHere</title>
@@ -62,7 +62,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
                   </NextClientOnly>
                   {isLoading ? <Loading /> : <Component {...pageProps} />}
                 </Layout>
-              </Container>
+              {/* </Container> */}
               <Footer />
             </ThemeProvider>
           </SessionProvider>

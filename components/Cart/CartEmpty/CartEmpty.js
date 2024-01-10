@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const EmptyCart = () => {
   return (
-    <Container maxWidth="lg">
+
       <Box
         sx={{
           display: 'flex',
@@ -76,7 +76,7 @@ const EmptyCart = () => {
           </Button>
         </Link>
       </Box>
-    </Container>
+
   );
 };
 
