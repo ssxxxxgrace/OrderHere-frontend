@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
   DialogContent,
+  InputLabel,
+  Select,
+  MenuItem,
   DialogActions,
   TextField,
+  FormControl,
   Button,
 } from '@mui/material';
 import {
@@ -13,6 +17,7 @@ import {
   ADD_DISH_ERROR,
 } from '../../store/actionTypes';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { getCategoriesByRestaurant } from '../../services/Category';
 
 const AddDishModal = ({ open, handleClose, handleSubmit }) => {
   const [newDish, setNewDish] = useState({
@@ -22,9 +27,11 @@ const AddDishModal = ({ open, handleClose, handleSubmit }) => {
     restaurantId: 1,
     availability: true,
     imageFile: null,
+    categoryId: 0,
   });
 
   const [imageName, setImageName] = useState('');
+  const [categories, setCategories] = useState([]);
 
   const handleDeleteFile = () => {
     setImageName('');
@@ -46,6 +53,16 @@ const AddDishModal = ({ open, handleClose, handleSubmit }) => {
     handleSubmit(newDish);
     handleClose();
   };
+
+  const selectCategory = (categoryId) => {
+    return parseInt(categoryId);
+  };
+
+  useEffect(() => {
+    getCategoriesByRestaurant().then((res) => {
+      setCategories(res.data);
+    });
+  }, [open]);
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -72,6 +89,21 @@ const AddDishModal = ({ open, handleClose, handleSubmit }) => {
           margin="normal"
           onChange={handleChange}
         />
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Category</InputLabel>
+          <Select
+            name="categoryId"
+            value={selectCategory(newDish.categoryId)}
+            label="Category"
+            onChange={handleChange}
+          >
+            {categories.map((category) => (
+              <MenuItem key={category.categoryId} value={category.categoryId}>
+                {category.categoryName}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <div style={{ display: 'flex', alignItems: 'center', marginTop: 16 }}>
           <Button
             variant="contained"
