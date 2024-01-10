@@ -15,7 +15,7 @@ const FoodItemsList = ({ dishes: initialDishes }) => {
   const [error, setError] = useState(null);
   const [isAddDishModalOpen, setAddDishModalOpen] = useState(false);
   const [dishAdditionCount, setDishAdditionCount] = useState(0);
-  const { searchTerm } = useSelector((state) => state.dish);
+  const { searchTerm, category } = useSelector((state) => state.dish);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -60,9 +60,14 @@ const FoodItemsList = ({ dishes: initialDishes }) => {
           dish.price.toString().includes(searchTerm),
       );
     }
+    if (category) {
+      filteredDishes = filteredDishes.filter(
+        (dish) => dish.categoryId === category,
+      );
+    }
     setDishes(filteredDishes);
     setError(null);
-  }, [priceRange, dishAdditionCount, initialDishes, searchTerm]);
+  }, [priceRange, dishAdditionCount, initialDishes, searchTerm, category]);
 
   if (isLoading) {
     return (
