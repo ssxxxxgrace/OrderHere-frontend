@@ -133,7 +133,11 @@ const CheckList = () => {
       // console.log('final ordertype:', orderType)
       const response = await placeOrder(orderData);
       console.log('Order placed successfully:', response);
-      router.push('/pay');
+
+      const orderId = response.data;
+      console.log(response.data);
+      router.push(`/pay?orderId=${orderId}&totalPrice=${totalPrice}`);
+
       dispatch({ type: Action.CLEAR_CART });
       dispatch({ type: Action.CLEAR_UNSELECTED_INGREDIENTS });
     } catch (error) {

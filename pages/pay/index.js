@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from '../../components/Payment/PaymentForm';
 import { createPayment } from '../../services/Payment';
-import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const stripePromise = loadStripe(
   'pk_test_51O79acCO47pkDdZVK9jDfdy0djVL0gYNNwwH9257UA7eYB1yG94hqTpuFzvaFPvnb0FRcGk2uHPxwmyNKiQUYFsf00NLEk17nI',
@@ -12,8 +12,10 @@ const stripePromise = loadStripe(
 export default function PayPage() {
   const [clientSecret, setClientSecret] = useState('');
   const [paymentId, setPaymentId] = useState(null);
-  const orderId = 1;
-  const amount = useSelector((state) => state.cart.totalPrice);
+  const router = useRouter();
+  let { orderId, totalPrice } = router.query;
+  orderId = parseInt(orderId, 10);
+  const amount = parseFloat(totalPrice);
   const currency = 'aud';
 
   useEffect(() => {
@@ -22,6 +24,7 @@ export default function PayPage() {
       amount: amount,
       currency: currency,
     };
+    console.log(paymentPostDto);
 
     createPayment(paymentPostDto)
       .then((response) => {
