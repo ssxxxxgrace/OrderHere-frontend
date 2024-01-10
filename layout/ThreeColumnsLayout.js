@@ -1,4 +1,4 @@
-import { Container, Grid, useTheme, useMediaQuery } from '@mui/material';
+import { Container, Grid, useTheme, useMediaQuery, Box } from '@mui/material';
 import Footer from './Footer';
 import Filter from '../components/Filter';
 
@@ -29,20 +29,22 @@ const ThreeColumnsLayout = ({ children, noFooter = false }) => {
   }
 
   return (
-    <Grid
-      container
-      direction="row"
-      spacing={4}
-      style={{ position: 'relative' }}
-    >
-      <Grid item xs={3} style={{ position: 'relative' }}>
-        <Filter />
+    <Container maxWidth="lg" style={{ padding: 0, margin: 'auto' }}>
+      <Grid
+        container
+        direction="row"
+        spacing={4}
+        style={{ position: 'relative' }}
+      >
+        <Grid item xs={3} style={{ position: 'relative' }}>
+          <Filter />
+        </Grid>
+        <Grid item xs={9} style={{ position: 'relative', flex: '1 1 auto' }}>
+          {children}
+        </Grid>
+        {/* {!noFooter && <Footer />} */}
       </Grid>
-      <Grid item xs={9} style={{ position: 'relative', flex: '1 1 auto' }}>
-        {children}
-      </Grid>
-      {/* {!noFooter && <Footer />} */}
-    </Grid>
+    </Container>
   );
 };
 
