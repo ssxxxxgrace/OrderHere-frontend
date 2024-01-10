@@ -61,7 +61,6 @@ const AddDishModal = ({ open, handleClose, handleSubmit }) => {
   useEffect(() => {
     getCategoriesByRestaurant().then((res) => {
       setCategories(res.data);
-      console.log('categories:', categories);
     });
   }, [open]);
 
