@@ -1,7 +1,14 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import Button from "@mui/material/Button";
+import Link from "next/link";
+import { useRouter } from 'next/router';
+import OrderDetail from "../../components/Payment/OrderDetail";
 
 const SuccessPage = () => {
+    const router = useRouter();
+    let { orderId } = router.query;
+
   return (
     <Box
       sx={{
@@ -50,48 +57,30 @@ const SuccessPage = () => {
       >
         Thank You
       </Typography>
-      <Typography
-        sx={{
-          color: '#474747',
-          textAlign: 'center',
-          fontFamily: 'DM Sans',
-          fontSize: '60px',
-          fontStyle: 'normal',
-          fontWeight: 500,
-          lineHeight: '24px',
-          my: 6,
-        }}
-      >
-        Your pickup code:
-      </Typography>
-      <Typography
-        sx={{
-          color: '#474747',
-          textAlign: 'center',
-          fontFamily: 'DM Sans',
-          fontSize: '90px',
-          fontStyle: 'normal',
-          fontWeight: 700,
-          lineHeight: '24px',
-          my: 6,
-        }}
-      >
-        P-A43D
-      </Typography>
-      <Typography
-        sx={{
-          color: '#595959',
-          textAlign: 'center',
-          fontFamily: 'Estedad-VF',
-          fontSize: '30px',
-          fontStyle: 'normal',
-          fontWeight: 400,
-          lineHeight: '40px',
-          my: 6,
-        }}
-      >
-        Please remember to bring your pickup code when collecting your order.
-      </Typography>
+        <OrderDetail orderId={orderId} />
+        <Link href="/" passHref>
+            <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                    marginTop: 8,
+                    marginBottom: 10,
+                    backgroundColor: 'button.main',
+                    '&:hover': {
+                        backgroundColor: 'button.main',
+                        opacity: 0.7,
+                        transition: '0.3s',
+                    },
+                    borderRadius: '8px',
+                    padding: '8px, 16px, 8px, 16px',
+                    width: '300px',
+                    height: '64px',
+                    fontSize: '1.25rem',
+                }}
+            >
+                BACK TO HOME
+            </Button>
+        </Link>
     </Box>
   );
 };

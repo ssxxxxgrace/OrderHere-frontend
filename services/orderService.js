@@ -10,6 +10,10 @@ export const getUserOrder = () => http(`/v1/public/orders/user`, { method: 'GET'
 
 export const getAllOrders = () => http(`/v1/public/orders`, { method: 'GET' });
 
+export const getOrderInfo = (orderId) => {
+    return http(`/v1/public/orders/${orderId}`, { method: 'GET' });
+};
+
 export const deleteOrder = (orderData) =>
     http(`/v1/public/orders/delete`, {
         method: 'DELETE',

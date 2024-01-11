@@ -60,7 +60,7 @@ export default function PayPage() {
     <div className="App">
       {clientSecret ? (
         <Elements stripe={stripePromise} options={options}>
-          <PaymentForm paymentId={paymentId} clientSecret={clientSecret} />
+          <PaymentForm paymentId={paymentId} clientSecret={clientSecret} orderId={orderId}/>
         </Elements>
       ) : (
         <p>Loading...</p>

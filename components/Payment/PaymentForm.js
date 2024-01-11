@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import * as Action from '../../store/actionTypes';
 import { sendPayResult } from '../../services/Payment';
 
-export default function PaymentForm({ paymentId }) {
+export default function PaymentForm({ paymentId, orderId }) {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
@@ -51,7 +51,7 @@ export default function PaymentForm({ paymentId }) {
         result: 'success',
       };
       sendPayResult(paymentResultDto);
-      router.push('/pay/success');
+      router.push(`/pay/success?orderId=${orderId}`);
     }
   };
 
