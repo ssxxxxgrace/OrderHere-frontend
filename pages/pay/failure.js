@@ -1,5 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import Button from "@mui/material/Button";
+import Link from "next/link";
 
 const FailurePage = () => {
   return (
@@ -64,6 +66,29 @@ const FailurePage = () => {
       >
         Please check your payment information.
       </Typography>
+        <Link href="/" passHref>
+            <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                    marginTop: 8,
+                    marginBottom: 10,
+                    backgroundColor: 'button.main',
+                    '&:hover': {
+                        backgroundColor: 'button.main',
+                        opacity: 0.7,
+                        transition: '0.3s',
+                    },
+                    borderRadius: '8px',
+                    padding: '8px, 16px, 8px, 16px',
+                    width: '300px',
+                    height: '64px',
+                    fontSize: '1.25rem',
+                }}
+            >
+                BACK TO HOME
+            </Button>
+        </Link>
     </Box>
   );
 };
