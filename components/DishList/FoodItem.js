@@ -72,6 +72,7 @@ const FoodItem = ({
     <>
       <Divider sx={{ border: 0, borderColor: 'border.main' }} />
       <Box
+        id={`food-item-${dishId}`}
         sx={{
           display: 'flex',
           alignItems: 'center',

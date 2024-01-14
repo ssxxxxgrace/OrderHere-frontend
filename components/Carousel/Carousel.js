@@ -16,6 +16,16 @@ const Carousel = () => {
       (prevIndex) => (prevIndex - 1 + images.length) % images.length,
     );
   };
+  
+  const handleSeeMoreClick = () => {
+    
+    const dishId = activeIndex ;
+    const imageElement = document.getElementById(`food-item-${dishId}`);
+    if (imageElement) {
+      
+      imageElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const intervalId = setInterval(nextImage, 10000);
@@ -89,7 +99,8 @@ const Carousel = () => {
         <Typography variant="h3" component="h2">
           Our Special List
         </Typography>
-        <Button variant="contained" color="secondary" sx={seeMoreButtonStyle}>
+
+        <Button variant="contained" color="secondary" sx={seeMoreButtonStyle}  onClick={handleSeeMoreClick}>
           See More
         </Button>
       </Box>
