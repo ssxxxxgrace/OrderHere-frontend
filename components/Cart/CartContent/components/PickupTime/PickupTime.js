@@ -30,7 +30,6 @@ const PickupTime = () => {
     `${now.getHours()}:00 - ${now.getHours() + 1}:00`,
   );
   const dispatch = useDispatch();
-  const [timeConfirmed, setTimeConfirmed] = useState(false);
 
   const router = useRouter();
 
@@ -118,7 +117,7 @@ const PickupTime = () => {
         </Button>
         <Box
           component="span"
-          sx={{ mx: 2, fontSize: 22, fontWeight: 500, marginX: 5 }}
+          sx={{ mx: 2, fontSize: 22, fontWeight: 600, marginX: 6 }}
         >
           {getDayLabel(selectedDate)}{' '}
           {selectedDate.toLocaleDateString('en-US', {
@@ -140,7 +139,20 @@ const PickupTime = () => {
         </Button>
       </Box>
 
-      <Box sx={{ mb: 4, height: '300px', overflowY: 'scroll' }}>
+      <Box
+        sx={{
+          mb: 4,
+          height: '350px',
+          overflowY: 'scroll',
+          backgroundColor: '#FAFAFA',
+          padding: 3,
+          borderRadius: 2,
+          transition: 'background-color 0.3s ease',
+          '&:hover': {
+            backgroundColor: '#F0F0F0',
+          },
+        }}
+      >
         <RadioGroup
           value={timeFrame}
           onChange={(e) => setTimeFrame(e.target.value)}
@@ -156,56 +168,6 @@ const PickupTime = () => {
           ))}
         </RadioGroup>
       </Box>
-
-      {!timeConfirmed && (
-        <Button
-          // type="submit"
-          onClick={handleSubmit}
-          sx={{
-            backgroundColor: 'button.main',
-            width: '400px',
-            height: '50px',
-            borderRadius: '10px',
-            color: 'white',
-            fontSize: '20px',
-            fontWeight: 600,
-          }}
-        >
-          Confirm
-        </Button>
-      )}
-
-      {timeConfirmed && (
-        <Box
-          sx={{
-            mt: 2,
-            mb: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Box component="span" sx={{ fontSize: '1.5rem', fontWeight: 500 }}>
-            Time has been confirmed, click the button below to Change time.
-          </Box>
-          <Button
-            onClick={handleChangeClick}
-            sx={{
-              backgroundColor: 'button.main',
-              width: '400px',
-              height: '50px',
-              borderRadius: '10px',
-              color: 'white',
-              fontSize: '20px',
-              fontWeight: 600,
-              mt: 2,
-            }}
-          >
-            Change
-          </Button>
-        </Box>
-      )}
     </Box>
   );
 };
