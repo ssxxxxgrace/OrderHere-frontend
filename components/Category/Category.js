@@ -43,18 +43,15 @@ const Category = ({ categories: initialData }) => {
         {categories.map((category) => (
           <Button
             key={category.categoryId}
-            variant="outlined"
-            color="secondary"
             onClick={() => handleCategoryClick(category.categoryId)}
             sx={{
               backgroundColor:
                 selectedCategoryId === category.categoryId
                   ? 'button.main'
-                  : 'white',
-              fontSize: '13px',
+                  : 'grey',
+              fontSize: '14px',
               width: '120px',
-              color:
-                selectedCategoryId === category.categoryId ? 'white' : 'black',
+              color: 'white',
               '&:hover': {
                 backgroundColor: 'button.main',
                 color: 'white',
