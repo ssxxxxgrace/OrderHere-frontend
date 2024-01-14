@@ -283,25 +283,31 @@ const DishPopup = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} className={styles.dishPopup}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      className={styles.dishPopup}
+      fullWidth
+      maxWidth="md"
+      sx={{
+        '& .MuiDialog-paper': { borderRadius: '10px', overflow: 'hidden' },
+      }}
+    >
       <IconButton
         aria-label="close"
         onClick={onClose}
-        style={{
+        sx={{
           position: 'absolute',
           right: '1.5rem',
           top: '1rem',
           backgroundColor: '#D3D3D3',
+          '&:hover': { backgroundColor: '#BFBFBF' },
         }}
       >
         <CloseIcon />
       </IconButton>
       <DialogContent
-        style={{
-          padding: 0,
-          maxHeight: 'calc(100vh - 200px)',
-          overflowY: 'auto',
-        }}
+        sx={{ padding: 0, overflowY: 'auto', backgroundColor: '#f4f4f4' }}
       >
         {isEditMode && userRole == 'ROLE_sys_admin' ? (
           <Box position="relative" display="inline-block">
@@ -363,7 +369,7 @@ const DishPopup = ({
               onChange={handleDishChange}
             />
           ) : (
-            <Typography variant="h6">{dishName}</Typography>
+            <Typography variant="h5">{dishName}</Typography>
           )}
           {userRole == 'ROLE_sys_admin' && (
             <IconButton
@@ -406,7 +412,7 @@ const DishPopup = ({
               inputProps={{ min: 0 }}
             />
           ) : (
-            <Typography variant="h6">${price}</Typography>
+            <Typography variant="h5">${price}</Typography>
           )}
         </DialogContentText>
 
@@ -442,8 +448,11 @@ const DishPopup = ({
                 color: '#f4f4f4',
                 marginRight: 3,
                 paddingInline: 2,
+                height: '45px',
+                width: '250px',
                 fontWeight: 600,
-                fontSize: '1.2rem',
+                fontSize: '1.3rem',
+                mb: 2,
                 '&:hover': {
                   backgroundColor: '#BF5B5F',
                 },
@@ -619,6 +628,7 @@ const DishPopup = ({
                     width: '95%',
                     fontWeight: 600,
                     paddingBlock: 1.5,
+                    fontSize: '1.3rem',
                     display: 'block',
                     marginTop: 1.5,
                     marginLeft: 'auto',
@@ -628,7 +638,7 @@ const DishPopup = ({
                     },
                   }}
                 >
-                  Save
+                  Save Ingredients
                 </IconButton>
               </Box>
             ) : null}
@@ -641,7 +651,9 @@ const DishPopup = ({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-end',
-          paddingBottom: '20px',
+          padding: '20px',
+          backgroundColor: '#f4f4f4',
+          borderTop: '1px solid #E0E0E0',
         }}
       >
         {quantity > 0 && (
@@ -671,7 +683,7 @@ const DishPopup = ({
               border: '1px solid #AD343E',
               borderRadius: '10px',
               width: '200px',
-              height: '50px',
+              height: '45px',
               justifyContent: 'space-between',
               padding: '0 8px',
             }}
@@ -700,7 +712,7 @@ const DishPopup = ({
                 backgroundColor: 'button.main',
                 fontSize: '25px',
                 width: '200px',
-                height: '50px',
+                height: '45px',
                 color: '#fff',
                 borderRadius: '10px',
                 '&:hover': {
