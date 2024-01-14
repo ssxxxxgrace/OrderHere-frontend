@@ -18,12 +18,11 @@ const Carousel = () => {
   };
   
   const handleSeeMoreClick = () => {
-    // 假设你想要滚动到的 FoodItem 的 dishId 是 activeIndex
-    //const dishId = images[activeIndex].dishId;  // 确保这里的 images 数组包含了 dishId
+    
     const dishId = activeIndex ;
     const imageElement = document.getElementById(`food-item-${dishId}`);
     if (imageElement) {
-      // 滚动到 FoodItem 组件的位置
+      
       imageElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
