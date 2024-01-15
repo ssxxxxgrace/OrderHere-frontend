@@ -6,8 +6,9 @@ import { Box, CircularProgress, Alert, Button } from '@mui/material';
 import AddDishModal from './AddDishModal';
 import { useDispatch } from 'react-redux';
 import { addDishStart, addDishSuccess, addDishError } from './AddDishModal';
-import { postDishes } from '../../services/Dish';
+import { deleteDish, postDishes } from '../../services/Dish';
 import { jwtInfo } from '../../utils/jwtInfo';
+import * as Action from '../../store/actionTypes';
 
 const FoodItemsList = ({ dishes: initialDishes }) => {
   const [dishes, setDishes] = useState(initialDishes);
@@ -25,6 +26,22 @@ const FoodItemsList = ({ dishes: initialDishes }) => {
 
   const handleCloseModal = () => {
     setAddDishModalOpen(false);
+  };
+
+  // const handleRemoveDish = (dishId) => {
+  //   dispatch({ type: Action.REMOVE_DISH, payload: dishId });
+  //   setDishes(dishes.filter(dish => dish.dishId !== dishId));
+  // };
+
+  const handleRemoveDish = async (dishId) => {
+    try {
+      const response = await deleteDish(dishId);
+      if (response.status === 200 || response.status === 204) {   
+        setDishes(currentDishes => currentDishes.filter(dish => dish.dishId !== dishId));
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const priceRange = useSelector((state) => state.filter.priceRange);
@@ -112,6 +129,7 @@ const FoodItemsList = ({ dishes: initialDishes }) => {
           price={dish.price}
           imageUrl={dish.imageUrl}
           rating={dish.rating}
+          onRemoveDish={handleRemoveDish}
         />
       ))}
 
@@ -154,3 +172,4 @@ const FoodItemsList = ({ dishes: initialDishes }) => {
 };
 
 export default FoodItemsList;
+

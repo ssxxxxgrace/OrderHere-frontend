@@ -12,6 +12,7 @@ import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import * as Action from '../../store/actionTypes';
 import DishPopup from '../DishPopUp/DishPopUp';
 import RatingStars from './RatingStars';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const FoodItem = ({
   dishId,
@@ -20,6 +21,7 @@ const FoodItem = ({
   price,
   imageUrl,
   rating,
+  onRemoveDish,
 }) => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
@@ -59,6 +61,17 @@ const FoodItem = ({
     dispatch({ type: Action.CALCULATE_TOTAL_PRICE });
   };
 
+  // const handleRemoveDish = () => {
+    
+  //   dispatch({ type: Action.REMOVE_DISH, payload: dishIdToRemove });
+
+
+  // }
+  
+  const handleRemoveDish = () => {
+    dispatch({ type: Action.REMOVE_DISH, payload: {dishId} });
+  };
+
   const decrementQuantity = () => {
     if (quantity > 1) {
       dispatch({ type: Action.DECREASE_ITEM, payload: { dishId } });
@@ -74,6 +87,7 @@ const FoodItem = ({
       <Box
         id={`food-item-${dishId}`}
         sx={{
+          position: 'relative',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-start',
@@ -83,7 +97,17 @@ const FoodItem = ({
           padding: '16px',
           height: '200px',
         }}
-      >
+      > 
+        <IconButton
+          onClick={() => onRemoveDish(dishId)}
+          sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
         <Box
           component="img"
           sx={{
@@ -213,3 +237,4 @@ const FoodItem = ({
 };
 
 export default FoodItem;
+
