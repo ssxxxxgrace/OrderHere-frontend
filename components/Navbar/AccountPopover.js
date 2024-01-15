@@ -116,22 +116,24 @@ const AccountPopover = (props) => {
             </MenuItem>
           </NextLink>
         )} */}
-        <NextLink href="/order-management" passHref>
-          <MenuItem>
-            <ListItemIcon>
-              <HistoryIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <Typography variant="body1">
-                  {userRole === 'ROLE_sys_admin'
-                    ? 'Order Management'
-                    : 'Order History'}
-                </Typography>
-              }
-            />
-          </MenuItem>
-        </NextLink>
+        {userRole !== 'ROLE_driver' ? (
+          <NextLink href="/order-management" passHref>
+            <MenuItem>
+              <ListItemIcon>
+                <HistoryIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="body1">
+                    {userRole === 'ROLE_sys_admin'
+                      ? 'Order Management'
+                      : 'Order History'}
+                  </Typography>
+                }
+              />
+            </MenuItem>
+          </NextLink>
+        ) : null}
         <Divider />
         <NextLink href="/profile" passHref>
           <MenuItem component="a">
