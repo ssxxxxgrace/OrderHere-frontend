@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import FoodItem from '/components/DishList/FoodItem';
-import { Box, CircularProgress, Alert, Button } from '@mui/material';
+import { Box, CircularProgress, Alert, Button, IconButton} from '@mui/material';
 import AddDishModal from './AddDishModal';
 import { useDispatch } from 'react-redux';
 import { addDishStart, addDishSuccess, addDishError } from './AddDishModal';
 import { deleteDish, postDishes } from '../../services/Dish';
 import { jwtInfo } from '../../utils/jwtInfo';
 import * as Action from '../../store/actionTypes';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const FoodItemsList = ({ dishes: initialDishes }) => {
   const [dishes, setDishes] = useState(initialDishes);
@@ -140,7 +141,17 @@ const FoodItemsList = ({ dishes: initialDishes }) => {
               display: 'flex',
               justifyContent: 'center',
             }}
-          >
+          > 
+            {/* <IconButton
+              onClick={() => onRemoveDish(dishId)}
+              sx={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+              }}
+            >
+            <DeleteIcon />
+            </IconButton> */}
             <Button
               onClick={handleAddNewDishClick}
               sx={{

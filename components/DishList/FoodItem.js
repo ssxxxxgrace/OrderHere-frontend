@@ -13,6 +13,7 @@ import * as Action from '../../store/actionTypes';
 import DishPopup from '../DishPopUp/DishPopUp';
 import RatingStars from './RatingStars';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { jwtInfo } from '../../utils/jwtInfo';
 
 const FoodItem = ({
   dishId,
@@ -29,6 +30,9 @@ const FoodItem = ({
   const quantity = item ? item.quantity : 0;
   const [popupOpen, setPopupOpen] = React.useState(false);
   const [isAddedToCart, setIsAddedToCart] = React.useState(false);
+
+  const { token } = useSelector((state) => state.sign);
+  const { userRole } = jwtInfo(token);
 
   useEffect(() => {
     if (quantity === 0) {
@@ -98,16 +102,18 @@ const FoodItem = ({
           height: '200px',
         }}
       > 
+        {userRole == 'ROLE_sys_admin' && (
         <IconButton
-          onClick={() => onRemoveDish(dishId)}
-          sx={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-          }}
+            onClick={() => onRemoveDish(dishId)}
+            sx={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+            }}
         >
           <DeleteIcon />
         </IconButton>
+        )}
         <Box
           component="img"
           sx={{
