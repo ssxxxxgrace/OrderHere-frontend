@@ -4,6 +4,9 @@ import Carousel from '../components/Carousel/Carousel';
 import Category from '../components/Category/Category';
 import { getDishes } from '../services/Dish';
 import { getCategoriesByRestaurant } from '../services/Category';
+import { jwtInfo } from '../utils/jwtInfo';
+import OrderList from '../components/OrderList/index'
+import { useSelector } from 'react-redux';
 
 export async function getStaticProps() {
   try {
@@ -25,12 +28,21 @@ export async function getStaticProps() {
 }
 
 const Index = ({ dishes, categories }) => {
+  const { token } = useSelector((state) => state.sign);
+  const { userRole } = jwtInfo(token);
+
   return (
-    <ThreeColumnsLayout>
-      <Carousel />
-      <Category categories={categories} />
-      <FoodItemsList dishes={dishes} />
-    </ThreeColumnsLayout>
+    <>
+      {userRole === 'ROLE_driver' ? (
+        <OrderList />
+      ) : (
+        <ThreeColumnsLayout>
+          <Carousel />
+          <Category categories={categories} />
+          <FoodItemsList dishes={dishes} />
+        </ThreeColumnsLayout>
+      )}
+    </>
   );
 };
 

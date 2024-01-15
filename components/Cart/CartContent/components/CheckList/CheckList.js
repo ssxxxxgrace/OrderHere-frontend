@@ -37,14 +37,6 @@ const CheckList = () => {
   const combinedPickUpDateTime = dayjs(`${PickUpDate} ${PickUpTime}`);
   const PickUpzonedDateTime = combinedPickUpDateTime.utc().format();
 
-  // console.log('dinein phone:', dineInPhone);
-  // console.log('dinein personCount:', personCount);
-  // console.log('dinein dineInDate:', dineInDate);
-  // console.log('dinein dineInTime:', dineInTime);
-  // console.log('ZonedDateTime in Melbourne:', dineInZonedDateTime);
-  // console.log('dinein name:', dineInName);
-  // console.log('dinein note:', note);
-  // console.log('pick up time:', PickUpzonedDateTime);
   const unselectedIngredients = useSelector(
     (state) => state.ingredient.unselectedIngredients,
   );
@@ -93,10 +85,7 @@ const CheckList = () => {
         phone: address.phone,
       };
 
-      // console.log('check for data:', orderData)
-      // console.log('check for ordertype:', orderType)
-
-      if (!address.name || !address.phone || !address.address) {
+      if (orderType === 'delivery' && (!address.name || !address.phone || !address.address)) {
         console.log('Warning: Shipping information is missing!');
         setShowWarningShake(true);
         setTimeout(() => setShowWarningShake(false), 1000);

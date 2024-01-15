@@ -18,6 +18,9 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import * as Action from '../../../store/actionTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { jwtInfo } from '../../../utils/jwtInfo';
+import dynamic from 'next/dynamic';
+
+const ContactMap = dynamic(() => import('../../restaurantInfo/components/ContactMap'), { ssr: false });
 
 const OrderPopUp = ({ open, onClose, order, time, onOrderStatusUpdate }) => {
   const dispatch = useDispatch();
@@ -252,6 +255,9 @@ const OrderPopUp = ({ open, onClose, order, time, onOrderStatusUpdate }) => {
                     {order.orderType === 'delivery' ? order.address : address}
                   </Typography>
                 </Box>
+                <ContactMap
+                  address={order.orderType === 'delivery' ? order.address : address}
+                />
                 <Typography sx={{ color: 'text.secondary' }}>
                   Note:{' '}
                   {order.note === undefined || order.note === ''

@@ -24,6 +24,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { loginWithOauthProviderAction } from '../../store/actions/httpAction';
 import * as Action from '../../store/actionTypes';
+import { jwtInfo } from '../../utils/jwtInfo';
 
 export const styleNew = {
   title: {
@@ -41,15 +42,15 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   ...(theme.palette.mode === 'light'
     ? {
-        boxShadow: theme.shadows[3],
-      }
+      boxShadow: theme.shadows[3],
+    }
     : {
-        backgroundColor: theme.palette.background.paper,
-        borderBottomColor: theme.palette.divider,
-        borderBottomStyle: 'solid',
-        borderBottomWidth: 1,
-        boxShadow: 'none',
-      }),
+      backgroundColor: theme.palette.background.paper,
+      borderBottomColor: theme.palette.divider,
+      borderBottomStyle: 'solid',
+      borderBottomWidth: 1,
+      boxShadow: 'none',
+    }),
 }));
 
 const Navbar = () => {
@@ -65,6 +66,8 @@ const Navbar = () => {
   const { totalItems } = useSelector((state) => state.cart);
 
   const [sessionToken, setSessionToken] = useState();
+  const { token } = useSelector((state) => state.sign);
+  const { userRole } = jwtInfo(token);
 
   //use session login user
   const dispatch = useDispatch();
@@ -162,27 +165,29 @@ const Navbar = () => {
                 Home
               </Button>
             </Link>
+            {userRole !== 'ROLE_driver' ? (
+              <Link href="/restaurant/1" passHref>
+                <Button
+                  sx={{
+                    display: 'inline-flex',
+                    padding: '4px 16px',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: 'black',
+                    borderRadius: 10,
+                    backgroundColor: isStoreInfoActive
+                      ? '#DBDFD0'
+                      : 'transparent',
+                    '&:hover': {
+                      backgroundColor: '#DBDFD0',
+                    },
+                  }}
+                >
+                  Store Info
+                </Button>
+              </Link>
+            ) : null}
 
-            <Link href="/restaurant/1" passHref>
-              <Button
-                sx={{
-                  display: 'inline-flex',
-                  padding: '4px 16px',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  color: 'black',
-                  borderRadius: 10,
-                  backgroundColor: isStoreInfoActive
-                    ? '#DBDFD0'
-                    : 'transparent',
-                  '&:hover': {
-                    backgroundColor: '#DBDFD0',
-                  },
-                }}
-              >
-                Store Info
-              </Button>
-            </Link>
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
