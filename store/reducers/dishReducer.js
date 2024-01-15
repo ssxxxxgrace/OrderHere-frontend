@@ -30,6 +30,13 @@ const dishesReducer = (state = initialState, { type, payload }) => {
         isLoading: false,
         error: payload,
       };
+
+    case Action.REMOVE_DISH:
+      return {
+        ...state,
+        dishes: state.dishes.filter(dish => dish.id !== payload),
+      };
+
     case Action.SET_SEARCH_TERM:
       return {
         ...state,
@@ -47,3 +54,4 @@ const dishesReducer = (state = initialState, { type, payload }) => {
 };
 
 export default dishesReducer;
+
