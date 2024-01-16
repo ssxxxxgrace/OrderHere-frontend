@@ -25,3 +25,9 @@ export const updateOrderStatus = (statusInfo) =>
         method: 'PATCH',
         data: statusInfo,
     });
+
+export const submitRatings = (ratingData) =>
+    http(`/v1/public/rating/submit-ratings`, { 
+    method: 'POST',
+    data: ratingData,
+    });    

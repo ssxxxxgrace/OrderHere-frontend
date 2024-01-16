@@ -12,7 +12,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import { updateOrderStatus, deleteOrder } from '../../../services/orderService';
+import { updateOrderStatus, deleteOrder, submitRatings } from '../../../services/orderService';
 import { getRestaurantInfo } from '../../../services/Restaurant';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import * as Action from '../../../store/actionTypes';
@@ -34,20 +34,54 @@ const OrderPopUp = ({ open, onClose, order, time, onOrderStatusUpdate }) => {
   // const [statusValue, setStatusValue] = useState(order.orderStatus);
   const [statusValue, setStatusValue] = useState('');
 
+  const [ratings, setRatings] = useState({});
+  const [showRatingButton, setShowRatingButton] = useState(false);
+
   useEffect(() => {
     const fetchRestaurantAddress = async () => {
       const response = await getRestaurantInfo(1);
       setAddress(response.data.address);
+
+      if (order) {
+        setShowRatingButton(order.orderStatus === 'finished');
+      }
     };
 
     fetchRestaurantAddress();
-  }, []);
+  }, [order]);
 
   const handleClose = () => {
     if (isEditMode) {
       setStatusValue(originalStatus);
     }
     onClose();
+  };
+
+  const handleRatingChange = (dishName, newRating) => {
+    setRatings(prevRatings => ({ ...prevRatings, [dishName]: newRating }));
+  };
+  
+
+  
+
+  const handleSubmitRating = async () => {
+    const ratingData = order.dishes.map(dish => ({
+      userId: 1, 
+      dishId: dish.dishId,
+      ratingValue: ratings[dish.dishId],
+      comments: 'good', 
+    }));
+  
+    try {
+      
+      const response = await submitRatings(ratingData);
+      console.log('Rating submitted successfully', response.data);
+      
+      setShowRatingButton(false); 
+    } catch (error) {
+      console.error('Error submitting ratings:', error.response || error);
+     
+    }
   };
 
   const toggleEditMode = () => {
@@ -346,26 +380,60 @@ const OrderPopUp = ({ open, onClose, order, time, onOrderStatusUpdate }) => {
         )}
       </DialogContent>
       <DialogActions>
-        {userRole === 'ROLE_sys_admin' ? (
-          isEditMode ? (
-            <React.Fragment>
-              <Button onClick={toggleEditMode}>Exit</Button>
-              <Button onClick={handleEditStatusSubmit}>Save</Button>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <Button onClick={handleClose}>Close</Button>
-              <Button onClick={handleRejectedOrder}>Reject Order</Button>
-              <Button onClick={toggleEditMode}>Modify Order</Button>
-            </React.Fragment>
-          )
-        ) : (
-          <React.Fragment>
-            <Button onClick={handleClose}>Close</Button>
-            <Button onClick={handleEditStatusSubmit}>Save</Button>
-          </React.Fragment>
-        )}
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid item xs={6}>
+            {showRatingButton && order.dishes.map((dish) => (
+              <Box key={dish.dishId} sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
+                <Typography component="legend">{dish.dishName}</Typography>
+                <Box sx={{ display: 'flex' }}>
+                  {[1, 2, 3, 4, 5].map((number) => (
+                    <Button
+                      key={number}
+                      onClick={() => handleRatingChange(dish.dishId, number)}
+                      variant={ratings[dish.dishId] === number ? "contained" : "outlined"}
+                      size="small"
+                      sx={{ 
+                        color: ratings[dish.dishId] === number ? 'white' : 'black', 
+                        borderColor: 'black',
+                        fontWeight: 'bold',
+                        backgroundColor: ratings[dish.dishId] === number ? 'blue' : 'transparent',
+                        '&:hover': {
+                          backgroundColor: 'black',
+                          color: 'white',
+                        },
+                        minWidth: '36px',
+                        margin: '2px',
+                      }}
+                    >
+                      {number}
+                    </Button>
+                  ))}
+                </Box>
+              </Box>
+            ))}
+            <Button onClick={handleSubmitRating} variant="contained" color="primary" sx={{ marginY: '8px' }}>
+              Submit
+            </Button>
+          </Grid>
+          <Grid item xs={6} style={{ textAlign: 'right' }}>
+            <Button onClick={handleClose} color="primary">Close</Button>
+            {userRole === 'ROLE_sys_admin' && !isEditMode && (
+              <>
+                <Button onClick={handleRejectedOrder}>Reject Order</Button>
+                <Button onClick={toggleEditMode}>Modify Order</Button>
+              </>
+            )}
+            {isEditMode && (
+              <>
+                <Button onClick={toggleEditMode}>Exit</Button>
+                <Button onClick={handleEditStatusSubmit} color="primary">Save</Button>
+              </>
+            )}
+          </Grid>
+        </Grid>
       </DialogActions>
+
+
     </Dialog>
   );
 };
