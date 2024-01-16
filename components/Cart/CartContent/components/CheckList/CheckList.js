@@ -96,7 +96,7 @@ const CheckList = () => {
       // console.log('check for data:', orderData)
       // console.log('check for ordertype:', orderType)
 
-      if (!address.name || !address.phone || !address.address) {
+      if (orderType === 'delivery' && (!address.name || !address.phone || !address.address)) {
         console.log('Warning: Shipping information is missing!');
         setShowWarningShake(true);
         setTimeout(() => setShowWarningShake(false), 1000);
