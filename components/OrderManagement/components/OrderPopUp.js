@@ -31,6 +31,11 @@ const OrderPopUp = ({ open, onClose, order, time, onOrderStatusUpdate }) => {
   // const [statusValue, setStatusValue] = useState(order.orderStatus);
   const [statusValue, setStatusValue] = useState('');
 
+  const [ratings, setRatings] = useState('');
+  const [showRatingButton, setShowRatingButton] = useState(false);
+  
+
+
   useEffect(() => {
     const fetchRestaurantAddress = async () => {
       const response = await getRestaurantInfo(1);
@@ -38,7 +43,8 @@ const OrderPopUp = ({ open, onClose, order, time, onOrderStatusUpdate }) => {
     };
 
     fetchRestaurantAddress();
-  }, []);
+    setShowRatingButton(order.orderStatus === 'finished');
+  }, [order.orderStatus]);
 
   const handleClose = () => {
     if (isEditMode) {
@@ -59,6 +65,24 @@ const OrderPopUp = ({ open, onClose, order, time, onOrderStatusUpdate }) => {
     console.log('status:', event.target.value);
     setStatusValue(event.target.value);
   };
+
+  const handleRatingChange = (dishName, newRating) => {
+    setRatings(prevRatings => ({ ...prevRatings, [dishName]: newRating }));
+  };
+  
+
+  const handleSubmitRating = async () => {
+    try {
+      // 将ratings对象发送到后端，其中包含了每个菜品的评分
+      // await submitRatings(order.orderId, ratings);
+      // 在此添加任何额外的处理逻辑
+      setShowRatingButton(false);
+    } catch (error) {
+      console.error('Error submitting ratings:', error.response);
+    }
+  };
+  
+  
 
   const handleEditStatusSubmit = async () => {
     try {
@@ -97,6 +121,11 @@ const OrderPopUp = ({ open, onClose, order, time, onOrderStatusUpdate }) => {
       console.error('Error updating status:', error.response);
     }
   };
+
+  // const handleRatingChange = (event) => {
+  //   setRating(event.target.value);
+  // };
+  
 
   const convertToMelbourneTime = (utcTimestamp) => {
     if (!utcTimestamp) {
@@ -355,8 +384,30 @@ const OrderPopUp = ({ open, onClose, order, time, onOrderStatusUpdate }) => {
           )
         ) : (
           <React.Fragment>
+            {showRating && (
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', p: 2 }}>
+                <Typography component="legend">Rate the Order</Typography>
+                <Select
+                  value={rating}
+                  onChange={handleRatingChange}
+                  displayEmpty
+                  inputProps={{ 'aria-label': 'Without label' }}
+                >
+                  <MenuItem value="" disabled>
+                    Rating
+                  </MenuItem>
+                  <MenuItem value={1}>1 Star</MenuItem>
+                  <MenuItem value={2}>2 Stars</MenuItem>
+                  <MenuItem value={3}>3 Stars</MenuItem>
+                  <MenuItem value={4}>4 Stars</MenuItem>
+                  <MenuItem value={5}>5 Stars</MenuItem>
+                </Select>
+                <Button onClick={handleSubmitRating} variant="contained" color="primary">
+                  Submit
+                </Button>
+              </Box>
+          )}
             <Button onClick={handleClose}>Close</Button>
-            <Button onClick={handleEditStatusSubmit}>Save</Button>
           </React.Fragment>
         )}
       </DialogActions>
@@ -365,3 +416,4 @@ const OrderPopUp = ({ open, onClose, order, time, onOrderStatusUpdate }) => {
 };
 
 export default OrderPopUp;
+
