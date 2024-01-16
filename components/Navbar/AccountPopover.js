@@ -97,25 +97,13 @@ const AccountPopover = (props) => {
           >
             <Typography variant="body1">{username}</Typography>
             <Typography color="textSecondary" variant="body2">
-              {userRole.slice(5)}
+              {userRole ? userRole.slice(5) : 'Role_visitor'}
             </Typography>
           </Box>
         </Box>
       </NextLink>
       <Divider />
       <Box sx={{ my: 1 }}>
-        {/* {myDetail.role.roleName === 'admin' && (
-          <NextLink href="/admin/users" passHref>
-            <MenuItem component="a">
-              <ListItemIcon>
-                <ManageAccountsIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText
-                primary={<Typography variant="body1">Admin</Typography>}
-              />
-            </MenuItem>
-          </NextLink>
-        )} */}
         {userRole !== 'ROLE_driver' ? (
           <NextLink href="/order-management" passHref>
             <MenuItem>
